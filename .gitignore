@@ -31,13 +31,14 @@ paper/*.fls
 runs/
 checkpoints/
 
-# Datasets are not redistributed (see README.md for download instructions)
+# Larger benchmarks are not redistributed (see README.md). UMLS and Kinship
+# are tiny public-domain benchmarks (Kemp 2006 / kinship Bayesian-KG lit) that
+# the original villmow mirror has 404'd; we redistribute them here so
+# code/measure_symmetry.py is runnable out-of-the-box.
 data/FB15k-237/
 data/WN18RR/
 data/YAGO3-10/
 data/CoDEx-M/
 data/CoDEx-L/
-data/UMLS/
-data/Kinship/
 data/codex-m/
 data/codex-l/
