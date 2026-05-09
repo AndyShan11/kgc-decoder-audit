@@ -25,8 +25,8 @@ training recipe:
 | **Decoder Δ (ComplEx vs. DistMult)** | **0.124** (1.65× wider)            |
 
 The most extreme decoder reversal is on **UMLS**, where DistMult beats
-ComplEx by **+0.036 MRR** (0.8705 ± 0.0109 vs. 0.8344 ± 0.0020;
-Welch *t* ≈ 5.6 across 3 seeds, df ≈ 2, *p* ≈ 0.03), directly
+ComplEx by **+0.045 MRR** (0.8748 ± 0.0096 vs. 0.8302 ± 0.0086;
+Welch *t* ≈ 8.5 across 6 seeds, df ≈ 10, *p* < 10⁻⁵), directly
 contradicting the practitioner-tutorial recommendation that biomedical KGs
 with antisymmetric relations require ComplEx.
 
@@ -38,8 +38,8 @@ wins as a lower-variance regulariser:
 
 | Dataset    | edges/rel | Decoder Δ | Winner       |
 |------------|----------:|----------:|--------------|
-| **UMLS**   |   **113** | **−0.036**| **DistMult** |
-| Kinship    |       342 |    +0.088 | ComplEx      |
+| **UMLS**   |   **113** | **−0.045**| **DistMult** |
+| Kinship    |       342 |    +0.089 | ComplEx      |
 | FB15k-237  |     1 148 |    +0.005 | ComplEx      |
 | CoDEx-M    |     3 627 |    +0.010 | ComplEx      |
 | WN18RR     |     7 894 |    +0.012 | ComplEx      |

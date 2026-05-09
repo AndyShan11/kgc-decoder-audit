@@ -2,7 +2,7 @@
   "rerun_metadata": {
     "round_id": "decoder_diag_round_20260504_2056",
     "code_commit_date": "2026-05-04",
-    "n_runs": 36,
+    "n_runs": 48,
     "n_seeds_per_config": 3,
     "purpose": "Lock decoder x dataset main result table on single code version"
   },
@@ -24,27 +24,27 @@
       "dataset": "Kinship",
       "d_h": 200,
       "layers": 2,
-      "ComplEx_MRR_mean": 0.7626333333333334,
-      "ComplEx_MRR_std": 0.009421429473988156,
-      "ComplEx_n": 3,
-      "DistMult_MRR_mean": 0.6749999999999999,
-      "DistMult_MRR_std": 0.011294689017409912,
-      "DistMult_n": 3,
-      "delta": 0.08763333333333345,
-      "delta_sigma": 10.319727693162134
+      "ComplEx_MRR_mean": 0.7633869489907491,
+      "ComplEx_MRR_std": 0.006527092405004764,
+      "ComplEx_n": 6,
+      "DistMult_MRR_mean": 0.6744375103369468,
+      "DistMult_MRR_std": 0.007777161549577618,
+      "DistMult_n": 6,
+      "delta": 0.08894943865380234,
+      "delta_sigma": 21.45934754215211
     },
     {
       "dataset": "UMLS",
       "d_h": 200,
       "layers": 2,
-      "ComplEx_MRR_mean": 0.8344333333333332,
-      "ComplEx_MRR_std": 0.0020428737928059704,
-      "ComplEx_n": 3,
-      "DistMult_MRR_mean": 0.8704666666666666,
-      "DistMult_MRR_std": 0.010945470905051694,
-      "DistMult_n": 3,
-      "delta": -0.03603333333333336,
-      "delta_sigma": 5.605251310624988
+      "ComplEx_MRR_mean": 0.8302059401758538,
+      "ComplEx_MRR_std": 0.008616179776001912,
+      "ComplEx_n": 6,
+      "DistMult_MRR_mean": 0.8748037454336108,
+      "DistMult_MRR_std": 0.00955981663554021,
+      "DistMult_n": 6,
+      "delta": -0.04459780525775703,
+      "delta_sigma": 8.488312962214817
     },
     {
       "dataset": "WN18RR",
@@ -86,9 +86,9 @@
       "delta_sigma": 14.169390763733828
     }
   ],
-  "decoder_delta_spread": 0.12366666666666681,
+  "decoder_delta_spread": 0.13354724391155937,
   "encoder_delta_spread_reference": 0.075,
-  "ratio": 1.6488888888888908,
+  "ratio": 1.7806299188207917,
   "per_config_aggregates": {
     "FB15k-237_d200_L3_ls0.3_ComplEx": {
       "dataset": "FB15k-237",
@@ -126,13 +126,16 @@
       "layers": 2,
       "scorer": "ComplEx",
       "label_smooth": 0.3,
-      "n_seeds": 3,
-      "MRR_mean": 0.7626333333333334,
-      "MRR_std": 0.009421429473988156,
+      "n_seeds": 6,
+      "MRR_mean": 0.7633869489907491,
+      "MRR_std": 0.006527092405004764,
       "seeds_MRRs": [
+        0.7634196746479747,
         0.7734,
+        0.7605449467880722,
         0.7559,
-        0.7586
+        0.7586,
+        0.7684570725084477
       ]
     },
     "Kinship_d200_L2_ls0.3_DistMult": {
@@ -141,13 +144,16 @@
       "layers": 2,
       "scorer": "DistMult",
       "label_smooth": 0.3,
-      "n_seeds": 3,
-      "MRR_mean": 0.6749999999999999,
-      "MRR_std": 0.011294689017409912,
+      "n_seeds": 6,
+      "MRR_mean": 0.6744375103369468,
+      "MRR_std": 0.007777161549577618,
       "seeds_MRRs": [
+        0.6710858091076488,
         0.6847,
+        0.6793753108928305,
         0.6777,
-        0.6626
+        0.6626,
+        0.6711639420212011
       ]
     },
     "UMLS_d200_L2_ls0.3_ComplEx": {
@@ -156,13 +162,16 @@
       "layers": 2,
       "scorer": "ComplEx",
       "label_smooth": 0.3,
-      "n_seeds": 3,
-      "MRR_mean": 0.8344333333333332,
-      "MRR_std": 0.0020428737928059704,
+      "n_seeds": 6,
+      "MRR_mean": 0.8302059401758538,
+      "MRR_std": 0.008616179776001912,
       "seeds_MRRs": [
+        0.8288820427479514,
         0.8359,
+        0.8355489485440245,
         0.8321,
-        0.8353
+        0.8353,
+        0.8135046497631464
       ]
     },
     "UMLS_d200_L2_ls0.3_DistMult": {
@@ -171,13 +180,16 @@
       "layers": 2,
       "scorer": "DistMult",
       "label_smooth": 0.3,
-      "n_seeds": 3,
-      "MRR_mean": 0.8704666666666666,
-      "MRR_std": 0.010945470905051694,
+      "n_seeds": 6,
+      "MRR_mean": 0.8748037454336108,
+      "MRR_std": 0.00955981663554021,
       "seeds_MRRs": [
+        0.8794032010715185,
         0.8749,
+        0.8717854047318974,
         0.858,
-        0.8785
+        0.8785,
+        0.8862338667982489
       ]
     },
     "WN18RR_d200_L2_ls0.3_ComplEx": {
