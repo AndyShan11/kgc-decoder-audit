@@ -1,0 +1,373 @@
+{
+  "UMLS": {
+    "weighted_dataset_score": 0.13266871165644173,
+    "unweighted_mean": 0.07286954526798167,
+    "n_edges_train": 5216,
+    "n_relations": 46,
+    "per_relation": {
+      "location_of": {
+        "n_edges": 244,
+        "sym_pair_count": 2,
+        "score": 0.00819672131147541
+      },
+      "manifestation_of": {
+        "n_edges": 153,
+        "sym_pair_count": 22,
+        "score": 0.1437908496732026
+      },
+      "isa": {
+        "n_edges": 399,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "affects": {
+        "n_edges": 803,
+        "sym_pair_count": 126,
+        "score": 0.1569115815691158
+      },
+      "associated_with": {
+        "n_edges": 198,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "interacts_with": {
+        "n_edges": 363,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "result_of": {
+        "n_edges": 455,
+        "sym_pair_count": 284,
+        "score": 0.6241758241758242
+      },
+      "complicates": {
+        "n_edges": 219,
+        "sym_pair_count": 32,
+        "score": 0.1461187214611872
+      },
+      "occurs_in": {
+        "n_edges": 71,
+        "sym_pair_count": 2,
+        "score": 0.028169014084507043
+      },
+      "uses": {
+        "n_edges": 55,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "produces": {
+        "n_edges": 221,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "degree_of": {
+        "n_edges": 27,
+        "sym_pair_count": 22,
+        "score": 0.8148148148148148
+      },
+      "connected_to": {
+        "n_edges": 4,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "process_of": {
+        "n_edges": 369,
+        "sym_pair_count": 154,
+        "score": 0.4173441734417344
+      },
+      "co-occurs_with": {
+        "n_edges": 48,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "disrupts": {
+        "n_edges": 127,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "issue_in": {
+        "n_edges": 223,
+        "sym_pair_count": 2,
+        "score": 0.008968609865470852
+      },
+      "part_of": {
+        "n_edges": 157,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "measures": {
+        "n_edges": 145,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "prevents": {
+        "n_edges": 25,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "causes": {
+        "n_edges": 283,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "indicates": {
+        "n_edges": 23,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "treats": {
+        "n_edges": 42,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "evaluation_of": {
+        "n_edges": 56,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "diagnoses": {
+        "n_edges": 34,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "exhibits": {
+        "n_edges": 33,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "ingredient_of": {
+        "n_edges": 22,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "property_of": {
+        "n_edges": 35,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "manages": {
+        "n_edges": 6,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "assesses_effect_of": {
+        "n_edges": 51,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "method_of": {
+        "n_edges": 20,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "measurement_of": {
+        "n_edges": 49,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "precedes": {
+        "n_edges": 57,
+        "sym_pair_count": 42,
+        "score": 0.7368421052631579
+      },
+      "consists_of": {
+        "n_edges": 9,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "performs": {
+        "n_edges": 73,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "conceptual_part_of": {
+        "n_edges": 15,
+        "sym_pair_count": 4,
+        "score": 0.26666666666666666
+      },
+      "analyzes": {
+        "n_edges": 38,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "carries_out": {
+        "n_edges": 30,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "developmental_form_of": {
+        "n_edges": 4,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "contains": {
+        "n_edges": 11,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "adjacent_to": {
+        "n_edges": 6,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "interconnects": {
+        "n_edges": 2,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "conceptually_related_to": {
+        "n_edges": 2,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "surrounds": {
+        "n_edges": 6,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "derivative_of": {
+        "n_edges": 1,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "practices": {
+        "n_edges": 2,
+        "sym_pair_count": 0,
+        "score": 0.0
+      }
+    }
+  },
+  "Kinship": {
+    "weighted_dataset_score": 0.2071629213483146,
+    "unweighted_mean": 0.23722669392502557,
+    "n_edges_train": 8544,
+    "n_relations": 25,
+    "per_relation": {
+      "term6": {
+        "n_edges": 370,
+        "sym_pair_count": 8,
+        "score": 0.021621621621621623
+      },
+      "term10": {
+        "n_edges": 392,
+        "sym_pair_count": 16,
+        "score": 0.04081632653061224
+      },
+      "term12": {
+        "n_edges": 236,
+        "sym_pair_count": 46,
+        "score": 0.19491525423728814
+      },
+      "term4": {
+        "n_edges": 393,
+        "sym_pair_count": 274,
+        "score": 0.6972010178117048
+      },
+      "term20": {
+        "n_edges": 209,
+        "sym_pair_count": 128,
+        "score": 0.6124401913875598
+      },
+      "term11": {
+        "n_edges": 600,
+        "sym_pair_count": 14,
+        "score": 0.023333333333333334
+      },
+      "term8": {
+        "n_edges": 637,
+        "sym_pair_count": 44,
+        "score": 0.06907378335949764
+      },
+      "term5": {
+        "n_edges": 404,
+        "sym_pair_count": 4,
+        "score": 0.009900990099009901
+      },
+      "term17": {
+        "n_edges": 320,
+        "sym_pair_count": 160,
+        "score": 0.5
+      },
+      "term15": {
+        "n_edges": 757,
+        "sym_pair_count": 6,
+        "score": 0.007926023778071334
+      },
+      "term9": {
+        "n_edges": 370,
+        "sym_pair_count": 34,
+        "score": 0.0918918918918919
+      },
+      "term1": {
+        "n_edges": 384,
+        "sym_pair_count": 140,
+        "score": 0.3645833333333333
+      },
+      "term18": {
+        "n_edges": 460,
+        "sym_pair_count": 344,
+        "score": 0.7478260869565218
+      },
+      "term13": {
+        "n_edges": 367,
+        "sym_pair_count": 80,
+        "score": 0.21798365122615804
+      },
+      "term7": {
+        "n_edges": 663,
+        "sym_pair_count": 12,
+        "score": 0.01809954751131222
+      },
+      "term0": {
+        "n_edges": 185,
+        "sym_pair_count": 134,
+        "score": 0.7243243243243244
+      },
+      "term16": {
+        "n_edges": 1004,
+        "sym_pair_count": 38,
+        "score": 0.037848605577689244
+      },
+      "term2": {
+        "n_edges": 183,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "term3": {
+        "n_edges": 299,
+        "sym_pair_count": 142,
+        "score": 0.47491638795986624
+      },
+      "term22": {
+        "n_edges": 153,
+        "sym_pair_count": 104,
+        "score": 0.6797385620915033
+      },
+      "term21": {
+        "n_edges": 106,
+        "sym_pair_count": 42,
+        "score": 0.39622641509433965
+      },
+      "term14": {
+        "n_edges": 34,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "term19": {
+        "n_edges": 10,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "term25": {
+        "n_edges": 6,
+        "sym_pair_count": 0,
+        "score": 0.0
+      },
+      "term24": {
+        "n_edges": 2,
+        "sym_pair_count": 0,
+        "score": 0.0
+      }
+    }
+  }
+}

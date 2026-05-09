@@ -1,0 +1,80 @@
+{
+  "threshold_edges_per_relation": 200,
+  "rows": [
+    {
+      "dataset": "UMLS",
+      "n_ent": 135,
+      "n_rel": 46,
+      "n_train": 5216,
+      "edges_per_relation": 113.3913043478261,
+      "symmetry_score": 0.13266871165644173,
+      "decoder_delta": -0.03603333333333336,
+      "decoder_winner": "DistMult"
+    },
+    {
+      "dataset": "Kinship",
+      "n_ent": 104,
+      "n_rel": 25,
+      "n_train": 8544,
+      "edges_per_relation": 341.76,
+      "symmetry_score": 0.2071629213483146,
+      "decoder_delta": 0.08763333333333345,
+      "decoder_winner": "ComplEx"
+    },
+    {
+      "dataset": "FB15k-237",
+      "n_ent": 14541,
+      "n_rel": 237,
+      "n_train": 272115,
+      "edges_per_relation": 1148.1645569620252,
+      "symmetry_score": null,
+      "decoder_delta": 0.005400000000000016,
+      "decoder_winner": "ComplEx"
+    },
+    {
+      "dataset": "CoDEx-M",
+      "n_ent": 17050,
+      "n_rel": 51,
+      "n_train": 185000,
+      "edges_per_relation": 3627.450980392157,
+      "symmetry_score": null,
+      "decoder_delta": 0.009633333333333272,
+      "decoder_winner": "ComplEx"
+    },
+    {
+      "dataset": "WN18RR",
+      "n_ent": 40943,
+      "n_rel": 11,
+      "n_train": 86835,
+      "edges_per_relation": 7894.090909090909,
+      "symmetry_score": null,
+      "decoder_delta": 0.012233333333333318,
+      "decoder_winner": "ComplEx"
+    },
+    {
+      "dataset": "CoDEx-L",
+      "n_ent": 77951,
+      "n_rel": 69,
+      "n_train": 551000,
+      "edges_per_relation": 7985.507246376812,
+      "symmetry_score": null,
+      "decoder_delta": null,
+      "decoder_winner": "?"
+    },
+    {
+      "dataset": "YAGO3-10",
+      "n_ent": 123182,
+      "n_rel": 37,
+      "n_train": 1079040,
+      "edges_per_relation": 29163.243243243243,
+      "symmetry_score": null,
+      "decoder_delta": 0.006433333333333291,
+      "decoder_winner": "ComplEx"
+    }
+  ],
+  "notes": [
+    "Decoder delta = MRR(ComplEx) - MRR(DistMult) at the dataset's lock-in (d, L) configuration (Table 4 in the paper).",
+    "Symmetry score is the Manabe 2018 weighted symmetry computed by code/measure_symmetry.py; only available for datasets with a local train.txt.",
+    "Single-axis prediction: edges/rel < threshold -> DistMult wins; otherwise ComplEx wins."
+  ]
+}

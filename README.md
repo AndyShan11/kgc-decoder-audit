@@ -30,9 +30,32 @@ Welch *t* ≈ 5.6 across 3 seeds, df ≈ 2, *p* ≈ 0.03), directly
 contradicting the practitioner-tutorial recommendation that biomedical KGs
 with antisymmetric relations require ComplEx.
 
+The mechanism is an **edges-per-relation phase transition**, not relation
+symmetry. ComplEx splits its embedding into real and imaginary halves,
+doubling its per-relation parameter budget over DistMult; below ≈ 200
+edges/relation the imaginary part overfits per-relation noise and DistMult
+wins as a lower-variance regulariser:
+
+| Dataset    | edges/rel | Decoder Δ | Winner       |
+|------------|----------:|----------:|--------------|
+| **UMLS**   |   **113** | **−0.036**| **DistMult** |
+| Kinship    |       342 |    +0.088 | ComplEx      |
+| FB15k-237  |     1 148 |    +0.005 | ComplEx      |
+| CoDEx-M    |     3 627 |    +0.010 | ComplEx      |
+| WN18RR     |     7 894 |    +0.012 | ComplEx      |
+| YAGO3-10   |    29 163 |    +0.006 | ComplEx      |
+
+The single integer `n_train / n_rel` predicts the decoder winner correctly
+on **6 / 6 measured datasets**. We also directly measured the Manabe-2018
+empirical relation-symmetry score: UMLS = 0.133, Kinship = 0.207. UMLS is
+in fact *less* symmetric than Kinship — ruling out the alternative
+"UMLS is symmetric-rich" explanation. Reproduce with
+`python code/measure_symmetry.py` and `python code/analyze_decoder_axis.py`.
+
 Three actionable rules follow:
 
-- **R1.** Try DistMult **before** ComplEx on small KGs (≤ 10 K edges).
+- **R1.** Compute `n_train / n_rel`. Default to DistMult below ~200,
+  ComplEx above ~300; in between, run both.
 - **R2.** Don't add a CompGCN encoder unless your KG is dense **and**
   heterogeneous (consistent with Zhang et al., WWW 2022).
 - **R3.** Don't sweep dimension past *d* = 128 on YAGO-scale KGs;
@@ -56,7 +79,10 @@ decoder-is-the-lever/
 ├── code/
 │   ├── train.py                    Training entry point (single run, single GPU)
 │   ├── download_datasets.py        Fetch UMLS / Kinship / YAGO3-10 from public mirrors
-│   └── aggregate_runs.py           Rebuild data/rerun_summary.json from per-run JSONs
+│   ├── aggregate_runs.py           Rebuild data/rerun_summary.json from per-run JSONs
+│   ├── measure_symmetry.py         Manabe-2018 relation-symmetry score (UMLS, Kinship)
+│   ├── analyze_decoder_axis.py     Cross-dataset edges/rel vs decoder Δ analysis
+│   └── extend_to_6_seeds.sh        Server bash to extend UMLS+Kinship from 3→6 seeds
 ├── data/
 │   ├── rerun_summary.json          Aggregate decoder×dataset table (= Table 4 in paper)
 │   ├── decoder_diag_jsons/         36 per-run JSONs from the lock-in pass
