@@ -2,7 +2,7 @@
   "rerun_metadata": {
     "round_id": "decoder_diag_round_20260504_2056",
     "code_commit_date": "2026-05-04",
-    "n_runs": 48,
+    "n_runs": 54,
     "n_seeds_per_config": 3,
     "purpose": "Lock decoder x dataset main result table on single code version"
   },
@@ -190,6 +190,36 @@
         0.858,
         0.8785,
         0.8862338667982489
+      ]
+    },
+    "WN18RR_d200_L0_ls0.3_DistMult": {
+      "dataset": "WN18RR",
+      "d_h": 200,
+      "layers": 0,
+      "scorer": "DistMult",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.4731067564064145,
+      "MRR_std": 0.0030119263911174204,
+      "seeds_MRRs": [
+        0.47437748646013295,
+        0.4752750736785047,
+        0.4696677090806059
+      ]
+    },
+    "WN18RR_d200_L1_ls0.3_ComplEx": {
+      "dataset": "WN18RR",
+      "d_h": 200,
+      "layers": 1,
+      "scorer": "ComplEx",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.45332351210923183,
+      "MRR_std": 0.0028738105222038475,
+      "seeds_MRRs": [
+        0.4566419023847438,
+        0.4516655010619872,
+        0.4516631328809645
       ]
     },
     "WN18RR_d200_L2_ls0.3_ComplEx": {
