@@ -1,0 +1,23 @@
+{
+  "dataset": "codex-m",
+  "seed": 42,
+  "config": {
+    "d_h": 200,
+    "layers": 0,
+    "lr": 0.0005,
+    "epochs": 300,
+    "batch_size": 1024,
+    "label_smooth": 0.3,
+    "scorer": "DistMult"
+  },
+  "train_time_s": null,
+  "best_val_mrr": 0.5357,
+  "test": {
+    "MRR": 0.5284,
+    "Hits@1": 42.4,
+    "Hits@3": 58.3,
+    "Hits@10": 73.4
+  },
+  "source_log": "cuda3_codex_umls_kinship.log",
+  "rerun_round": "decoder_diag_round_20260504_2056"
+}

@@ -1,0 +1,23 @@
+{
+  "dataset": "FB15k-237",
+  "seed": 42,
+  "config": {
+    "d_h": 200,
+    "layers": 3,
+    "lr": 0.0005,
+    "epochs": 200,
+    "batch_size": 1024,
+    "label_smooth": 0.3,
+    "scorer": "ComplEx"
+  },
+  "train_time_s": null,
+  "best_val_mrr": 0.4327,
+  "test": {
+    "MRR": 0.4222,
+    "Hits@1": 32.8,
+    "Hits@3": 46.2,
+    "Hits@10": 61.0
+  },
+  "source_log": "cuda2_fb_wn_decoder.log",
+  "rerun_round": "decoder_diag_round_20260504_2056"
+}

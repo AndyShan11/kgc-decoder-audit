@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this code or the released per-run JSONs, please cite the paper."
+title: "The Decoder Is the Lever, Not the Encoder: A Recipe-Controlled Audit of Knowledge-Graph Completion"
+authors:
+  - name: "Anonymous Author(s)"
+type: conference-paper
+preferred-citation:
+  type: conference-paper
+  title: "The Decoder Is the Lever, Not the Encoder: A Recipe-Controlled Audit of Knowledge-Graph Completion"
+  authors:
+    - name: "Anonymous Author(s)"
+  conference:
+    name: "International Semantic Web Conference (ISWC)"
+  year: 2026
+  notes: "Under double-blind review at the time of release; replace authors and add DOI on acceptance."

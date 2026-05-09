@@ -1,0 +1,23 @@
+{
+  "dataset": "YAGO3-10",
+  "seed": 123,
+  "config": {
+    "d_h": 64,
+    "layers": 0,
+    "lr": 0.0005,
+    "epochs": 150,
+    "batch_size": 2048,
+    "label_smooth": 0.3,
+    "scorer": "ComplEx"
+  },
+  "train_time_s": null,
+  "best_val_mrr": 0.6732,
+  "test": {
+    "MRR": 0.6728,
+    "Hits@1": 61.2,
+    "Hits@3": 71.4,
+    "Hits@10": 77.3
+  },
+  "source_log": "cuda0_yago64_complex.log",
+  "rerun_round": "decoder_diag_round_20260504_2056"
+}

@@ -1,0 +1,274 @@
+{
+  "rerun_metadata": {
+    "round_id": "decoder_diag_round_20260504_2056",
+    "code_commit_date": "2026-05-04",
+    "n_runs": 36,
+    "n_seeds_per_config": 3,
+    "purpose": "Lock decoder x dataset main result table on single code version"
+  },
+  "decoder_delta_table": [
+    {
+      "dataset": "FB15k-237",
+      "d_h": 200,
+      "layers": 3,
+      "ComplEx_MRR_mean": 0.42106666666666664,
+      "ComplEx_MRR_std": 0.0013316656236959015,
+      "ComplEx_n": 3,
+      "DistMult_MRR_mean": 0.41566666666666663,
+      "DistMult_MRR_std": 0.0024946609656090087,
+      "DistMult_n": 3,
+      "delta": 0.005400000000000016,
+      "delta_sigma": 3.307500287109422
+    },
+    {
+      "dataset": "Kinship",
+      "d_h": 200,
+      "layers": 2,
+      "ComplEx_MRR_mean": 0.7626333333333334,
+      "ComplEx_MRR_std": 0.009421429473988156,
+      "ComplEx_n": 3,
+      "DistMult_MRR_mean": 0.6749999999999999,
+      "DistMult_MRR_std": 0.011294689017409912,
+      "DistMult_n": 3,
+      "delta": 0.08763333333333345,
+      "delta_sigma": 10.319727693162134
+    },
+    {
+      "dataset": "UMLS",
+      "d_h": 200,
+      "layers": 2,
+      "ComplEx_MRR_mean": 0.8344333333333332,
+      "ComplEx_MRR_std": 0.0020428737928059704,
+      "ComplEx_n": 3,
+      "DistMult_MRR_mean": 0.8704666666666666,
+      "DistMult_MRR_std": 0.010945470905051694,
+      "DistMult_n": 3,
+      "delta": -0.03603333333333336,
+      "delta_sigma": 5.605251310624988
+    },
+    {
+      "dataset": "WN18RR",
+      "d_h": 200,
+      "layers": 2,
+      "ComplEx_MRR_mean": 0.47809999999999997,
+      "ComplEx_MRR_std": 0.0019287301521985888,
+      "ComplEx_n": 3,
+      "DistMult_MRR_mean": 0.46586666666666665,
+      "DistMult_MRR_std": 0.004188476254359494,
+      "DistMult_n": 3,
+      "delta": 0.012233333333333318,
+      "delta_sigma": 4.595044939898457
+    },
+    {
+      "dataset": "YAGO3-10",
+      "d_h": 64,
+      "layers": 0,
+      "ComplEx_MRR_mean": 0.6713,
+      "ComplEx_MRR_std": 0.005408326913195958,
+      "ComplEx_n": 3,
+      "DistMult_MRR_mean": 0.6648666666666667,
+      "DistMult_MRR_std": 0.0008504900548115011,
+      "DistMult_n": 3,
+      "delta": 0.006433333333333291,
+      "delta_sigma": 2.0353034084413077
+    },
+    {
+      "dataset": "codex-m",
+      "d_h": 200,
+      "layers": 0,
+      "ComplEx_MRR_mean": 0.5378666666666666,
+      "ComplEx_MRR_std": 0.00020816659994665258,
+      "ComplEx_n": 3,
+      "DistMult_MRR_mean": 0.5282333333333333,
+      "DistMult_MRR_std": 0.00115902257671423,
+      "DistMult_n": 3,
+      "delta": 0.009633333333333272,
+      "delta_sigma": 14.169390763733828
+    }
+  ],
+  "decoder_delta_spread": 0.12366666666666681,
+  "encoder_delta_spread_reference": 0.075,
+  "ratio": 1.6488888888888908,
+  "per_config_aggregates": {
+    "FB15k-237_d200_L3_ls0.3_ComplEx": {
+      "dataset": "FB15k-237",
+      "d_h": 200,
+      "layers": 3,
+      "scorer": "ComplEx",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.42106666666666664,
+      "MRR_std": 0.0013316656236959015,
+      "seeds_MRRs": [
+        0.4222,
+        0.4196,
+        0.4214
+      ]
+    },
+    "FB15k-237_d200_L3_ls0.3_DistMult": {
+      "dataset": "FB15k-237",
+      "d_h": 200,
+      "layers": 3,
+      "scorer": "DistMult",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.41566666666666663,
+      "MRR_std": 0.0024946609656090087,
+      "seeds_MRRs": [
+        0.4147,
+        0.4138,
+        0.4185
+      ]
+    },
+    "Kinship_d200_L2_ls0.3_ComplEx": {
+      "dataset": "Kinship",
+      "d_h": 200,
+      "layers": 2,
+      "scorer": "ComplEx",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.7626333333333334,
+      "MRR_std": 0.009421429473988156,
+      "seeds_MRRs": [
+        0.7734,
+        0.7559,
+        0.7586
+      ]
+    },
+    "Kinship_d200_L2_ls0.3_DistMult": {
+      "dataset": "Kinship",
+      "d_h": 200,
+      "layers": 2,
+      "scorer": "DistMult",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.6749999999999999,
+      "MRR_std": 0.011294689017409912,
+      "seeds_MRRs": [
+        0.6847,
+        0.6777,
+        0.6626
+      ]
+    },
+    "UMLS_d200_L2_ls0.3_ComplEx": {
+      "dataset": "UMLS",
+      "d_h": 200,
+      "layers": 2,
+      "scorer": "ComplEx",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.8344333333333332,
+      "MRR_std": 0.0020428737928059704,
+      "seeds_MRRs": [
+        0.8359,
+        0.8321,
+        0.8353
+      ]
+    },
+    "UMLS_d200_L2_ls0.3_DistMult": {
+      "dataset": "UMLS",
+      "d_h": 200,
+      "layers": 2,
+      "scorer": "DistMult",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.8704666666666666,
+      "MRR_std": 0.010945470905051694,
+      "seeds_MRRs": [
+        0.8749,
+        0.858,
+        0.8785
+      ]
+    },
+    "WN18RR_d200_L2_ls0.3_ComplEx": {
+      "dataset": "WN18RR",
+      "d_h": 200,
+      "layers": 2,
+      "scorer": "ComplEx",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.47809999999999997,
+      "MRR_std": 0.0019287301521985888,
+      "seeds_MRRs": [
+        0.4795,
+        0.4789,
+        0.4759
+      ]
+    },
+    "WN18RR_d200_L2_ls0.3_DistMult": {
+      "dataset": "WN18RR",
+      "d_h": 200,
+      "layers": 2,
+      "scorer": "DistMult",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.46586666666666665,
+      "MRR_std": 0.004188476254359494,
+      "seeds_MRRs": [
+        0.4693,
+        0.4671,
+        0.4612
+      ]
+    },
+    "YAGO3-10_d64_L0_ls0.3_ComplEx": {
+      "dataset": "YAGO3-10",
+      "d_h": 64,
+      "layers": 0,
+      "scorer": "ComplEx",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.6713,
+      "MRR_std": 0.005408326913195958,
+      "seeds_MRRs": [
+        0.6653,
+        0.6728,
+        0.6758
+      ]
+    },
+    "YAGO3-10_d64_L0_ls0.3_DistMult": {
+      "dataset": "YAGO3-10",
+      "d_h": 64,
+      "layers": 0,
+      "scorer": "DistMult",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.6648666666666667,
+      "MRR_std": 0.0008504900548115011,
+      "seeds_MRRs": [
+        0.6649,
+        0.6657,
+        0.664
+      ]
+    },
+    "codex-m_d200_L0_ls0.3_ComplEx": {
+      "dataset": "codex-m",
+      "d_h": 200,
+      "layers": 0,
+      "scorer": "ComplEx",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.5378666666666666,
+      "MRR_std": 0.00020816659994665258,
+      "seeds_MRRs": [
+        0.5377,
+        0.5381,
+        0.5378
+      ]
+    },
+    "codex-m_d200_L0_ls0.3_DistMult": {
+      "dataset": "codex-m",
+      "d_h": 200,
+      "layers": 0,
+      "scorer": "DistMult",
+      "label_smooth": 0.3,
+      "n_seeds": 3,
+      "MRR_mean": 0.5282333333333333,
+      "MRR_std": 0.00115902257671423,
+      "seeds_MRRs": [
+        0.5284,
+        0.527,
+        0.5293
+      ]
+    }
+  }
+}

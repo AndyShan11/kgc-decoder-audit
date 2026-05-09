@@ -1,0 +1,23 @@
+{
+  "dataset": "UMLS",
+  "seed": 456,
+  "config": {
+    "d_h": 200,
+    "layers": 2,
+    "lr": 0.0005,
+    "epochs": 300,
+    "batch_size": 1024,
+    "label_smooth": 0.3,
+    "scorer": "ComplEx"
+  },
+  "train_time_s": null,
+  "best_val_mrr": 0.8229,
+  "test": {
+    "MRR": 0.8353,
+    "Hits@1": 74.9,
+    "Hits@3": 91.5,
+    "Hits@10": 95.6
+  },
+  "source_log": "cuda3_codex_umls_kinship.log",
+  "rerun_round": "decoder_diag_round_20260504_2056"
+}

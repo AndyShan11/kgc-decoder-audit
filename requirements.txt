@@ -1,0 +1,9 @@
+# Core
+torch>=1.13          # tested with 1.13, 2.0, 2.1, 2.4 (AMP API auto-detected)
+numpy>=1.23
+
+# Optional, for figure regeneration
+matplotlib>=3.6      # only needed if you re-run code/generate_figures.py (not included)
+
+# No PyTorch-Geometric, no DGL: message passing is implemented inline with
+# scatter_add_ in train.py. CUDA 11.x or 12.x both work.

@@ -1,0 +1,155 @@
+nohup: ignoring input
+=== cuda1 [1/3] ['python', 'server_wn18rr.py', '--dataset', 'YAGO3-10', '--seed', '42', '--d_h', '64', '--layers', '0', '--lr', '5e-4', '--epochs', '150', '--val_every', '10', '--batch_size', '2048'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | YAGO3-10 | seed=42
+d_h=64 L=0 lr=0.0005 ls=0.3 epochs=150
+======================================================================
+  KG: 123182 ent, 74 rel, 2158080 edges
+  Train/Val/Test: 1079040/5000/5000
+  Params: 7,888,512
+  Training: epochs=150, lr=0.0005, batch=2048, ls=0.3
+  Steps/epoch: 526
+  E  1/150 Loss:8.980 lr:5.00e-04 20s
+  E 10/150 Loss:6.482 lr:5.00e-04 20s
+  >> Val MRR:0.4997 H@1:39.8% H@10:68.4% ** BEST **
+  E 20/150 Loss:6.281 lr:5.00e-04 20s
+  >> Val MRR:0.5740 H@1:49.0% H@10:73.6% ** BEST **
+  E 30/150 Loss:6.179 lr:5.00e-04 20s
+  >> Val MRR:0.6065 H@1:52.4% H@10:75.0% ** BEST **
+  E 40/150 Loss:6.116 lr:5.00e-04 20s
+  >> Val MRR:0.6212 H@1:54.4% H@10:75.8% ** BEST **
+  E 50/150 Loss:6.073 lr:5.00e-04 20s
+  >> Val MRR:0.6347 H@1:55.8% H@10:74.8% ** BEST **
+  E 60/150 Loss:6.040 lr:5.00e-04 20s
+  >> Val MRR:0.6465 H@1:57.4% H@10:76.8% ** BEST **
+  E 70/150 Loss:6.015 lr:5.00e-04 20s
+  >> Val MRR:0.6470 H@1:58.0% H@10:75.0% ** BEST **
+  E 80/150 Loss:5.993 lr:5.00e-04 20s
+  >> Val MRR:0.6462 (best:0.6470 p:1/30)
+  E 90/150 Loss:5.976 lr:1.50e-04 20s
+  >> Val MRR:0.6580 H@1:59.2% H@10:76.0% ** BEST **
+  E100/150 Loss:5.828 lr:1.50e-04 20s
+  >> Val MRR:0.6633 H@1:60.2% H@10:75.8% ** BEST **
+  E110/150 Loss:5.821 lr:1.50e-04 20s
+  >> Val MRR:0.6647 H@1:60.2% H@10:75.6% ** BEST **
+  E120/150 Loss:5.816 lr:4.50e-05 20s
+  >> Val MRR:0.6718 H@1:61.4% H@10:75.4% ** BEST **
+  E130/150 Loss:5.763 lr:4.50e-05 20s
+  >> Val MRR:0.6686 (best:0.6718 p:1/30)
+  E140/150 Loss:5.761 lr:4.50e-05 20s
+  >> Val MRR:0.6669 (best:0.6718 p:2/30)
+  E150/150 Loss:5.759 lr:4.50e-05 20s
+  >> Val MRR:0.6654 (best:0.6718 p:3/30)
+  Training done: 2999s, best_val_MRR=0.6718
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (5000 triples)...
+
+  FINAL TEST: MRR=0.6649 H@1=60.0% H@3=71.0% H@10=77.3%
+  Saved: ./YAGO3-10_d64_L0_ls0.3_seed42.json
+=== cuda1 [1/3] Done in 3007s ===
+=== cuda1 [2/3] ['python', 'server_wn18rr.py', '--dataset', 'YAGO3-10', '--seed', '123', '--d_h', '64', '--layers', '0', '--lr', '5e-4', '--epochs', '150', '--val_every', '10', '--batch_size', '2048'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | YAGO3-10 | seed=123
+d_h=64 L=0 lr=0.0005 ls=0.3 epochs=150
+======================================================================
+  KG: 123182 ent, 74 rel, 2158080 edges
+  Train/Val/Test: 1079040/5000/5000
+  Params: 7,888,512
+  Training: epochs=150, lr=0.0005, batch=2048, ls=0.3
+  Steps/epoch: 526
+  E  1/150 Loss:8.964 lr:5.00e-04 20s
+  E 10/150 Loss:6.487 lr:5.00e-04 20s
+  >> Val MRR:0.4880 H@1:39.0% H@10:67.6% ** BEST **
+  E 20/150 Loss:6.291 lr:5.00e-04 20s
+  >> Val MRR:0.5646 H@1:48.2% H@10:71.6% ** BEST **
+  E 30/150 Loss:6.188 lr:5.00e-04 20s
+  >> Val MRR:0.5897 H@1:51.6% H@10:72.2% ** BEST **
+  E 40/150 Loss:6.123 lr:5.00e-04 20s
+  >> Val MRR:0.6094 H@1:53.8% H@10:73.0% ** BEST **
+  E 50/150 Loss:6.078 lr:5.00e-04 20s
+  >> Val MRR:0.6116 H@1:53.8% H@10:74.2% ** BEST **
+  E 60/150 Loss:6.044 lr:5.00e-04 20s
+  >> Val MRR:0.6285 H@1:56.0% H@10:74.6% ** BEST **
+  E 70/150 Loss:6.018 lr:5.00e-04 20s
+  >> Val MRR:0.6371 H@1:57.6% H@10:74.8% ** BEST **
+  E 80/150 Loss:5.997 lr:5.00e-04 20s
+  >> Val MRR:0.6372 H@1:57.2% H@10:75.4% ** BEST **
+  E 90/150 Loss:5.980 lr:1.50e-04 20s
+  >> Val MRR:0.6467 H@1:58.4% H@10:75.4% ** BEST **
+  E100/150 Loss:5.831 lr:1.50e-04 20s
+  >> Val MRR:0.6514 H@1:59.4% H@10:75.8% ** BEST **
+  E110/150 Loss:5.824 lr:1.50e-04 20s
+  >> Val MRR:0.6547 H@1:59.8% H@10:75.2% ** BEST **
+  E120/150 Loss:5.819 lr:4.50e-05 20s
+  >> Val MRR:0.6593 H@1:60.6% H@10:75.4% ** BEST **
+  E130/150 Loss:5.765 lr:4.50e-05 20s
+  >> Val MRR:0.6590 (best:0.6593 p:1/30)
+  E140/150 Loss:5.763 lr:4.50e-05 20s
+  >> Val MRR:0.6582 (best:0.6593 p:2/30)
+  E150/150 Loss:5.761 lr:4.50e-05 20s
+  >> Val MRR:0.6590 (best:0.6593 p:3/30)
+  Training done: 2996s, best_val_MRR=0.6593
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (5000 triples)...
+
+  FINAL TEST: MRR=0.6657 H@1=60.0% H@3=70.8% H@10=77.6%
+  Saved: ./YAGO3-10_d64_L0_ls0.3_seed123.json
+=== cuda1 [2/3] Done in 3004s ===
+=== cuda1 [3/3] ['python', 'server_wn18rr.py', '--dataset', 'YAGO3-10', '--seed', '456', '--d_h', '64', '--layers', '0', '--lr', '5e-4', '--epochs', '150', '--val_every', '10', '--batch_size', '2048'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | YAGO3-10 | seed=456
+d_h=64 L=0 lr=0.0005 ls=0.3 epochs=150
+======================================================================
+  KG: 123182 ent, 74 rel, 2158080 edges
+  Train/Val/Test: 1079040/5000/5000
+  Params: 7,888,512
+  Training: epochs=150, lr=0.0005, batch=2048, ls=0.3
+  Steps/epoch: 526
+  E  1/150 Loss:8.947 lr:5.00e-04 20s
+  E 10/150 Loss:6.495 lr:5.00e-04 20s
+  >> Val MRR:0.4949 H@1:38.4% H@10:69.8% ** BEST **
+  E 20/150 Loss:6.290 lr:5.00e-04 20s
+  >> Val MRR:0.5712 H@1:49.4% H@10:70.8% ** BEST **
+  E 30/150 Loss:6.182 lr:5.00e-04 20s
+  >> Val MRR:0.6032 H@1:52.4% H@10:72.8% ** BEST **
+  E 40/150 Loss:6.116 lr:5.00e-04 20s
+  >> Val MRR:0.6286 H@1:56.0% H@10:73.4% ** BEST **
+  E 50/150 Loss:6.069 lr:5.00e-04 20s
+  >> Val MRR:0.6478 H@1:58.6% H@10:73.4% ** BEST **
+  E 60/150 Loss:6.036 lr:5.00e-04 20s
+  >> Val MRR:0.6565 H@1:60.2% H@10:74.0% ** BEST **
+  E 70/150 Loss:6.009 lr:5.00e-04 20s
+  >> Val MRR:0.6512 (best:0.6565 p:1/30)
+  E 80/150 Loss:5.988 lr:5.00e-04 20s
+  >> Val MRR:0.6586 H@1:60.4% H@10:75.0% ** BEST **
+  E 90/150 Loss:5.971 lr:1.50e-04 20s
+  >> Val MRR:0.6597 H@1:60.8% H@10:74.4% ** BEST **
+  E100/150 Loss:5.822 lr:1.50e-04 20s
+  >> Val MRR:0.6655 H@1:61.4% H@10:74.8% ** BEST **
+  E110/150 Loss:5.815 lr:1.50e-04 20s
+  >> Val MRR:0.6663 H@1:61.4% H@10:74.6% ** BEST **
+  E120/150 Loss:5.810 lr:4.50e-05 20s
+  >> Val MRR:0.6725 H@1:62.6% H@10:74.2% ** BEST **
+  E130/150 Loss:5.757 lr:4.50e-05 20s
+  >> Val MRR:0.6707 (best:0.6725 p:1/30)
+  E140/150 Loss:5.755 lr:4.50e-05 20s
+  >> Val MRR:0.6712 (best:0.6725 p:2/30)
+  E150/150 Loss:5.753 lr:4.50e-05 20s
+  >> Val MRR:0.6691 (best:0.6725 p:3/30)
+  Training done: 2996s, best_val_MRR=0.6725
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (5000 triples)...
+
+  FINAL TEST: MRR=0.6640 H@1=60.2% H@3=70.4% H@10=77.0%
+  Saved: ./YAGO3-10_d64_L0_ls0.3_seed456.json
+=== cuda1 [3/3] Done in 3005s ===
+=== CUDA1 DONE ===

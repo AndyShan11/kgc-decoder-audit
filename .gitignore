@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# LaTeX build artefacts (paper/ keeps only main.pdf + .tex sources)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.synctex.gz
+paper/*.fdb_latexmk
+paper/*.fls
+
+# Training intermediates: checkpoint files and TensorBoard
+*.pt
+*.pth
+runs/
+checkpoints/
+
+# Datasets are not redistributed (see README.md for download instructions)
+data/FB15k-237/
+data/WN18RR/
+data/YAGO3-10/
+data/CoDEx-M/
+data/CoDEx-L/
+data/UMLS/
+data/Kinship/
+data/codex-m/
+data/codex-l/

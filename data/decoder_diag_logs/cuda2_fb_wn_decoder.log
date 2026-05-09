@@ -1,0 +1,936 @@
+nohup: ignoring input
+=== cuda2 [1/12] ['python', 'server_wn18rr.py', '--dataset', 'FB15k-237', '--seed', '42', '--d_h', '200', '--layers', '3', '--lr', '5e-4', '--epochs', '200', '--scorer', 'ComplEx'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=42
+d_h=200 L=3 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 3,529,600
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.995 lr:5.00e-04 7s
+  >> Val MRR:0.3419 H@1:25.2% H@10:50.2% ** BEST **
+  E 10/200 Loss:6.554 lr:5.00e-04 7s
+  >> Val MRR:0.3642 H@1:26.6% H@10:55.8% ** BEST **
+  >> Val MRR:0.3880 H@1:28.6% H@10:59.0% ** BEST **
+  E 20/200 Loss:6.158 lr:5.00e-04 7s
+  >> Val MRR:0.4069 H@1:30.2% H@10:61.6% ** BEST **
+  >> Val MRR:0.4171 H@1:32.2% H@10:61.0% ** BEST **
+  E 30/200 Loss:5.976 lr:5.00e-04 7s
+  >> Val MRR:0.4162 (best:0.4171 p:1/30)
+  >> Val MRR:0.4178 H@1:32.4% H@10:61.6% ** BEST **
+  E 40/200 Loss:5.862 lr:5.00e-04 7s
+  >> Val MRR:0.4180 H@1:31.8% H@10:62.8% ** BEST **
+  >> Val MRR:0.4274 H@1:32.8% H@10:62.2% ** BEST **
+  E 50/200 Loss:5.783 lr:5.00e-04 7s
+  >> Val MRR:0.4327 H@1:33.4% H@10:63.2% ** BEST **
+  >> Val MRR:0.4249 (best:0.4327 p:1/30)
+  E 60/200 Loss:5.720 lr:5.00e-04 7s
+  >> Val MRR:0.4293 (best:0.4327 p:2/30)
+  >> Val MRR:0.4320 (best:0.4327 p:3/30)
+  E 70/200 Loss:5.672 lr:5.00e-04 7s
+  E 80/200 Loss:5.634 lr:5.00e-04 7s
+  E 90/200 Loss:5.601 lr:5.00e-04 7s
+  E100/200 Loss:5.574 lr:5.00e-04 7s
+  >> Val MRR:0.4287 (best:0.4327 p:10/30)
+  E110/200 Loss:5.551 lr:5.00e-04 7s
+  E120/200 Loss:5.532 lr:1.50e-04 7s
+  E130/200 Loss:5.479 lr:1.50e-04 7s
+  E140/200 Loss:5.470 lr:1.50e-04 7s
+  E150/200 Loss:5.461 lr:1.50e-04 7s
+  >> Val MRR:0.4164 (best:0.4327 p:20/30)
+  E160/200 Loss:5.454 lr:4.50e-05 7s
+  E170/200 Loss:5.438 lr:4.50e-05 7s
+  E180/200 Loss:5.436 lr:4.50e-05 7s
+  E190/200 Loss:5.433 lr:4.50e-05 7s
+  E200/200 Loss:5.432 lr:4.50e-05 7s
+  >> Val MRR:0.4158 (best:0.4327 p:30/30)
+  Early stop at epoch 200
+  Training done: 1353s, best_val_MRR=0.4327
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4222 H@1=32.8% H@3=46.2% H@10=61.0%
+  Saved: ./FB15k-237_d200_L3_ls0.3_ComplEx_seed42.json
+=== cuda2 [1/12] Done in 1367s ===
+=== cuda2 [2/12] ['python', 'server_wn18rr.py', '--dataset', 'FB15k-237', '--seed', '123', '--d_h', '200', '--layers', '3', '--lr', '5e-4', '--epochs', '200', '--scorer', 'ComplEx'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=123
+d_h=200 L=3 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 3,529,600
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.998 lr:5.00e-04 7s
+  >> Val MRR:0.3409 H@1:25.6% H@10:50.4% ** BEST **
+  E 10/200 Loss:6.558 lr:5.00e-04 7s
+  >> Val MRR:0.3765 H@1:28.6% H@10:56.8% ** BEST **
+  >> Val MRR:0.3832 H@1:28.2% H@10:59.4% ** BEST **
+  E 20/200 Loss:6.169 lr:5.00e-04 7s
+  >> Val MRR:0.4151 H@1:32.4% H@10:62.2% ** BEST **
+  >> Val MRR:0.4174 H@1:32.0% H@10:61.0% ** BEST **
+  E 30/200 Loss:5.988 lr:5.00e-04 7s
+  >> Val MRR:0.4172 (best:0.4174 p:1/30)
+  >> Val MRR:0.4157 (best:0.4174 p:2/30)
+  E 40/200 Loss:5.872 lr:5.00e-04 7s
+  >> Val MRR:0.4125 (best:0.4174 p:3/30)
+  E 50/200 Loss:5.789 lr:5.00e-04 7s
+  >> Val MRR:0.4233 H@1:32.4% H@10:61.0% ** BEST **
+  >> Val MRR:0.4232 (best:0.4233 p:1/30)
+  E 60/200 Loss:5.725 lr:5.00e-04 7s
+  >> Val MRR:0.4170 (best:0.4233 p:2/30)
+  >> Val MRR:0.4171 (best:0.4233 p:3/30)
+  E 70/200 Loss:5.675 lr:5.00e-04 7s
+  >> Val MRR:0.4295 H@1:33.4% H@10:62.4% ** BEST **
+  >> Val MRR:0.4298 H@1:33.4% H@10:61.8% ** BEST **
+  E 80/200 Loss:5.632 lr:5.00e-04 7s
+  >> Val MRR:0.4141 (best:0.4298 p:1/30)
+  >> Val MRR:0.4222 (best:0.4298 p:2/30)
+  E 90/200 Loss:5.598 lr:5.00e-04 7s
+  >> Val MRR:0.4294 (best:0.4298 p:3/30)
+  E100/200 Loss:5.570 lr:5.00e-04 7s
+  E110/200 Loss:5.546 lr:5.00e-04 7s
+  E120/200 Loss:5.525 lr:1.50e-04 7s
+  >> Val MRR:0.4241 (best:0.4298 p:10/30)
+  E130/200 Loss:5.471 lr:1.50e-04 7s
+  E140/200 Loss:5.461 lr:1.50e-04 7s
+  E150/200 Loss:5.454 lr:1.50e-04 7s
+  E160/200 Loss:5.447 lr:4.50e-05 7s
+  E170/200 Loss:5.432 lr:4.50e-05 7s
+  >> Val MRR:0.4172 (best:0.4298 p:20/30)
+  E180/200 Loss:5.428 lr:4.50e-05 7s
+  E190/200 Loss:5.426 lr:4.50e-05 7s
+  E200/200 Loss:5.424 lr:4.50e-05 7s
+  Training done: 1349s, best_val_MRR=0.4298
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4196 H@1=32.5% H@3=46.1% H@10=60.8%
+  Saved: ./FB15k-237_d200_L3_ls0.3_ComplEx_seed123.json
+=== cuda2 [2/12] Done in 1362s ===
+=== cuda2 [3/12] ['python', 'server_wn18rr.py', '--dataset', 'FB15k-237', '--seed', '456', '--d_h', '200', '--layers', '3', '--lr', '5e-4', '--epochs', '200', '--scorer', 'ComplEx'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=456
+d_h=200 L=3 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 3,529,600
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.994 lr:5.00e-04 7s
+  >> Val MRR:0.3513 H@1:26.0% H@10:51.6% ** BEST **
+  E 10/200 Loss:6.571 lr:5.00e-04 7s
+  >> Val MRR:0.3755 H@1:28.4% H@10:56.6% ** BEST **
+  >> Val MRR:0.3985 H@1:31.2% H@10:57.0% ** BEST **
+  E 20/200 Loss:6.170 lr:5.00e-04 7s
+  >> Val MRR:0.4007 H@1:30.0% H@10:59.4% ** BEST **
+  >> Val MRR:0.4042 H@1:30.6% H@10:61.8% ** BEST **
+  E 30/200 Loss:5.985 lr:5.00e-04 7s
+  >> Val MRR:0.4150 H@1:31.8% H@10:62.2% ** BEST **
+  >> Val MRR:0.4225 H@1:32.4% H@10:61.4% ** BEST **
+  E 40/200 Loss:5.871 lr:5.00e-04 7s
+  >> Val MRR:0.4242 H@1:33.0% H@10:62.2% ** BEST **
+  >> Val MRR:0.4234 (best:0.4242 p:1/30)
+  E 50/200 Loss:5.788 lr:5.00e-04 7s
+  >> Val MRR:0.4201 (best:0.4242 p:2/30)
+  >> Val MRR:0.4244 H@1:32.6% H@10:61.8% ** BEST **
+  E 60/200 Loss:5.726 lr:5.00e-04 7s
+  >> Val MRR:0.4294 H@1:33.2% H@10:61.8% ** BEST **
+  >> Val MRR:0.4333 H@1:34.4% H@10:60.8% ** BEST **
+  E 70/200 Loss:5.676 lr:5.00e-04 7s
+  >> Val MRR:0.4207 (best:0.4333 p:1/30)
+  >> Val MRR:0.4171 (best:0.4333 p:2/30)
+  E 80/200 Loss:5.635 lr:5.00e-04 7s
+  >> Val MRR:0.4279 (best:0.4333 p:3/30)
+  E 90/200 Loss:5.602 lr:5.00e-04 7s
+  E100/200 Loss:5.575 lr:5.00e-04 7s
+  E110/200 Loss:5.550 lr:5.00e-04 7s
+  >> Val MRR:0.4109 (best:0.4333 p:10/30)
+  E120/200 Loss:5.530 lr:1.50e-04 7s
+  E130/200 Loss:5.475 lr:1.50e-04 7s
+  E140/200 Loss:5.465 lr:1.50e-04 7s
+  E150/200 Loss:5.457 lr:1.50e-04 7s
+  E160/200 Loss:5.452 lr:4.50e-05 7s
+  >> Val MRR:0.4155 (best:0.4333 p:20/30)
+  E170/200 Loss:5.435 lr:4.50e-05 7s
+  E180/200 Loss:5.432 lr:4.50e-05 7s
+  E190/200 Loss:5.430 lr:4.50e-05 7s
+  E200/200 Loss:5.428 lr:4.50e-05 7s
+  Training done: 1348s, best_val_MRR=0.4333
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4214 H@1=32.6% H@3=46.5% H@10=60.9%
+  Saved: ./FB15k-237_d200_L3_ls0.3_ComplEx_seed456.json
+=== cuda2 [3/12] Done in 1362s ===
+=== cuda2 [4/12] ['python', 'server_wn18rr.py', '--dataset', 'FB15k-237', '--seed', '42', '--d_h', '200', '--layers', '3', '--lr', '5e-4', '--epochs', '200'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=42
+d_h=200 L=3 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 3,529,600
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.719 lr:5.00e-04 7s
+  >> Val MRR:0.3487 H@1:26.6% H@10:50.6% ** BEST **
+  E 10/200 Loss:6.529 lr:5.00e-04 7s
+  >> Val MRR:0.3787 H@1:28.8% H@10:57.2% ** BEST **
+  >> Val MRR:0.4039 H@1:30.8% H@10:58.6% ** BEST **
+  E 20/200 Loss:6.141 lr:5.00e-04 7s
+  >> Val MRR:0.4211 H@1:33.0% H@10:61.6% ** BEST **
+  >> Val MRR:0.4165 (best:0.4211 p:1/30)
+  E 30/200 Loss:5.953 lr:5.00e-04 7s
+  >> Val MRR:0.4286 H@1:34.6% H@10:60.8% ** BEST **
+  >> Val MRR:0.4230 (best:0.4286 p:1/30)
+  E 40/200 Loss:5.833 lr:5.00e-04 7s
+  >> Val MRR:0.4199 (best:0.4286 p:2/30)
+  >> Val MRR:0.4386 H@1:35.6% H@10:62.0% ** BEST **
+  E 50/200 Loss:5.750 lr:5.00e-04 7s
+  >> Val MRR:0.4309 (best:0.4386 p:1/30)
+  >> Val MRR:0.4277 (best:0.4386 p:2/30)
+  E 60/200 Loss:5.686 lr:5.00e-04 7s
+  >> Val MRR:0.4236 (best:0.4386 p:3/30)
+  E 70/200 Loss:5.638 lr:5.00e-04 7s
+  E 80/200 Loss:5.597 lr:5.00e-04 7s
+  >> Val MRR:0.4415 H@1:35.8% H@10:61.6% ** BEST **
+  E 90/200 Loss:5.564 lr:5.00e-04 7s
+  >> Val MRR:0.4386 (best:0.4415 p:1/30)
+  >> Val MRR:0.4295 (best:0.4415 p:2/30)
+  E100/200 Loss:5.537 lr:5.00e-04 7s
+  >> Val MRR:0.4304 (best:0.4415 p:3/30)
+  E110/200 Loss:5.513 lr:5.00e-04 7s
+  E120/200 Loss:5.491 lr:1.50e-04 7s
+  E130/200 Loss:5.440 lr:1.50e-04 7s
+  >> Val MRR:0.4207 (best:0.4415 p:10/30)
+  E140/200 Loss:5.432 lr:1.50e-04 7s
+  E150/200 Loss:5.423 lr:1.50e-04 7s
+  E160/200 Loss:5.418 lr:4.50e-05 7s
+  E170/200 Loss:5.401 lr:4.50e-05 7s
+  E180/200 Loss:5.398 lr:4.50e-05 7s
+  >> Val MRR:0.4209 (best:0.4415 p:20/30)
+  E190/200 Loss:5.395 lr:4.50e-05 7s
+  E200/200 Loss:5.395 lr:4.50e-05 7s
+  Training done: 1329s, best_val_MRR=0.4415
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4147 H@1=31.9% H@3=45.6% H@10=60.4%
+  Saved: ./FB15k-237_d200_L3_ls0.3_seed42.json
+=== cuda2 [4/12] Done in 1342s ===
+=== cuda2 [5/12] ['python', 'server_wn18rr.py', '--dataset', 'FB15k-237', '--seed', '123', '--d_h', '200', '--layers', '3', '--lr', '5e-4', '--epochs', '200'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=123
+d_h=200 L=3 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 3,529,600
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.723 lr:5.00e-04 7s
+  >> Val MRR:0.3450 H@1:25.6% H@10:52.0% ** BEST **
+  E 10/200 Loss:6.519 lr:5.00e-04 7s
+  >> Val MRR:0.3819 H@1:29.8% H@10:57.4% ** BEST **
+  >> Val MRR:0.4033 H@1:30.6% H@10:60.0% ** BEST **
+  E 20/200 Loss:6.124 lr:5.00e-04 7s
+  >> Val MRR:0.4175 H@1:32.2% H@10:61.0% ** BEST **
+  >> Val MRR:0.4229 H@1:32.4% H@10:61.0% ** BEST **
+  E 30/200 Loss:5.939 lr:5.00e-04 7s
+  >> Val MRR:0.4185 (best:0.4229 p:1/30)
+  >> Val MRR:0.4293 H@1:33.0% H@10:62.0% ** BEST **
+  E 40/200 Loss:5.820 lr:5.00e-04 7s
+  >> Val MRR:0.4204 (best:0.4293 p:1/30)
+  >> Val MRR:0.4229 (best:0.4293 p:2/30)
+  E 50/200 Loss:5.739 lr:5.00e-04 7s
+  >> Val MRR:0.4226 (best:0.4293 p:3/30)
+  E 60/200 Loss:5.676 lr:5.00e-04 7s
+  E 70/200 Loss:5.628 lr:5.00e-04 7s
+  >> Val MRR:0.4310 H@1:33.8% H@10:61.6% ** BEST **
+  E 80/200 Loss:5.588 lr:5.00e-04 7s
+  >> Val MRR:0.4303 (best:0.4310 p:1/30)
+  >> Val MRR:0.4352 H@1:34.2% H@10:62.2% ** BEST **
+  E 90/200 Loss:5.557 lr:5.00e-04 7s
+  >> Val MRR:0.4278 (best:0.4352 p:1/30)
+  >> Val MRR:0.4363 H@1:35.0% H@10:62.2% ** BEST **
+  E100/200 Loss:5.530 lr:5.00e-04 7s
+  >> Val MRR:0.4206 (best:0.4363 p:1/30)
+  >> Val MRR:0.4260 (best:0.4363 p:2/30)
+  E110/200 Loss:5.507 lr:5.00e-04 7s
+  >> Val MRR:0.4237 (best:0.4363 p:3/30)
+  E120/200 Loss:5.489 lr:1.50e-04 7s
+  E130/200 Loss:5.436 lr:1.50e-04 7s
+  E140/200 Loss:5.429 lr:1.50e-04 7s
+  >> Val MRR:0.4134 (best:0.4363 p:10/30)
+  E150/200 Loss:5.422 lr:1.50e-04 7s
+  E160/200 Loss:5.414 lr:4.50e-05 7s
+  E170/200 Loss:5.399 lr:4.50e-05 7s
+  E180/200 Loss:5.397 lr:4.50e-05 7s
+  E190/200 Loss:5.393 lr:4.50e-05 7s
+  >> Val MRR:0.4201 (best:0.4363 p:20/30)
+  E200/200 Loss:5.393 lr:4.50e-05 7s
+  Training done: 1329s, best_val_MRR=0.4363
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4138 H@1=32.0% H@3=45.6% H@10=60.1%
+  Saved: ./FB15k-237_d200_L3_ls0.3_seed123.json
+=== cuda2 [5/12] Done in 1342s ===
+=== cuda2 [6/12] ['python', 'server_wn18rr.py', '--dataset', 'FB15k-237', '--seed', '456', '--d_h', '200', '--layers', '3', '--lr', '5e-4', '--epochs', '200'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=456
+d_h=200 L=3 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 3,529,600
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.719 lr:5.00e-04 7s
+  >> Val MRR:0.3470 H@1:26.0% H@10:50.0% ** BEST **
+  E 10/200 Loss:6.520 lr:5.00e-04 7s
+  >> Val MRR:0.3819 H@1:29.0% H@10:55.8% ** BEST **
+  >> Val MRR:0.3968 H@1:30.4% H@10:58.4% ** BEST **
+  E 20/200 Loss:6.130 lr:5.00e-04 7s
+  >> Val MRR:0.4219 H@1:33.4% H@10:60.2% ** BEST **
+  >> Val MRR:0.4181 (best:0.4219 p:1/30)
+  E 30/200 Loss:5.941 lr:5.00e-04 7s
+  >> Val MRR:0.4208 (best:0.4219 p:2/30)
+  >> Val MRR:0.4351 H@1:34.2% H@10:62.8% ** BEST **
+  E 40/200 Loss:5.824 lr:5.00e-04 7s
+  >> Val MRR:0.4237 (best:0.4351 p:1/30)
+  >> Val MRR:0.4328 (best:0.4351 p:2/30)
+  E 50/200 Loss:5.740 lr:5.00e-04 7s
+  >> Val MRR:0.4306 (best:0.4351 p:3/30)
+  >> Val MRR:0.4382 H@1:34.8% H@10:62.0% ** BEST **
+  E 60/200 Loss:5.676 lr:5.00e-04 7s
+  >> Val MRR:0.4329 (best:0.4382 p:1/30)
+  >> Val MRR:0.4411 H@1:35.0% H@10:62.4% ** BEST **
+  E 70/200 Loss:5.626 lr:5.00e-04 7s
+  >> Val MRR:0.4332 (best:0.4411 p:1/30)
+  >> Val MRR:0.4276 (best:0.4411 p:2/30)
+  E 80/200 Loss:5.587 lr:5.00e-04 7s
+  >> Val MRR:0.4365 (best:0.4411 p:3/30)
+  E 90/200 Loss:5.555 lr:5.00e-04 7s
+  E100/200 Loss:5.528 lr:5.00e-04 7s
+  E110/200 Loss:5.505 lr:5.00e-04 7s
+  >> Val MRR:0.4223 (best:0.4411 p:10/30)
+  E120/200 Loss:5.484 lr:1.50e-04 7s
+  E130/200 Loss:5.434 lr:1.50e-04 7s
+  E140/200 Loss:5.426 lr:1.50e-04 7s
+  E150/200 Loss:5.416 lr:1.50e-04 7s
+  E160/200 Loss:5.411 lr:4.50e-05 7s
+  >> Val MRR:0.4225 (best:0.4411 p:20/30)
+  E170/200 Loss:5.395 lr:4.50e-05 7s
+  E180/200 Loss:5.391 lr:4.50e-05 7s
+  E190/200 Loss:5.390 lr:4.50e-05 7s
+  E200/200 Loss:5.389 lr:4.50e-05 7s
+  Training done: 1328s, best_val_MRR=0.4411
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4185 H@1=32.4% H@3=46.0% H@10=60.9%
+  Saved: ./FB15k-237_d200_L3_ls0.3_seed456.json
+=== cuda2 [6/12] Done in 1342s ===
+=== cuda2 [7/12] ['python', 'server_wn18rr.py', '--dataset', 'WN18RR', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | WN18RR | seed=42
+d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
+======================================================================
+  KG: 40943 ent, 22 rel, 173670 edges
+  Train/Val/Test: 86835/3034/3134
+  Params: 8,363,400
+  Training: epochs=300, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 21
+  E  1/300 Loss:13.323 lr:5.00e-04 1s
+  >> Val MRR:0.0117 H@1:0.6% H@10:2.2% ** BEST **
+  E 10/300 Loss:6.776 lr:5.00e-04 1s
+  >> Val MRR:0.1560 H@1:12.2% H@10:22.6% ** BEST **
+  >> Val MRR:0.3066 H@1:27.4% H@10:35.4% ** BEST **
+  E 20/300 Loss:5.698 lr:5.00e-04 1s
+  >> Val MRR:0.3743 H@1:34.8% H@10:41.4% ** BEST **
+  >> Val MRR:0.4031 H@1:38.4% H@10:43.8% ** BEST **
+  E 30/300 Loss:5.292 lr:5.00e-04 1s
+  >> Val MRR:0.4169 H@1:40.0% H@10:45.2% ** BEST **
+  >> Val MRR:0.4327 H@1:41.8% H@10:46.0% ** BEST **
+  E 40/300 Loss:5.061 lr:5.00e-04 1s
+  >> Val MRR:0.4416 H@1:42.8% H@10:46.2% ** BEST **
+  >> Val MRR:0.4420 H@1:42.6% H@10:46.8% ** BEST **
+  E 50/300 Loss:4.920 lr:5.00e-04 1s
+  >> Val MRR:0.4460 H@1:42.8% H@10:47.2% ** BEST **
+  >> Val MRR:0.4513 H@1:43.4% H@10:48.2% ** BEST **
+  E 60/300 Loss:4.828 lr:5.00e-04 1s
+  >> Val MRR:0.4554 H@1:43.6% H@10:48.2% ** BEST **
+  >> Val MRR:0.4559 H@1:44.0% H@10:48.6% ** BEST **
+  E 70/300 Loss:4.762 lr:5.00e-04 1s
+  >> Val MRR:0.4599 H@1:44.2% H@10:48.2% ** BEST **
+  >> Val MRR:0.4651 H@1:45.0% H@10:48.8% ** BEST **
+  E 80/300 Loss:4.715 lr:5.00e-04 1s
+  >> Val MRR:0.4650 (best:0.4651 p:1/30)
+  >> Val MRR:0.4625 (best:0.4651 p:2/30)
+  E 90/300 Loss:4.678 lr:5.00e-04 1s
+  >> Val MRR:0.4657 H@1:44.4% H@10:49.6% ** BEST **
+  >> Val MRR:0.4670 H@1:44.6% H@10:50.0% ** BEST **
+  E100/300 Loss:4.649 lr:5.00e-04 1s
+  >> Val MRR:0.4719 H@1:45.2% H@10:51.0% ** BEST **
+  >> Val MRR:0.4793 H@1:46.0% H@10:50.8% ** BEST **
+  E110/300 Loss:4.627 lr:5.00e-04 1s
+  >> Val MRR:0.4737 (best:0.4793 p:1/30)
+  >> Val MRR:0.4747 (best:0.4793 p:2/30)
+  E120/300 Loss:4.607 lr:5.00e-04 1s
+  >> Val MRR:0.4785 (best:0.4793 p:3/30)
+  >> Val MRR:0.4814 H@1:46.2% H@10:52.6% ** BEST **
+  E130/300 Loss:4.589 lr:5.00e-04 1s
+  >> Val MRR:0.4779 (best:0.4814 p:1/30)
+  >> Val MRR:0.4752 (best:0.4814 p:2/30)
+  E140/300 Loss:4.576 lr:5.00e-04 1s
+  >> Val MRR:0.4817 H@1:45.8% H@10:52.4% ** BEST **
+  >> Val MRR:0.4831 H@1:46.0% H@10:52.6% ** BEST **
+  E150/300 Loss:4.562 lr:5.00e-04 1s
+  >> Val MRR:0.4849 H@1:46.2% H@10:52.6% ** BEST **
+  >> Val MRR:0.4856 H@1:46.4% H@10:52.2% ** BEST **
+  E160/300 Loss:4.552 lr:5.00e-04 1s
+  >> Val MRR:0.4847 (best:0.4856 p:1/30)
+  >> Val MRR:0.4937 H@1:47.6% H@10:52.8% ** BEST **
+  E170/300 Loss:4.541 lr:5.00e-04 1s
+  >> Val MRR:0.4868 (best:0.4937 p:1/30)
+  >> Val MRR:0.4920 (best:0.4937 p:2/30)
+  E180/300 Loss:4.534 lr:1.50e-04 1s
+  >> Val MRR:0.4897 (best:0.4937 p:3/30)
+  >> Val MRR:0.4945 H@1:47.4% H@10:53.0% ** BEST **
+  E190/300 Loss:4.510 lr:1.50e-04 1s
+  >> Val MRR:0.4939 (best:0.4945 p:1/30)
+  >> Val MRR:0.4925 (best:0.4945 p:2/30)
+  E200/300 Loss:4.503 lr:1.50e-04 1s
+  >> Val MRR:0.4935 (best:0.4945 p:3/30)
+  E210/300 Loss:4.501 lr:1.50e-04 1s
+  >> Val MRR:0.4952 H@1:47.4% H@10:53.2% ** BEST **
+  >> Val MRR:0.4970 H@1:47.6% H@10:53.0% ** BEST **
+  E220/300 Loss:4.497 lr:1.50e-04 1s
+  >> Val MRR:0.4972 H@1:47.6% H@10:53.2% ** BEST **
+  >> Val MRR:0.4949 (best:0.4972 p:1/30)
+  E230/300 Loss:4.495 lr:1.50e-04 1s
+  >> Val MRR:0.4959 (best:0.4972 p:2/30)
+  >> Val MRR:0.4964 (best:0.4972 p:3/30)
+  E240/300 Loss:4.491 lr:4.50e-05 1s
+  E250/300 Loss:4.485 lr:4.50e-05 1s
+  E260/300 Loss:4.484 lr:4.50e-05 1s
+  E270/300 Loss:4.482 lr:4.50e-05 1s
+  >> Val MRR:0.4967 (best:0.4972 p:10/30)
+  E280/300 Loss:4.480 lr:4.50e-05 1s
+  E290/300 Loss:4.478 lr:4.50e-05 1s
+  E300/300 Loss:4.479 lr:4.50e-05 1s
+  Training done: 375s, best_val_MRR=0.4972
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (3134 triples)...
+
+  FINAL TEST: MRR=0.4795 H@1=45.0% H@3=49.5% H@10=53.0%
+  Saved: ./WN18RR_d200_L2_ls0.3_ComplEx_seed42.json
+=== cuda2 [7/12] Done in 378s ===
+=== cuda2 [8/12] ['python', 'server_wn18rr.py', '--dataset', 'WN18RR', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | WN18RR | seed=123
+d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
+======================================================================
+  KG: 40943 ent, 22 rel, 173670 edges
+  Train/Val/Test: 86835/3034/3134
+  Params: 8,363,400
+  Training: epochs=300, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 21
+  E  1/300 Loss:13.224 lr:5.00e-04 1s
+  >> Val MRR:0.0119 H@1:0.6% H@10:1.8% ** BEST **
+  E 10/300 Loss:6.779 lr:5.00e-04 1s
+  >> Val MRR:0.1441 H@1:10.6% H@10:22.2% ** BEST **
+  >> Val MRR:0.3094 H@1:28.2% H@10:35.4% ** BEST **
+  E 20/300 Loss:5.706 lr:5.00e-04 1s
+  >> Val MRR:0.3632 H@1:34.0% H@10:40.2% ** BEST **
+  >> Val MRR:0.3898 H@1:37.2% H@10:41.8% ** BEST **
+  E 30/300 Loss:5.290 lr:5.00e-04 1s
+  >> Val MRR:0.4109 H@1:39.2% H@10:44.4% ** BEST **
+  >> Val MRR:0.4242 H@1:40.4% H@10:45.8% ** BEST **
+  E 40/300 Loss:5.069 lr:5.00e-04 1s
+  >> Val MRR:0.4358 H@1:42.2% H@10:46.4% ** BEST **
+  >> Val MRR:0.4430 H@1:42.8% H@10:47.4% ** BEST **
+  E 50/300 Loss:4.926 lr:5.00e-04 1s
+  >> Val MRR:0.4452 H@1:43.2% H@10:46.8% ** BEST **
+  >> Val MRR:0.4466 H@1:43.2% H@10:46.8% ** BEST **
+  E 60/300 Loss:4.835 lr:5.00e-04 1s
+  >> Val MRR:0.4457 (best:0.4466 p:1/30)
+  >> Val MRR:0.4495 H@1:43.6% H@10:47.8% ** BEST **
+  E 70/300 Loss:4.770 lr:5.00e-04 1s
+  >> Val MRR:0.4541 H@1:44.0% H@10:47.6% ** BEST **
+  >> Val MRR:0.4508 (best:0.4541 p:1/30)
+  E 80/300 Loss:4.723 lr:5.00e-04 1s
+  >> Val MRR:0.4576 H@1:44.0% H@10:49.4% ** BEST **
+  >> Val MRR:0.4581 H@1:44.4% H@10:48.8% ** BEST **
+  E 90/300 Loss:4.687 lr:5.00e-04 1s
+  >> Val MRR:0.4593 H@1:44.6% H@10:48.8% ** BEST **
+  >> Val MRR:0.4628 H@1:44.6% H@10:49.4% ** BEST **
+  E100/300 Loss:4.656 lr:5.00e-04 1s
+  >> Val MRR:0.4624 (best:0.4628 p:1/30)
+  >> Val MRR:0.4643 H@1:44.6% H@10:49.8% ** BEST **
+  E110/300 Loss:4.631 lr:5.00e-04 1s
+  >> Val MRR:0.4677 H@1:45.0% H@10:51.0% ** BEST **
+  >> Val MRR:0.4684 H@1:45.0% H@10:51.4% ** BEST **
+  E120/300 Loss:4.610 lr:5.00e-04 1s
+  >> Val MRR:0.4680 (best:0.4684 p:1/30)
+  >> Val MRR:0.4715 H@1:45.0% H@10:52.0% ** BEST **
+  E130/300 Loss:4.593 lr:5.00e-04 1s
+  >> Val MRR:0.4718 H@1:45.0% H@10:51.4% ** BEST **
+  >> Val MRR:0.4742 H@1:45.2% H@10:52.0% ** BEST **
+  E140/300 Loss:4.577 lr:5.00e-04 1s
+  >> Val MRR:0.4764 H@1:45.4% H@10:51.8% ** BEST **
+  >> Val MRR:0.4780 H@1:45.4% H@10:53.0% ** BEST **
+  E150/300 Loss:4.565 lr:5.00e-04 1s
+  >> Val MRR:0.4784 H@1:45.4% H@10:52.6% ** BEST **
+  >> Val MRR:0.4810 H@1:45.6% H@10:52.6% ** BEST **
+  E160/300 Loss:4.555 lr:5.00e-04 1s
+  >> Val MRR:0.4774 (best:0.4810 p:1/30)
+  >> Val MRR:0.4780 (best:0.4810 p:2/30)
+  E170/300 Loss:4.544 lr:5.00e-04 1s
+  >> Val MRR:0.4804 (best:0.4810 p:3/30)
+  E180/300 Loss:4.537 lr:1.50e-04 1s
+  >> Val MRR:0.4838 H@1:46.2% H@10:53.0% ** BEST **
+  E190/300 Loss:4.511 lr:1.50e-04 1s
+  >> Val MRR:0.4843 H@1:46.2% H@10:53.2% ** BEST **
+  >> Val MRR:0.4846 H@1:46.2% H@10:53.2% ** BEST **
+  E200/300 Loss:4.507 lr:1.50e-04 1s
+  >> Val MRR:0.4851 H@1:46.2% H@10:53.2% ** BEST **
+  >> Val MRR:0.4830 (best:0.4851 p:1/30)
+  E210/300 Loss:4.502 lr:1.50e-04 1s
+  >> Val MRR:0.4857 H@1:46.2% H@10:53.0% ** BEST **
+  >> Val MRR:0.4825 (best:0.4857 p:1/30)
+  E220/300 Loss:4.499 lr:1.50e-04 1s
+  >> Val MRR:0.4838 (best:0.4857 p:2/30)
+  >> Val MRR:0.4874 H@1:46.4% H@10:53.2% ** BEST **
+  E230/300 Loss:4.496 lr:1.50e-04 1s
+  >> Val MRR:0.4872 (best:0.4874 p:1/30)
+  >> Val MRR:0.4834 (best:0.4874 p:2/30)
+  E240/300 Loss:4.494 lr:4.50e-05 1s
+  >> Val MRR:0.4858 (best:0.4874 p:3/30)
+  E250/300 Loss:4.486 lr:4.50e-05 1s
+  E260/300 Loss:4.486 lr:4.50e-05 1s
+  E270/300 Loss:4.484 lr:4.50e-05 1s
+  >> Val MRR:0.4846 (best:0.4874 p:10/30)
+  E280/300 Loss:4.482 lr:4.50e-05 1s
+  E290/300 Loss:4.480 lr:4.50e-05 1s
+  >> Val MRR:0.4874 H@1:46.2% H@10:53.0% ** BEST **
+  E300/300 Loss:4.480 lr:4.50e-05 1s
+  >> Val MRR:0.4855 (best:0.4874 p:1/30)
+  Training done: 375s, best_val_MRR=0.4874
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (3134 triples)...
+
+  FINAL TEST: MRR=0.4789 H@1=45.3% H@3=48.9% H@10=52.5%
+  Saved: ./WN18RR_d200_L2_ls0.3_ComplEx_seed123.json
+=== cuda2 [8/12] Done in 378s ===
+=== cuda2 [9/12] ['python', 'server_wn18rr.py', '--dataset', 'WN18RR', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | WN18RR | seed=456
+d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
+======================================================================
+  KG: 40943 ent, 22 rel, 173670 edges
+  Train/Val/Test: 86835/3034/3134
+  Params: 8,363,400
+  Training: epochs=300, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 21
+  E  1/300 Loss:13.323 lr:5.00e-04 1s
+  >> Val MRR:0.0116 H@1:0.4% H@10:2.4% ** BEST **
+  E 10/300 Loss:6.817 lr:5.00e-04 1s
+  >> Val MRR:0.1192 H@1:8.6% H@10:18.8% ** BEST **
+  >> Val MRR:0.2657 H@1:22.4% H@10:33.6% ** BEST **
+  E 20/300 Loss:5.710 lr:5.00e-04 1s
+  >> Val MRR:0.3544 H@1:32.6% H@10:40.6% ** BEST **
+  >> Val MRR:0.3942 H@1:37.6% H@10:42.8% ** BEST **
+  E 30/300 Loss:5.290 lr:5.00e-04 1s
+  >> Val MRR:0.4102 H@1:38.8% H@10:44.8% ** BEST **
+  >> Val MRR:0.4203 H@1:40.0% H@10:45.2% ** BEST **
+  E 40/300 Loss:5.065 lr:5.00e-04 1s
+  >> Val MRR:0.4312 H@1:41.6% H@10:46.2% ** BEST **
+  >> Val MRR:0.4351 H@1:41.8% H@10:46.6% ** BEST **
+  E 50/300 Loss:4.925 lr:5.00e-04 1s
+  >> Val MRR:0.4423 H@1:42.4% H@10:47.2% ** BEST **
+  >> Val MRR:0.4417 (best:0.4423 p:1/30)
+  E 60/300 Loss:4.837 lr:5.00e-04 1s
+  >> Val MRR:0.4477 H@1:42.8% H@10:47.8% ** BEST **
+  >> Val MRR:0.4472 (best:0.4477 p:1/30)
+  E 70/300 Loss:4.770 lr:5.00e-04 1s
+  >> Val MRR:0.4495 H@1:43.0% H@10:48.0% ** BEST **
+  >> Val MRR:0.4551 H@1:43.8% H@10:48.6% ** BEST **
+  E 80/300 Loss:4.723 lr:5.00e-04 1s
+  >> Val MRR:0.4584 H@1:44.2% H@10:48.6% ** BEST **
+  >> Val MRR:0.4588 H@1:44.2% H@10:49.4% ** BEST **
+  E 90/300 Loss:4.686 lr:5.00e-04 1s
+  >> Val MRR:0.4595 H@1:43.8% H@10:49.2% ** BEST **
+  >> Val MRR:0.4651 H@1:45.0% H@10:50.2% ** BEST **
+  E100/300 Loss:4.655 lr:5.00e-04 1s
+  >> Val MRR:0.4670 H@1:44.8% H@10:50.6% ** BEST **
+  >> Val MRR:0.4696 H@1:45.2% H@10:50.0% ** BEST **
+  E110/300 Loss:4.631 lr:5.00e-04 1s
+  >> Val MRR:0.4676 (best:0.4696 p:1/30)
+  >> Val MRR:0.4694 (best:0.4696 p:2/30)
+  E120/300 Loss:4.613 lr:5.00e-04 1s
+  >> Val MRR:0.4701 H@1:44.4% H@10:52.2% ** BEST **
+  >> Val MRR:0.4758 H@1:45.4% H@10:51.4% ** BEST **
+  E130/300 Loss:4.594 lr:5.00e-04 1s
+  >> Val MRR:0.4784 H@1:45.8% H@10:51.4% ** BEST **
+  >> Val MRR:0.4815 H@1:46.2% H@10:52.4% ** BEST **
+  E140/300 Loss:4.582 lr:5.00e-04 1s
+  >> Val MRR:0.4779 (best:0.4815 p:1/30)
+  >> Val MRR:0.4814 (best:0.4815 p:2/30)
+  E150/300 Loss:4.570 lr:5.00e-04 1s
+  >> Val MRR:0.4829 H@1:46.2% H@10:52.0% ** BEST **
+  >> Val MRR:0.4811 (best:0.4829 p:1/30)
+  E160/300 Loss:4.557 lr:5.00e-04 1s
+  >> Val MRR:0.4832 H@1:46.2% H@10:52.0% ** BEST **
+  >> Val MRR:0.4846 H@1:46.6% H@10:52.2% ** BEST **
+  E170/300 Loss:4.548 lr:5.00e-04 1s
+  >> Val MRR:0.4867 H@1:46.8% H@10:52.0% ** BEST **
+  >> Val MRR:0.4846 (best:0.4867 p:1/30)
+  E180/300 Loss:4.539 lr:1.50e-04 1s
+  >> Val MRR:0.4882 H@1:46.8% H@10:53.2% ** BEST **
+  >> Val MRR:0.4883 H@1:46.8% H@10:53.2% ** BEST **
+  E190/300 Loss:4.515 lr:1.50e-04 1s
+  >> Val MRR:0.4859 (best:0.4883 p:1/30)
+  >> Val MRR:0.4892 H@1:46.8% H@10:53.8% ** BEST **
+  E200/300 Loss:4.511 lr:1.50e-04 1s
+  >> Val MRR:0.4880 (best:0.4892 p:1/30)
+  >> Val MRR:0.4860 (best:0.4892 p:2/30)
+  E210/300 Loss:4.506 lr:1.50e-04 1s
+  >> Val MRR:0.4862 (best:0.4892 p:3/30)
+  E220/300 Loss:4.504 lr:1.50e-04 1s
+  >> Val MRR:0.4921 H@1:47.2% H@10:53.8% ** BEST **
+  >> Val MRR:0.4893 (best:0.4921 p:1/30)
+  E230/300 Loss:4.502 lr:1.50e-04 1s
+  >> Val MRR:0.4903 (best:0.4921 p:2/30)
+  >> Val MRR:0.4901 (best:0.4921 p:3/30)
+  E240/300 Loss:4.500 lr:4.50e-05 1s
+  >> Val MRR:0.4924 H@1:47.0% H@10:54.0% ** BEST **
+  >> Val MRR:0.4933 H@1:47.2% H@10:54.0% ** BEST **
+  E250/300 Loss:4.493 lr:4.50e-05 1s
+  >> Val MRR:0.4923 (best:0.4933 p:1/30)
+  >> Val MRR:0.4920 (best:0.4933 p:2/30)
+  E260/300 Loss:4.490 lr:4.50e-05 1s
+  >> Val MRR:0.4900 (best:0.4933 p:3/30)
+  E270/300 Loss:4.489 lr:4.50e-05 1s
+  E280/300 Loss:4.487 lr:4.50e-05 1s
+  E290/300 Loss:4.487 lr:4.50e-05 1s
+  >> Val MRR:0.4915 (best:0.4933 p:10/30)
+  E300/300 Loss:4.487 lr:4.50e-05 1s
+  Training done: 375s, best_val_MRR=0.4933
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (3134 triples)...
+
+  FINAL TEST: MRR=0.4759 H@1=44.9% H@3=48.7% H@10=52.3%
+  Saved: ./WN18RR_d200_L2_ls0.3_ComplEx_seed456.json
+=== cuda2 [9/12] Done in 378s ===
+=== cuda2 [10/12] ['python', 'server_wn18rr.py', '--dataset', 'WN18RR', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | WN18RR | seed=42
+d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
+======================================================================
+  KG: 40943 ent, 22 rel, 173670 edges
+  Train/Val/Test: 86835/3034/3134
+  Params: 8,363,400
+  Training: epochs=300, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 21
+  E  1/300 Loss:11.218 lr:5.00e-04 1s
+  >> Val MRR:0.1616 H@1:13.2% H@10:21.8% ** BEST **
+  E 10/300 Loss:6.660 lr:5.00e-04 1s
+  >> Val MRR:0.3379 H@1:31.4% H@10:38.4% ** BEST **
+  >> Val MRR:0.3829 H@1:36.6% H@10:40.6% ** BEST **
+  E 20/300 Loss:5.619 lr:5.00e-04 1s
+  >> Val MRR:0.4054 H@1:38.8% H@10:44.0% ** BEST **
+  >> Val MRR:0.4153 H@1:40.0% H@10:44.2% ** BEST **
+  E 30/300 Loss:5.217 lr:5.00e-04 1s
+  >> Val MRR:0.4268 H@1:41.0% H@10:44.8% ** BEST **
+  >> Val MRR:0.4340 H@1:41.8% H@10:46.0% ** BEST **
+  E 40/300 Loss:5.015 lr:5.00e-04 1s
+  >> Val MRR:0.4324 (best:0.4340 p:1/30)
+  >> Val MRR:0.4410 H@1:42.2% H@10:47.4% ** BEST **
+  E 50/300 Loss:4.894 lr:5.00e-04 1s
+  >> Val MRR:0.4461 H@1:42.8% H@10:48.2% ** BEST **
+  >> Val MRR:0.4532 H@1:43.6% H@10:48.2% ** BEST **
+  E 60/300 Loss:4.815 lr:5.00e-04 1s
+  >> Val MRR:0.4521 (best:0.4532 p:1/30)
+  >> Val MRR:0.4537 H@1:43.0% H@10:48.8% ** BEST **
+  E 70/300 Loss:4.760 lr:5.00e-04 1s
+  >> Val MRR:0.4543 H@1:43.2% H@10:49.2% ** BEST **
+  >> Val MRR:0.4589 H@1:43.8% H@10:49.8% ** BEST **
+  E 80/300 Loss:4.720 lr:5.00e-04 1s
+  >> Val MRR:0.4584 (best:0.4589 p:1/30)
+  >> Val MRR:0.4587 (best:0.4589 p:2/30)
+  E 90/300 Loss:4.689 lr:5.00e-04 1s
+  >> Val MRR:0.4643 H@1:43.8% H@10:50.6% ** BEST **
+  >> Val MRR:0.4663 H@1:44.2% H@10:51.4% ** BEST **
+  E100/300 Loss:4.662 lr:5.00e-04 1s
+  >> Val MRR:0.4686 H@1:44.6% H@10:51.4% ** BEST **
+  >> Val MRR:0.4680 (best:0.4686 p:1/30)
+  E110/300 Loss:4.641 lr:5.00e-04 1s
+  >> Val MRR:0.4694 H@1:44.4% H@10:52.2% ** BEST **
+  >> Val MRR:0.4730 H@1:44.8% H@10:52.0% ** BEST **
+  E120/300 Loss:4.624 lr:5.00e-04 1s
+  >> Val MRR:0.4714 (best:0.4730 p:1/30)
+  >> Val MRR:0.4725 (best:0.4730 p:2/30)
+  E130/300 Loss:4.612 lr:5.00e-04 1s
+  >> Val MRR:0.4708 (best:0.4730 p:3/30)
+  >> Val MRR:0.4753 H@1:44.8% H@10:51.8% ** BEST **
+  E140/300 Loss:4.598 lr:5.00e-04 1s
+  >> Val MRR:0.4772 H@1:45.2% H@10:51.6% ** BEST **
+  >> Val MRR:0.4743 (best:0.4772 p:1/30)
+  E150/300 Loss:4.589 lr:5.00e-04 1s
+  >> Val MRR:0.4741 (best:0.4772 p:2/30)
+  >> Val MRR:0.4748 (best:0.4772 p:3/30)
+  E160/300 Loss:4.577 lr:5.00e-04 1s
+  >> Val MRR:0.4774 H@1:44.8% H@10:53.2% ** BEST **
+  E170/300 Loss:4.569 lr:5.00e-04 1s
+  >> Val MRR:0.4740 (best:0.4774 p:1/30)
+  >> Val MRR:0.4771 (best:0.4774 p:2/30)
+  E180/300 Loss:4.561 lr:1.50e-04 1s
+  >> Val MRR:0.4761 (best:0.4774 p:3/30)
+  >> Val MRR:0.4793 H@1:45.0% H@10:53.4% ** BEST **
+  E190/300 Loss:4.539 lr:1.50e-04 1s
+  >> Val MRR:0.4811 H@1:45.2% H@10:53.6% ** BEST **
+  >> Val MRR:0.4823 H@1:45.4% H@10:53.2% ** BEST **
+  E200/300 Loss:4.533 lr:1.50e-04 1s
+  >> Val MRR:0.4817 (best:0.4823 p:1/30)
+  >> Val MRR:0.4814 (best:0.4823 p:2/30)
+  E210/300 Loss:4.532 lr:1.50e-04 1s
+  >> Val MRR:0.4823 H@1:45.2% H@10:53.6% ** BEST **
+  >> Val MRR:0.4821 (best:0.4823 p:1/30)
+  E220/300 Loss:4.528 lr:1.50e-04 1s
+  >> Val MRR:0.4818 (best:0.4823 p:2/30)
+  >> Val MRR:0.4812 (best:0.4823 p:3/30)
+  E230/300 Loss:4.526 lr:1.50e-04 1s
+  E240/300 Loss:4.523 lr:4.50e-05 1s
+  >> Val MRR:0.4829 H@1:45.4% H@10:53.4% ** BEST **
+  E250/300 Loss:4.517 lr:4.50e-05 1s
+  >> Val MRR:0.4832 H@1:45.4% H@10:53.4% ** BEST **
+  >> Val MRR:0.4822 (best:0.4832 p:1/30)
+  E260/300 Loss:4.517 lr:4.50e-05 1s
+  >> Val MRR:0.4829 (best:0.4832 p:2/30)
+  >> Val MRR:0.4808 (best:0.4832 p:3/30)
+  E270/300 Loss:4.514 lr:4.50e-05 1s
+  E280/300 Loss:4.512 lr:4.50e-05 1s
+  E290/300 Loss:4.512 lr:4.50e-05 1s
+  E300/300 Loss:4.511 lr:4.50e-05 1s
+  >> Val MRR:0.4816 (best:0.4832 p:10/30)
+  Training done: 352s, best_val_MRR=0.4832
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (3134 triples)...
+
+  FINAL TEST: MRR=0.4693 H@1=43.8% H@3=48.0% H@10=52.8%
+  Saved: ./WN18RR_d200_L2_ls0.3_seed42.json
+=== cuda2 [10/12] Done in 355s ===
+=== cuda2 [11/12] ['python', 'server_wn18rr.py', '--dataset', 'WN18RR', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | WN18RR | seed=123
+d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
+======================================================================
+  KG: 40943 ent, 22 rel, 173670 edges
+  Train/Val/Test: 86835/3034/3134
+  Params: 8,363,400
+  Training: epochs=300, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 21
+  E  1/300 Loss:11.173 lr:5.00e-04 1s
+  >> Val MRR:0.1301 H@1:10.0% H@10:18.4% ** BEST **
+  E 10/300 Loss:6.621 lr:5.00e-04 1s
+  >> Val MRR:0.3341 H@1:31.4% H@10:36.6% ** BEST **
+  >> Val MRR:0.3758 H@1:36.2% H@10:40.0% ** BEST **
+  E 20/300 Loss:5.586 lr:5.00e-04 1s
+  >> Val MRR:0.3985 H@1:38.4% H@10:41.6% ** BEST **
+  >> Val MRR:0.4061 H@1:39.2% H@10:42.8% ** BEST **
+  E 30/300 Loss:5.199 lr:5.00e-04 1s
+  >> Val MRR:0.4127 H@1:39.8% H@10:44.0% ** BEST **
+  >> Val MRR:0.4190 H@1:40.0% H@10:44.8% ** BEST **
+  E 40/300 Loss:5.001 lr:5.00e-04 1s
+  >> Val MRR:0.4237 H@1:40.6% H@10:44.6% ** BEST **
+  >> Val MRR:0.4240 H@1:40.2% H@10:46.0% ** BEST **
+  E 50/300 Loss:4.882 lr:5.00e-04 1s
+  >> Val MRR:0.4335 H@1:41.0% H@10:46.8% ** BEST **
+  >> Val MRR:0.4342 H@1:41.0% H@10:47.4% ** BEST **
+  E 60/300 Loss:4.809 lr:5.00e-04 1s
+  >> Val MRR:0.4381 H@1:41.0% H@10:48.6% ** BEST **
+  >> Val MRR:0.4444 H@1:41.8% H@10:48.8% ** BEST **
+  E 70/300 Loss:4.757 lr:5.00e-04 1s
+  >> Val MRR:0.4466 H@1:41.8% H@10:49.0% ** BEST **
+  >> Val MRR:0.4494 H@1:42.4% H@10:49.4% ** BEST **
+  E 80/300 Loss:4.712 lr:5.00e-04 1s
+  >> Val MRR:0.4525 H@1:42.6% H@10:50.0% ** BEST **
+  >> Val MRR:0.4517 (best:0.4525 p:1/30)
+  E 90/300 Loss:4.684 lr:5.00e-04 1s
+  >> Val MRR:0.4625 H@1:44.0% H@10:50.8% ** BEST **
+  >> Val MRR:0.4641 H@1:43.8% H@10:51.4% ** BEST **
+  E100/300 Loss:4.658 lr:5.00e-04 1s
+  >> Val MRR:0.4647 H@1:44.0% H@10:52.6% ** BEST **
+  >> Val MRR:0.4645 (best:0.4647 p:1/30)
+  E110/300 Loss:4.638 lr:5.00e-04 1s
+  >> Val MRR:0.4668 H@1:43.8% H@10:52.0% ** BEST **
+  >> Val MRR:0.4694 H@1:44.2% H@10:51.6% ** BEST **
+  E120/300 Loss:4.620 lr:5.00e-04 1s
+  >> Val MRR:0.4677 (best:0.4694 p:1/30)
+  >> Val MRR:0.4729 H@1:44.4% H@10:52.6% ** BEST **
+  E130/300 Loss:4.607 lr:5.00e-04 1s
+  >> Val MRR:0.4707 (best:0.4729 p:1/30)
+  >> Val MRR:0.4685 (best:0.4729 p:2/30)
+  E140/300 Loss:4.595 lr:5.00e-04 1s
+  >> Val MRR:0.4730 H@1:44.2% H@10:53.0% ** BEST **
+  >> Val MRR:0.4755 H@1:44.4% H@10:53.0% ** BEST **
+  E150/300 Loss:4.583 lr:5.00e-04 1s
+  >> Val MRR:0.4758 H@1:44.4% H@10:53.6% ** BEST **
+  >> Val MRR:0.4767 H@1:44.6% H@10:53.8% ** BEST **
+  E160/300 Loss:4.573 lr:5.00e-04 1s
+  >> Val MRR:0.4778 H@1:44.6% H@10:52.6% ** BEST **
+  >> Val MRR:0.4759 (best:0.4778 p:1/30)
+  E170/300 Loss:4.566 lr:5.00e-04 1s
+  >> Val MRR:0.4752 (best:0.4778 p:2/30)
+  >> Val MRR:0.4773 (best:0.4778 p:3/30)
+  E180/300 Loss:4.558 lr:1.50e-04 1s
+  E190/300 Loss:4.535 lr:1.50e-04 1s
+  >> Val MRR:0.4799 H@1:45.2% H@10:52.8% ** BEST **
+  E200/300 Loss:4.532 lr:1.50e-04 1s
+  >> Val MRR:0.4762 (best:0.4799 p:1/30)
+  >> Val MRR:0.4736 (best:0.4799 p:2/30)
+  E210/300 Loss:4.528 lr:1.50e-04 1s
+  >> Val MRR:0.4769 (best:0.4799 p:3/30)
+  E220/300 Loss:4.527 lr:1.50e-04 1s
+  E230/300 Loss:4.524 lr:1.50e-04 1s
+  E240/300 Loss:4.522 lr:4.50e-05 1s
+  >> Val MRR:0.4774 (best:0.4799 p:10/30)
+  E250/300 Loss:4.515 lr:4.50e-05 1s
+  E260/300 Loss:4.514 lr:4.50e-05 1s
+  E270/300 Loss:4.512 lr:4.50e-05 1s
+  E280/300 Loss:4.512 lr:4.50e-05 1s
+  E290/300 Loss:4.511 lr:4.50e-05 1s
+  >> Val MRR:0.4755 (best:0.4799 p:20/30)
+  E300/300 Loss:4.510 lr:4.50e-05 1s
+  Training done: 352s, best_val_MRR=0.4799
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (3134 triples)...
+
+  FINAL TEST: MRR=0.4671 H@1=43.4% H@3=48.3% H@10=52.7%
+  Saved: ./WN18RR_d200_L2_ls0.3_seed123.json
+=== cuda2 [11/12] Done in 355s ===
+=== cuda2 [12/12] ['python', 'server_wn18rr.py', '--dataset', 'WN18RR', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | WN18RR | seed=456
+d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
+======================================================================
+  KG: 40943 ent, 22 rel, 173670 edges
+  Train/Val/Test: 86835/3034/3134
+  Params: 8,363,400
+  Training: epochs=300, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 21
+  E  1/300 Loss:11.187 lr:5.00e-04 1s
+  >> Val MRR:0.1583 H@1:12.8% H@10:20.6% ** BEST **
+  E 10/300 Loss:6.636 lr:5.00e-04 1s
+  >> Val MRR:0.3317 H@1:30.8% H@10:37.8% ** BEST **
+  >> Val MRR:0.3826 H@1:36.4% H@10:41.6% ** BEST **
+  E 20/300 Loss:5.602 lr:5.00e-04 1s
+  >> Val MRR:0.4033 H@1:38.8% H@10:43.6% ** BEST **
+  >> Val MRR:0.4199 H@1:40.6% H@10:44.8% ** BEST **
+  E 30/300 Loss:5.212 lr:5.00e-04 1s
+  >> Val MRR:0.4242 H@1:40.8% H@10:45.4% ** BEST **
+  >> Val MRR:0.4323 H@1:41.2% H@10:46.4% ** BEST **
+  E 40/300 Loss:5.008 lr:5.00e-04 1s
+  >> Val MRR:0.4349 H@1:41.6% H@10:46.8% ** BEST **
+  >> Val MRR:0.4434 H@1:42.4% H@10:48.2% ** BEST **
+  E 50/300 Loss:4.890 lr:5.00e-04 1s
+  >> Val MRR:0.4469 H@1:42.4% H@10:49.2% ** BEST **
+  >> Val MRR:0.4601 H@1:44.2% H@10:49.8% ** BEST **
+  E 60/300 Loss:4.814 lr:5.00e-04 1s
+  >> Val MRR:0.4586 (best:0.4601 p:1/30)
+  >> Val MRR:0.4595 (best:0.4601 p:2/30)
+  E 70/300 Loss:4.759 lr:5.00e-04 1s
+  >> Val MRR:0.4632 H@1:43.8% H@10:50.6% ** BEST **
+  >> Val MRR:0.4677 H@1:44.4% H@10:50.8% ** BEST **
+  E 80/300 Loss:4.718 lr:5.00e-04 1s
+  >> Val MRR:0.4684 H@1:44.4% H@10:50.8% ** BEST **
+  >> Val MRR:0.4711 H@1:44.8% H@10:51.0% ** BEST **
+  E 90/300 Loss:4.685 lr:5.00e-04 1s
+  >> Val MRR:0.4730 H@1:45.0% H@10:51.4% ** BEST **
+  >> Val MRR:0.4747 H@1:45.2% H@10:51.4% ** BEST **
+  E100/300 Loss:4.660 lr:5.00e-04 1s
+  >> Val MRR:0.4731 (best:0.4747 p:1/30)
+  >> Val MRR:0.4694 (best:0.4747 p:2/30)
+  E110/300 Loss:4.640 lr:5.00e-04 1s
+  >> Val MRR:0.4731 (best:0.4747 p:3/30)
+  >> Val MRR:0.4785 H@1:46.0% H@10:51.4% ** BEST **
+  E120/300 Loss:4.623 lr:5.00e-04 1s
+  >> Val MRR:0.4737 (best:0.4785 p:1/30)
+  >> Val MRR:0.4769 (best:0.4785 p:2/30)
+  E130/300 Loss:4.608 lr:5.00e-04 1s
+  >> Val MRR:0.4743 (best:0.4785 p:3/30)
+  E140/300 Loss:4.595 lr:5.00e-04 1s
+  >> Val MRR:0.4803 H@1:45.8% H@10:51.8% ** BEST **
+  E150/300 Loss:4.584 lr:5.00e-04 1s
+  >> Val MRR:0.4770 (best:0.4803 p:1/30)
+  >> Val MRR:0.4757 (best:0.4803 p:2/30)
+  E160/300 Loss:4.574 lr:5.00e-04 1s
+  >> Val MRR:0.4761 (best:0.4803 p:3/30)
+  E170/300 Loss:4.567 lr:5.00e-04 1s
+  E180/300 Loss:4.559 lr:1.50e-04 1s
+  E190/300 Loss:4.538 lr:1.50e-04 1s
+  >> Val MRR:0.4756 (best:0.4803 p:10/30)
+  E200/300 Loss:4.533 lr:1.50e-04 1s
+  E210/300 Loss:4.530 lr:1.50e-04 1s
+  E220/300 Loss:4.526 lr:1.50e-04 1s
+  E230/300 Loss:4.525 lr:1.50e-04 1s
+  E240/300 Loss:4.523 lr:4.50e-05 1s
+  >> Val MRR:0.4789 (best:0.4803 p:20/30)
+  E250/300 Loss:4.517 lr:4.50e-05 1s
+  E260/300 Loss:4.514 lr:4.50e-05 1s
+  E270/300 Loss:4.514 lr:4.50e-05 1s
+  E280/300 Loss:4.512 lr:4.50e-05 1s
+  E290/300 Loss:4.511 lr:4.50e-05 1s
+  >> Val MRR:0.4784 (best:0.4803 p:30/30)
+  Early stop at epoch 295
+  Training done: 345s, best_val_MRR=0.4803
+<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  Full test evaluation (3134 triples)...
+
+  FINAL TEST: MRR=0.4612 H@1=43.3% H@3=47.0% H@10=51.6%
+  Saved: ./WN18RR_d200_L2_ls0.3_seed456.json
+=== cuda2 [12/12] Done in 348s ===
+=== CUDA2 DONE ===

@@ -1,0 +1,23 @@
+{
+  "dataset": "YAGO3-10",
+  "seed": 42,
+  "config": {
+    "d_h": 64,
+    "layers": 0,
+    "lr": 0.0005,
+    "epochs": 150,
+    "batch_size": 2048,
+    "label_smooth": 0.3,
+    "scorer": "DistMult"
+  },
+  "train_time_s": null,
+  "best_val_mrr": 0.6718,
+  "test": {
+    "MRR": 0.6649,
+    "Hits@1": 60.0,
+    "Hits@3": 71.0,
+    "Hits@10": 77.3
+  },
+  "source_log": "cuda1_yago64_distmult.log",
+  "rerun_round": "decoder_diag_round_20260504_2056"
+}

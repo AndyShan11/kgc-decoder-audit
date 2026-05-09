@@ -1,0 +1,23 @@
+{
+  "dataset": "WN18RR",
+  "seed": 456,
+  "config": {
+    "d_h": 200,
+    "layers": 2,
+    "lr": 0.0005,
+    "epochs": 300,
+    "batch_size": 1024,
+    "label_smooth": 0.3,
+    "scorer": "ComplEx"
+  },
+  "train_time_s": null,
+  "best_val_mrr": 0.4933,
+  "test": {
+    "MRR": 0.4759,
+    "Hits@1": 44.9,
+    "Hits@3": 48.7,
+    "Hits@10": 52.3
+  },
+  "source_log": "cuda2_fb_wn_decoder.log",
+  "rerun_round": "decoder_diag_round_20260504_2056"
+}

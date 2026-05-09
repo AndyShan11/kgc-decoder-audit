@@ -1,0 +1,23 @@
+{
+  "dataset": "Kinship",
+  "seed": 42,
+  "config": {
+    "d_h": 200,
+    "layers": 2,
+    "lr": 0.0005,
+    "epochs": 300,
+    "batch_size": 1024,
+    "label_smooth": 0.3,
+    "scorer": "DistMult"
+  },
+  "train_time_s": null,
+  "best_val_mrr": 0.686,
+  "test": {
+    "MRR": 0.6847,
+    "Hits@1": 55.6,
+    "Hits@3": 76.7,
+    "Hits@10": 94.2
+  },
+  "source_log": "cuda3_codex_umls_kinship.log",
+  "rerun_round": "decoder_diag_round_20260504_2056"
+}
