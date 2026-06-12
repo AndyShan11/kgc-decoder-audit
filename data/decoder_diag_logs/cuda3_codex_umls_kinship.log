@@ -1,5 +1,5 @@
 nohup: ignoring input
-=== cuda3 [1/18] ['python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '42', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [1/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '42', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -48,14 +48,14 @@ d_h=200 L=0 lr=0.0005 ls=0.3 epochs=300
   >> Val MRR:0.5248 (best:0.5409 p:30/30)
   Early stop at epoch 195
   Training done: 163s, best_val_MRR=0.5409
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (10311 triples)...
 
   FINAL TEST: MRR=0.5377 H@1=42.9% H@3=59.8% H@10=74.4%
-  Saved: ./codex-m_d200_L0_ls0.3_ComplEx_seed42.json
+  Saved: /home/shanxh/NM-NBFNet/codex-m_d200_L0_ls0.3_ComplEx_seed42.json
 === cuda3 [1/18] Done in 167s ===
-=== cuda3 [2/18] ['python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '123', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [2/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '123', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -110,14 +110,14 @@ d_h=200 L=0 lr=0.0005 ls=0.3 epochs=300
   >> Val MRR:0.5208 (best:0.5359 p:30/30)
   Early stop at epoch 235
   Training done: 196s, best_val_MRR=0.5359
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (10311 triples)...
 
   FINAL TEST: MRR=0.5381 H@1=43.1% H@3=59.9% H@10=74.7%
-  Saved: ./codex-m_d200_L0_ls0.3_ComplEx_seed123.json
+  Saved: /home/shanxh/NM-NBFNet/codex-m_d200_L0_ls0.3_ComplEx_seed123.json
 === cuda3 [2/18] Done in 200s ===
-=== cuda3 [3/18] ['python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '456', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [3/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '456', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -172,14 +172,14 @@ d_h=200 L=0 lr=0.0005 ls=0.3 epochs=300
   >> Val MRR:0.5096 (best:0.5321 p:30/30)
   Early stop at epoch 235
   Training done: 199s, best_val_MRR=0.5321
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (10311 triples)...
 
   FINAL TEST: MRR=0.5378 H@1=43.1% H@3=59.7% H@10=74.3%
-  Saved: ./codex-m_d200_L0_ls0.3_ComplEx_seed456.json
+  Saved: /home/shanxh/NM-NBFNet/codex-m_d200_L0_ls0.3_ComplEx_seed456.json
 === cuda3 [3/18] Done in 203s ===
-=== cuda3 [4/18] ['python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '42', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [4/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '42', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -233,14 +233,14 @@ d_h=200 L=0 lr=0.0005 ls=0.3 epochs=300
   >> Val MRR:0.5033 (best:0.5357 p:30/30)
   Early stop at epoch 215
   Training done: 159s, best_val_MRR=0.5357
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (10311 triples)...
 
   FINAL TEST: MRR=0.5284 H@1=42.4% H@3=58.3% H@10=73.4%
-  Saved: ./codex-m_d200_L0_ls0.3_seed42.json
+  Saved: /home/shanxh/NM-NBFNet/codex-m_d200_L0_ls0.3_seed42.json
 === cuda3 [4/18] Done in 164s ===
-=== cuda3 [5/18] ['python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '123', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [5/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '123', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -304,14 +304,14 @@ d_h=200 L=0 lr=0.0005 ls=0.3 epochs=300
   >> Val MRR:0.5013 (best:0.5201 p:30/30)
   Early stop at epoch 295
   Training done: 218s, best_val_MRR=0.5201
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (10311 triples)...
 
   FINAL TEST: MRR=0.5270 H@1=42.4% H@3=58.1% H@10=72.7%
-  Saved: ./codex-m_d200_L0_ls0.3_seed123.json
+  Saved: /home/shanxh/NM-NBFNet/codex-m_d200_L0_ls0.3_seed123.json
 === cuda3 [5/18] Done in 222s ===
-=== cuda3 [6/18] ['python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '456', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [6/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'codex-m', '--seed', '456', '--d_h', '200', '--layers', '0', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -356,14 +356,14 @@ d_h=200 L=0 lr=0.0005 ls=0.3 epochs=300
   >> Val MRR:0.5137 (best:0.5294 p:30/30)
   Early stop at epoch 180
   Training done: 133s, best_val_MRR=0.5294
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (10311 triples)...
 
   FINAL TEST: MRR=0.5293 H@1=42.4% H@3=58.5% H@10=73.3%
-  Saved: ./codex-m_d200_L0_ls0.3_seed456.json
+  Saved: /home/shanxh/NM-NBFNet/codex-m_d200_L0_ls0.3_seed456.json
 === cuda3 [6/18] Done in 138s ===
-=== cuda3 [7/18] ['python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [7/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -466,14 +466,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:4.051 lr:4.50e-05 0s
   >> Val MRR:0.8490 H@1:78.2% H@10:94.6% ** BEST **
   Training done: 12s, best_val_MRR=0.8490
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (661 triples)...
 
   FINAL TEST: MRR=0.8359 H@1=75.8% H@3=89.6% H@10=95.5%
-  Saved: ./UMLS_d200_L2_ls0.3_ComplEx_seed42.json
+  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed42.json
 === cuda3 [7/18] Done in 14s ===
-=== cuda3 [8/18] ['python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [8/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -576,14 +576,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   >> Val MRR:0.8346 (best:0.8360 p:3/30)
   E300/300 Loss:4.057 lr:4.50e-05 0s
   Training done: 11s, best_val_MRR=0.8360
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (661 triples)...
 
   FINAL TEST: MRR=0.8321 H@1=75.3% H@3=89.7% H@10=95.3%
-  Saved: ./UMLS_d200_L2_ls0.3_ComplEx_seed123.json
+  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed123.json
 === cuda3 [8/18] Done in 14s ===
-=== cuda3 [9/18] ['python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [9/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -686,14 +686,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:4.050 lr:4.50e-05 0s
   >> Val MRR:0.8229 H@1:73.4% H@10:94.0% ** BEST **
   Training done: 11s, best_val_MRR=0.8229
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (661 triples)...
 
   FINAL TEST: MRR=0.8353 H@1=74.9% H@3=91.5% H@10=95.6%
-  Saved: ./UMLS_d200_L2_ls0.3_ComplEx_seed456.json
+  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed456.json
 === cuda3 [9/18] Done in 14s ===
-=== cuda3 [10/18] ['python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [10/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -794,14 +794,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E290/300 Loss:3.925 lr:4.50e-05 0s
   E300/300 Loss:3.932 lr:4.50e-05 0s
   Training done: 11s, best_val_MRR=0.8783
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (661 triples)...
 
   FINAL TEST: MRR=0.8749 H@1=82.5% H@3=90.5% H@10=96.8%
-  Saved: ./UMLS_d200_L2_ls0.3_seed42.json
+  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed42.json
 === cuda3 [10/18] Done in 13s ===
-=== cuda3 [11/18] ['python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [11/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -892,14 +892,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E290/300 Loss:3.931 lr:4.50e-05 0s
   E300/300 Loss:3.941 lr:4.50e-05 0s
   Training done: 11s, best_val_MRR=0.8902
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (661 triples)...
 
   FINAL TEST: MRR=0.8580 H@1=79.4% H@3=90.3% H@10=96.7%
-  Saved: ./UMLS_d200_L2_ls0.3_seed123.json
+  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed123.json
 === cuda3 [11/18] Done in 14s ===
-=== cuda3 [12/18] ['python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [12/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'UMLS', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -999,14 +999,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:3.938 lr:4.50e-05 0s
   >> Val MRR:0.8824 H@1:83.6% H@10:96.2% ** BEST **
   Training done: 11s, best_val_MRR=0.8824
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (661 triples)...
 
   FINAL TEST: MRR=0.8785 H@1=82.8% H@3=91.2% H@10=97.1%
-  Saved: ./UMLS_d200_L2_ls0.3_seed456.json
+  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed456.json
 === cuda3 [12/18] Done in 14s ===
-=== cuda3 [13/18] ['python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [13/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -1102,14 +1102,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:3.744 lr:4.50e-05 0s
   >> Val MRR:0.7921 H@1:67.6% H@10:96.2% ** BEST **
   Training done: 11s, best_val_MRR=0.7921
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (1074 triples)...
 
   FINAL TEST: MRR=0.7734 H@1=66.3% H@3=85.7% H@10=96.4%
-  Saved: ./Kinship_d200_L2_ls0.3_ComplEx_seed42.json
+  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed42.json
 === cuda3 [13/18] Done in 14s ===
-=== cuda3 [14/18] ['python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [14/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -1213,14 +1213,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:3.756 lr:4.50e-05 0s
   >> Val MRR:0.7565 (best:0.7583 p:2/30)
   Training done: 11s, best_val_MRR=0.7583
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (1074 triples)...
 
   FINAL TEST: MRR=0.7559 H@1=64.2% H@3=84.2% H@10=95.6%
-  Saved: ./Kinship_d200_L2_ls0.3_ComplEx_seed123.json
+  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed123.json
 === cuda3 [14/18] Done in 14s ===
-=== cuda3 [15/18] ['python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
+=== cuda3 [15/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300', '--scorer', 'ComplEx'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -1321,14 +1321,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:3.744 lr:4.50e-05 0s
   >> Val MRR:0.7968 (best:0.7973 p:2/30)
   Training done: 11s, best_val_MRR=0.7973
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (1074 triples)...
 
   FINAL TEST: MRR=0.7586 H@1=63.3% H@3=85.9% H@10=96.9%
-  Saved: ./Kinship_d200_L2_ls0.3_ComplEx_seed456.json
+  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed456.json
 === cuda3 [15/18] Done in 14s ===
-=== cuda3 [16/18] ['python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [16/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '42', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -1428,14 +1428,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:3.729 lr:4.50e-05 0s
   >> Val MRR:0.6823 (best:0.6860 p:2/30)
   Training done: 11s, best_val_MRR=0.6860
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (1074 triples)...
 
   FINAL TEST: MRR=0.6847 H@1=55.6% H@3=76.7% H@10=94.2%
-  Saved: ./Kinship_d200_L2_ls0.3_seed42.json
+  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed42.json
 === cuda3 [16/18] Done in 13s ===
-=== cuda3 [17/18] ['python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [17/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '123', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -1537,14 +1537,14 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:3.728 lr:4.50e-05 0s
   >> Val MRR:0.7029 H@1:58.2% H@10:95.0% ** BEST **
   Training done: 11s, best_val_MRR=0.7029
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (1074 triples)...
 
   FINAL TEST: MRR=0.6777 H@1=54.7% H@3=76.3% H@10=93.9%
-  Saved: ./Kinship_d200_L2_ls0.3_seed123.json
+  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed123.json
 === cuda3 [17/18] Done in 13s ===
-=== cuda3 [18/18] ['python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
+=== cuda3 [18/18] ['/home/shanxh/Python-3.10.14/python', 'server_wn18rr.py', '--dataset', 'Kinship', '--seed', '456', '--d_h', '200', '--layers', '2', '--lr', '5e-4', '--epochs', '300'] ===
 Device: cuda, AMP: True
 GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
 ======================================================================
@@ -1643,11 +1643,11 @@ d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
   E300/300 Loss:3.740 lr:4.50e-05 0s
   >> Val MRR:0.6831 (best:0.6844 p:2/30)
   Training done: 11s, best_val_MRR=0.6844
-<env>/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+/home/shanxh/python3.10/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   return self.fget.__get__(instance, owner)()
   Full test evaluation (1074 triples)...
 
   FINAL TEST: MRR=0.6626 H@1=53.0% H@3=74.3% H@10=93.9%
-  Saved: ./Kinship_d200_L2_ls0.3_seed456.json
+  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed456.json
 === cuda3 [18/18] Done in 13s ===
 === CUDA3 DONE ===

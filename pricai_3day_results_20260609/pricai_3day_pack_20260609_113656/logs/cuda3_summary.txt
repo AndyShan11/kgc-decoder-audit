@@ -1,0 +1,174 @@
+2:=== CUDA3 START Sat Jun  6 11:32:11 AM CST 2026 ===
+4:=== CUDA3 wn_rotate_extra: WN18RR RotatE seed 888 d200 L2 batch128 chunk2048 ===
+7:======================================================================
+11:======================================================================
+68:  Early stop at epoch 270
+69:  Training done: 85594s, best_val_MRR=0.5068
+72:  FINAL TEST: MRR=0.4949 H@1=45.9% H@3=50.9% H@10=56.1%
+73:  Saved: /home/shanxh/NM-NBFNet/WN18RR_d200_L2_ls0.3_RotatE_seed888.json
+75:=== CUDA3 wn_rotate_extra: WN18RR RotatE seed 999 d200 L2 batch128 chunk2048 ===
+78:======================================================================
+82:======================================================================
+131:  Early stop at epoch 220
+132:  Training done: 69700s, best_val_MRR=0.5205
+135:  FINAL TEST: MRR=0.4910 H@1=45.5% H@3=50.5% H@10=55.8%
+136:  Saved: /home/shanxh/NM-NBFNet/WN18RR_d200_L2_ls0.3_RotatE_seed999.json
+138:=== CUDA3 yago_d128_headline: YAGO3-10 ComplEx seed 888 d128 L0 batch2048 chunk0 ===
+141:======================================================================
+144:======================================================================
+182:  Training done: 3795s, best_val_MRR=0.6965
+185:  FINAL TEST: MRR=0.6926 H@1=63.3% H@3=73.4% H@10=78.8%
+186:  Saved: /home/shanxh/NM-NBFNet/YAGO3-10_d128_L0_ls0.3_ComplEx_seed888.json
+188:=== CUDA3 yago_d256_saturation: YAGO3-10 ComplEx seed 42 d256 L0 batch1024 chunk0 ===
+191:======================================================================
+194:======================================================================
+229:  Training done: 5520s, best_val_MRR=0.6994
+232:  FINAL TEST: MRR=0.7047 H@1=64.6% H@3=74.4% H@10=80.1%
+233:  Saved: /home/shanxh/NM-NBFNet/YAGO3-10_d256_L0_ls0.3_ComplEx_seed42.json
+235:=== CUDA3 smallkg_6seed: UMLS DistMult seed 42 d200 L2 batch1024 chunk0 ===
+238:======================================================================
+241:======================================================================
+312:  Early stop at epoch 300
+313:  Training done: 17s, best_val_MRR=0.9240
+316:  FINAL TEST: MRR=0.9167 H@1=87.9% H@3=94.1% H@10=98.9%
+317:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed42.json
+319:=== CUDA3 smallkg_6seed: UMLS DistMult seed 123 d200 L2 batch1024 chunk0 ===
+322:======================================================================
+325:======================================================================
+400:  Training done: 17s, best_val_MRR=0.9410
+403:  FINAL TEST: MRR=0.9209 H@1=88.0% H@3=95.2% H@10=98.9%
+404:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed123.json
+406:=== CUDA3 smallkg_6seed: UMLS DistMult seed 456 d200 L2 batch1024 chunk0 ===
+409:======================================================================
+412:======================================================================
+499:  Training done: 17s, best_val_MRR=0.9312
+502:  FINAL TEST: MRR=0.9223 H@1=88.2% H@3=96.1% H@10=99.2%
+503:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed456.json
+505:=== CUDA3 smallkg_6seed: UMLS DistMult seed 777 d200 L2 batch1024 chunk0 ===
+508:======================================================================
+511:======================================================================
+597:  Training done: 17s, best_val_MRR=0.9326
+600:  FINAL TEST: MRR=0.9296 H@1=89.4% H@3=95.3% H@10=99.5%
+601:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed777.json
+603:=== CUDA3 smallkg_6seed: UMLS DistMult seed 888 d200 L2 batch1024 chunk0 ===
+606:======================================================================
+609:======================================================================
+689:  Training done: 17s, best_val_MRR=0.9460
+692:  FINAL TEST: MRR=0.9155 H@1=87.3% H@3=94.6% H@10=98.6%
+693:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed888.json
+695:=== CUDA3 smallkg_6seed: UMLS DistMult seed 999 d200 L2 batch1024 chunk0 ===
+698:======================================================================
+701:======================================================================
+785:  Training done: 21s, best_val_MRR=0.9247
+788:  FINAL TEST: MRR=0.9178 H@1=87.6% H@3=94.7% H@10=99.4%
+789:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_seed999.json
+791:=== CUDA3 smallkg_6seed: UMLS ComplEx seed 42 d200 L2 batch1024 chunk0 ===
+794:======================================================================
+797:======================================================================
+879:  Training done: 18s, best_val_MRR=0.9550
+882:  FINAL TEST: MRR=0.9319 H@1=88.7% H@3=97.1% H@10=99.7%
+883:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed42.json
+885:=== CUDA3 smallkg_6seed: UMLS ComplEx seed 123 d200 L2 batch1024 chunk0 ===
+888:======================================================================
+891:======================================================================
+976:  Training done: 22s, best_val_MRR=0.9499
+979:  FINAL TEST: MRR=0.9445 H@1=90.5% H@3=98.5% H@10=99.2%
+980:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed123.json
+982:=== CUDA3 smallkg_6seed: UMLS ComplEx seed 456 d200 L2 batch1024 chunk0 ===
+985:======================================================================
+988:======================================================================
+1072:  Training done: 19s, best_val_MRR=0.9515
+1075:  FINAL TEST: MRR=0.9494 H@1=91.2% H@3=98.5% H@10=99.5%
+1076:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed456.json
+1078:=== CUDA3 smallkg_6seed: UMLS ComplEx seed 777 d200 L2 batch1024 chunk0 ===
+1081:======================================================================
+1084:======================================================================
+1177:  Training done: 18s, best_val_MRR=0.9461
+1180:  FINAL TEST: MRR=0.9468 H@1=91.7% H@3=97.3% H@10=99.4%
+1181:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed777.json
+1183:=== CUDA3 smallkg_6seed: UMLS ComplEx seed 888 d200 L2 batch1024 chunk0 ===
+1186:======================================================================
+1189:======================================================================
+1284:  Training done: 18s, best_val_MRR=0.9491
+1287:  FINAL TEST: MRR=0.9479 H@1=91.8% H@3=97.3% H@10=99.1%
+1288:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed888.json
+1290:=== CUDA3 smallkg_6seed: UMLS ComplEx seed 999 d200 L2 batch1024 chunk0 ===
+1293:======================================================================
+1296:======================================================================
+1388:  Training done: 22s, best_val_MRR=0.9450
+1391:  FINAL TEST: MRR=0.9358 H@1=89.6% H@3=97.1% H@10=98.9%
+1392:  Saved: /home/shanxh/NM-NBFNet/UMLS_d200_L2_ls0.3_ComplEx_seed999.json
+1394:=== CUDA3 smallkg_6seed: Kinship DistMult seed 42 d200 L2 batch1024 chunk0 ===
+1397:======================================================================
+1400:======================================================================
+1471:  Early stop at epoch 295
+1472:  Training done: 21s, best_val_MRR=0.7347
+1475:  FINAL TEST: MRR=0.7080 H@1=57.8% H@3=79.5% H@10=95.3%
+1476:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed42.json
+1478:=== CUDA3 smallkg_6seed: Kinship DistMult seed 123 d200 L2 batch1024 chunk0 ===
+1481:======================================================================
+1484:======================================================================
+1570:  Training done: 21s, best_val_MRR=0.7495
+1573:  FINAL TEST: MRR=0.7093 H@1=58.7% H@3=78.9% H@10=95.3%
+1574:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed123.json
+1576:=== CUDA3 smallkg_6seed: Kinship DistMult seed 456 d200 L2 batch1024 chunk0 ===
+1579:======================================================================
+1582:======================================================================
+1672:  Training done: 19s, best_val_MRR=0.7397
+1675:  FINAL TEST: MRR=0.7013 H@1=57.8% H@3=77.8% H@10=95.0%
+1676:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed456.json
+1678:=== CUDA3 smallkg_6seed: Kinship DistMult seed 777 d200 L2 batch1024 chunk0 ===
+1681:======================================================================
+1684:======================================================================
+1761:  Training done: 19s, best_val_MRR=0.7429
+1764:  FINAL TEST: MRR=0.7105 H@1=58.4% H@3=79.8% H@10=94.9%
+1765:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed777.json
+1767:=== CUDA3 smallkg_6seed: Kinship DistMult seed 888 d200 L2 batch1024 chunk0 ===
+1770:======================================================================
+1773:======================================================================
+1851:  Training done: 20s, best_val_MRR=0.7583
+1854:  FINAL TEST: MRR=0.7149 H@1=58.8% H@3=80.2% H@10=95.5%
+1855:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed888.json
+1857:=== CUDA3 smallkg_6seed: Kinship DistMult seed 999 d200 L2 batch1024 chunk0 ===
+1860:======================================================================
+1863:======================================================================
+1938:  Training done: 18s, best_val_MRR=0.7384
+1941:  FINAL TEST: MRR=0.7177 H@1=59.2% H@3=79.8% H@10=95.9%
+1942:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_seed999.json
+1944:=== CUDA3 smallkg_6seed: Kinship ComplEx seed 42 d200 L2 batch1024 chunk0 ===
+1947:======================================================================
+1950:======================================================================
+2043:  Training done: 21s, best_val_MRR=0.8662
+2046:  FINAL TEST: MRR=0.8602 H@1=77.9% H@3=93.1% H@10=98.5%
+2047:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed42.json
+2049:=== CUDA3 smallkg_6seed: Kinship ComplEx seed 123 d200 L2 batch1024 chunk0 ===
+2052:======================================================================
+2055:======================================================================
+2140:  Training done: 21s, best_val_MRR=0.8647
+2143:  FINAL TEST: MRR=0.8566 H@1=77.3% H@3=93.3% H@10=98.7%
+2144:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed123.json
+2146:=== CUDA3 smallkg_6seed: Kinship ComplEx seed 456 d200 L2 batch1024 chunk0 ===
+2149:======================================================================
+2152:======================================================================
+2241:  Training done: 21s, best_val_MRR=0.8625
+2244:  FINAL TEST: MRR=0.8455 H@1=75.5% H@3=92.6% H@10=98.0%
+2245:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed456.json
+2247:=== CUDA3 smallkg_6seed: Kinship ComplEx seed 777 d200 L2 batch1024 chunk0 ===
+2250:======================================================================
+2253:======================================================================
+2343:  Training done: 21s, best_val_MRR=0.8655
+2346:  FINAL TEST: MRR=0.8517 H@1=76.6% H@3=93.3% H@10=98.2%
+2347:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed777.json
+2349:=== CUDA3 smallkg_6seed: Kinship ComplEx seed 888 d200 L2 batch1024 chunk0 ===
+2352:======================================================================
+2355:======================================================================
+2441:  Training done: 23s, best_val_MRR=0.8630
+2444:  FINAL TEST: MRR=0.8478 H@1=76.1% H@3=92.8% H@10=98.4%
+2445:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed888.json
+2447:=== CUDA3 smallkg_6seed: Kinship ComplEx seed 999 d200 L2 batch1024 chunk0 ===
+2450:======================================================================
+2453:======================================================================
+2543:  Training done: 21s, best_val_MRR=0.8586
+2546:  FINAL TEST: MRR=0.8584 H@1=77.8% H@3=93.2% H@10=98.5%
+2547:  Saved: /home/shanxh/NM-NBFNet/Kinship_d200_L2_ls0.3_ComplEx_seed999.json
+2548:=== CUDA3 DONE Mon Jun  8 09:25:00 AM CST 2026 ===

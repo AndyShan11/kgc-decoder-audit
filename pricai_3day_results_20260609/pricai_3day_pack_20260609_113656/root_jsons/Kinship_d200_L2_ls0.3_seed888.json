@@ -1,0 +1,24 @@
+{
+  "dataset": "Kinship",
+  "seed": 888,
+  "config": {
+    "d_h": 200,
+    "layers": 2,
+    "lr": 0.0005,
+    "epochs": 300,
+    "batch_size": 1024,
+    "score_chunk_size": 0,
+    "label_smooth": 0.3,
+    "dropout": 0.2
+  },
+  "params": 212400,
+  "train_time_s": 19.644503355026245,
+  "best_val_mrr": 0.7583121636366913,
+  "test": {
+    "MRR": 0.7149339851352562,
+    "Hits@1": 58.84543761638734,
+    "Hits@3": 80.16759776536313,
+    "Hits@10": 95.53072625698324,
+    "MR": 3.01024208566108
+  }
+}

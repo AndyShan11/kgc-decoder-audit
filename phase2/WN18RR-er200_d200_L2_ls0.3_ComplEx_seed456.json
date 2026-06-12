@@ -1,0 +1,23 @@
+{
+  "dataset": "WN18RR-er200",
+  "seed": 456,
+  "config": {
+    "d_h": 200,
+    "layers": 2,
+    "lr": 0.0005,
+    "epochs": 300,
+    "batch_size": 4096,
+    "label_smooth": 0.3,
+    "dropout": 0.2
+  },
+  "params": 2505000,
+  "train_time_s": 12.66064739227295,
+  "best_val_mrr": 0.0018790337645999654,
+  "test": {
+    "MRR": 0.0006520539961572926,
+    "Hits@1": 0.0,
+    "Hits@3": 0.0,
+    "Hits@10": 0.0,
+    "MR": 5821.669112954691
+  }
+}

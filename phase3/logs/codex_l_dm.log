@@ -1,0 +1,144 @@
+nohup: ignoring input
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | CoDEx-L | seed=42
+d_h=200 L=0 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 77951 ent, 138 rel, 1102386 edges
+  Train/Val/Test: 551193/30622/30622
+  Params: 15,618,200
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 134
+  E  1/200 Loss:8.349 lr:5.00e-04 10s
+  >> Val MRR:0.4933 H@1:39.8% H@10:66.4% ** BEST **
+  E 10/200 Loss:5.025 lr:5.00e-04 10s
+  >> Val MRR:0.5130 H@1:41.8% H@10:70.2% ** BEST **
+  >> Val MRR:0.5016 (best:0.5130 p:1/30)
+  E 20/200 Loss:4.905 lr:5.00e-04 10s
+  >> Val MRR:0.4997 (best:0.5130 p:2/30)
+  >> Val MRR:0.4983 (best:0.5130 p:3/30)
+  E 30/200 Loss:4.850 lr:5.00e-04 10s
+  E 40/200 Loss:4.814 lr:5.00e-04 10s
+  E 50/200 Loss:4.788 lr:5.00e-04 10s
+  E 60/200 Loss:4.767 lr:5.00e-04 10s
+  >> Val MRR:0.4843 (best:0.5130 p:10/30)
+  E 70/200 Loss:4.750 lr:5.00e-04 10s
+  E 80/200 Loss:4.736 lr:5.00e-04 10s
+  E 90/200 Loss:4.725 lr:5.00e-04 10s
+  E100/200 Loss:4.714 lr:5.00e-04 10s
+  E110/200 Loss:4.706 lr:5.00e-04 10s
+  >> Val MRR:0.4741 (best:0.5130 p:20/30)
+  E120/200 Loss:4.699 lr:1.50e-04 10s
+  E130/200 Loss:4.626 lr:1.50e-04 10s
+  E140/200 Loss:4.624 lr:1.50e-04 10s
+  E150/200 Loss:4.622 lr:1.50e-04 10s
+  E160/200 Loss:4.621 lr:4.50e-05 10s
+  >> Val MRR:0.4695 (best:0.5130 p:30/30)
+  Early stop at epoch 160
+  Training done: 1604s, best_val_MRR=0.5130
+  Full test evaluation (30622 triples)...
+
+  FINAL TEST: MRR=0.5337 H@1=43.2% H@3=59.2% H@10=72.5%
+  Saved: /home/shanxh/decoder/CoDEx-L_d200_L0_ls0.3_seed42.json
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | CoDEx-L | seed=123
+d_h=200 L=0 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 77951 ent, 138 rel, 1102386 edges
+  Train/Val/Test: 551193/30622/30622
+  Params: 15,618,200
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 134
+  E  1/200 Loss:8.338 lr:5.00e-04 10s
+  >> Val MRR:0.5053 H@1:41.4% H@10:68.8% ** BEST **
+  E 10/200 Loss:5.020 lr:5.00e-04 10s
+  >> Val MRR:0.5078 H@1:40.8% H@10:69.4% ** BEST **
+  >> Val MRR:0.5159 H@1:41.6% H@10:70.4% ** BEST **
+  E 20/200 Loss:4.902 lr:5.00e-04 10s
+  >> Val MRR:0.5083 (best:0.5159 p:1/30)
+  >> Val MRR:0.5141 (best:0.5159 p:2/30)
+  E 30/200 Loss:4.848 lr:5.00e-04 10s
+  >> Val MRR:0.5136 (best:0.5159 p:3/30)
+  E 40/200 Loss:4.813 lr:5.00e-04 10s
+  >> Val MRR:0.5197 H@1:42.4% H@10:69.4% ** BEST **
+  >> Val MRR:0.5096 (best:0.5197 p:1/30)
+  E 50/200 Loss:4.787 lr:5.00e-04 10s
+  >> Val MRR:0.5168 (best:0.5197 p:2/30)
+  >> Val MRR:0.5137 (best:0.5197 p:3/30)
+  E 60/200 Loss:4.767 lr:5.00e-04 10s
+  E 70/200 Loss:4.751 lr:5.00e-04 10s
+  E 80/200 Loss:4.737 lr:5.00e-04 10s
+  E 90/200 Loss:4.725 lr:5.00e-04 10s
+  >> Val MRR:0.5058 (best:0.5197 p:10/30)
+  E100/200 Loss:4.715 lr:5.00e-04 11s
+  E110/200 Loss:4.707 lr:5.00e-04 11s
+  E120/200 Loss:4.699 lr:1.50e-04 10s
+  E130/200 Loss:4.628 lr:1.50e-04 10s
+  E140/200 Loss:4.626 lr:1.50e-04 10s
+  >> Val MRR:0.5016 (best:0.5197 p:20/30)
+  E150/200 Loss:4.624 lr:1.50e-04 10s
+  E160/200 Loss:4.622 lr:4.50e-05 10s
+  E170/200 Loss:4.600 lr:4.50e-05 10s
+  E180/200 Loss:4.599 lr:4.50e-05 10s
+  E190/200 Loss:4.598 lr:4.50e-05 10s
+  >> Val MRR:0.4901 (best:0.5197 p:30/30)
+  Early stop at epoch 190
+  Training done: 1960s, best_val_MRR=0.5197
+  Full test evaluation (30622 triples)...
+
+  FINAL TEST: MRR=0.5371 H@1=44.0% H@3=59.1% H@10=72.3%
+  Saved: /home/shanxh/decoder/CoDEx-L_d200_L0_ls0.3_seed123.json
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | CoDEx-L | seed=456
+d_h=200 L=0 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 77951 ent, 138 rel, 1102386 edges
+  Train/Val/Test: 551193/30622/30622
+  Params: 15,618,200
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 134
+  E  1/200 Loss:8.346 lr:5.00e-04 11s
+  >> Val MRR:0.5013 H@1:40.0% H@10:68.2% ** BEST **
+  E 10/200 Loss:5.021 lr:5.00e-04 10s
+  >> Val MRR:0.5106 H@1:41.2% H@10:69.2% ** BEST **
+  >> Val MRR:0.5121 H@1:41.0% H@10:70.8% ** BEST **
+  E 20/200 Loss:4.901 lr:5.00e-04 10s
+  >> Val MRR:0.5123 H@1:41.4% H@10:70.0% ** BEST **
+  >> Val MRR:0.5123 H@1:41.0% H@10:70.8% ** BEST **
+  E 30/200 Loss:4.847 lr:5.00e-04 10s
+  >> Val MRR:0.5096 (best:0.5123 p:1/30)
+  >> Val MRR:0.5087 (best:0.5123 p:2/30)
+  E 40/200 Loss:4.812 lr:5.00e-04 10s
+  >> Val MRR:0.5173 H@1:42.4% H@10:71.2% ** BEST **
+  >> Val MRR:0.5085 (best:0.5173 p:1/30)
+  E 50/200 Loss:4.787 lr:5.00e-04 10s
+  >> Val MRR:0.5091 (best:0.5173 p:2/30)
+  >> Val MRR:0.5088 (best:0.5173 p:3/30)
+  E 60/200 Loss:4.766 lr:5.00e-04 10s
+  E 70/200 Loss:4.750 lr:5.00e-04 10s
+  E 80/200 Loss:4.736 lr:5.00e-04 10s
+  E 90/200 Loss:4.725 lr:5.00e-04 10s
+  >> Val MRR:0.4941 (best:0.5173 p:10/30)
+  E100/200 Loss:4.715 lr:5.00e-04 10s
+  E110/200 Loss:4.707 lr:5.00e-04 10s
+  E120/200 Loss:4.699 lr:1.50e-04 10s
+  E130/200 Loss:4.627 lr:1.50e-04 10s
+  E140/200 Loss:4.625 lr:1.50e-04 10s
+  >> Val MRR:0.4950 (best:0.5173 p:20/30)
+  E150/200 Loss:4.624 lr:1.50e-04 10s
+  E160/200 Loss:4.622 lr:4.50e-05 10s
+  E170/200 Loss:4.599 lr:4.50e-05 10s
+  E180/200 Loss:4.598 lr:4.50e-05 10s
+  E190/200 Loss:4.598 lr:4.50e-05 10s
+  >> Val MRR:0.4895 (best:0.5173 p:30/30)
+  Early stop at epoch 190
+  Training done: 2030s, best_val_MRR=0.5173
+  Full test evaluation (30622 triples)...
+
+  FINAL TEST: MRR=0.5363 H@1=43.9% H@3=59.0% H@10=72.2%
+  Saved: /home/shanxh/decoder/CoDEx-L_d200_L0_ls0.3_seed456.json

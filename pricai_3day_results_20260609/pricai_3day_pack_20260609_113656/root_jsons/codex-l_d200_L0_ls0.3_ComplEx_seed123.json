@@ -1,0 +1,24 @@
+{
+  "dataset": "codex-l",
+  "seed": 123,
+  "config": {
+    "d_h": 200,
+    "layers": 0,
+    "lr": 0.0005,
+    "epochs": 200,
+    "batch_size": 4096,
+    "score_chunk_size": 0,
+    "label_smooth": 0.3,
+    "dropout": 0.2
+  },
+  "params": 15618200,
+  "train_time_s": 1757.5660285949707,
+  "best_val_mrr": 0.5280126344947901,
+  "test": {
+    "MRR": 0.536758510915465,
+    "Hits@1": 43.965123114100976,
+    "Hits@3": 59.035987198746,
+    "Hits@10": 72.10502253281955,
+    "MR": 1330.2667689896152
+  }
+}

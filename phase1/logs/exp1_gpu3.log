@@ -1,0 +1,272 @@
+nohup: ignoring input
+=== [1/5] FB15k-237/ComplEx@d100/seed123 ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=123
+d_h=100 L=2 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 1,637,100
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.815 lr:5.00e-04 6s
+  >> Val MRR:0.3355 H@1:25.2% H@10:48.4% ** BEST **
+  E 10/200 Loss:6.815 lr:5.00e-04 4s
+  >> Val MRR:0.3526 H@1:26.8% H@10:53.6% ** BEST **
+  >> Val MRR:0.3610 H@1:27.6% H@10:53.2% ** BEST **
+  E 20/200 Loss:6.479 lr:5.00e-04 3s
+  >> Val MRR:0.3922 H@1:30.2% H@10:58.2% ** BEST **
+  >> Val MRR:0.3993 H@1:30.8% H@10:58.6% ** BEST **
+  E 30/200 Loss:6.325 lr:5.00e-04 6s
+  >> Val MRR:0.4080 H@1:32.0% H@10:58.2% ** BEST **
+  >> Val MRR:0.4116 H@1:31.8% H@10:58.8% ** BEST **
+  E 40/200 Loss:6.229 lr:5.00e-04 6s
+  >> Val MRR:0.4156 H@1:32.6% H@10:61.0% ** BEST **
+  >> Val MRR:0.4258 H@1:33.4% H@10:59.8% ** BEST **
+  E 50/200 Loss:6.159 lr:5.00e-04 6s
+  >> Val MRR:0.4256 (best:0.4258 p:1/30)
+  >> Val MRR:0.4264 H@1:33.2% H@10:61.2% ** BEST **
+  E 60/200 Loss:6.106 lr:5.00e-04 6s
+  >> Val MRR:0.4246 (best:0.4264 p:1/30)
+  >> Val MRR:0.4166 (best:0.4264 p:2/30)
+  E 70/200 Loss:6.058 lr:5.00e-04 6s
+  >> Val MRR:0.4187 (best:0.4264 p:3/30)
+  E 80/200 Loss:6.010 lr:5.00e-04 6s
+  E 90/200 Loss:5.955 lr:5.00e-04 6s
+  E100/200 Loss:5.885 lr:5.00e-04 6s
+  >> Val MRR:0.4210 (best:0.4264 p:10/30)
+  E110/200 Loss:5.807 lr:5.00e-04 6s
+  E120/200 Loss:5.730 lr:1.50e-04 6s
+  E130/200 Loss:5.661 lr:1.50e-04 6s
+  E140/200 Loss:5.639 lr:1.50e-04 6s
+  E150/200 Loss:5.619 lr:1.50e-04 6s
+  >> Val MRR:0.4010 (best:0.4264 p:20/30)
+  E160/200 Loss:5.601 lr:4.50e-05 6s
+  E170/200 Loss:5.581 lr:4.50e-05 3s
+  E180/200 Loss:5.575 lr:4.50e-05 3s
+  E190/200 Loss:5.569 lr:4.50e-05 3s
+  E200/200 Loss:5.564 lr:4.50e-05 3s
+  Training done: 1241s, best_val_MRR=0.4264
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4114 H@1=31.6% H@3=45.2% H@10=60.3%
+  Saved: /home/shanxh/decoder/FB15k-237_d100_L2_ls0.3_ComplEx_seed123.json
+=== FB15k-237/ComplEx@d100/seed123 rc=0 in 1343s ===
+=== [2/5] FB15k-237/ComplEx@d100/seed456 ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=456
+d_h=100 L=2 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 1,637,100
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:9.825 lr:5.00e-04 6s
+  >> Val MRR:0.3360 H@1:26.2% H@10:47.6% ** BEST **
+  E 10/200 Loss:6.835 lr:5.00e-04 6s
+  >> Val MRR:0.3577 H@1:27.4% H@10:54.4% ** BEST **
+  >> Val MRR:0.3704 H@1:28.4% H@10:55.8% ** BEST **
+  E 20/200 Loss:6.496 lr:5.00e-04 6s
+  >> Val MRR:0.3818 H@1:29.0% H@10:57.8% ** BEST **
+  >> Val MRR:0.3984 H@1:30.2% H@10:58.4% ** BEST **
+  E 30/200 Loss:6.332 lr:5.00e-04 6s
+  >> Val MRR:0.4041 H@1:31.2% H@10:59.0% ** BEST **
+  >> Val MRR:0.4038 (best:0.4041 p:1/30)
+  E 40/200 Loss:6.231 lr:5.00e-04 6s
+  >> Val MRR:0.4122 H@1:31.0% H@10:60.2% ** BEST **
+  >> Val MRR:0.4127 H@1:31.2% H@10:60.8% ** BEST **
+  E 50/200 Loss:6.154 lr:5.00e-04 6s
+  >> Val MRR:0.4189 H@1:32.2% H@10:60.6% ** BEST **
+  >> Val MRR:0.4194 H@1:32.4% H@10:59.6% ** BEST **
+  E 60/200 Loss:6.088 lr:5.00e-04 6s
+  >> Val MRR:0.4215 H@1:32.8% H@10:60.8% ** BEST **
+  >> Val MRR:0.4334 H@1:34.2% H@10:61.4% ** BEST **
+  E 70/200 Loss:6.015 lr:5.00e-04 6s
+  >> Val MRR:0.4209 (best:0.4334 p:1/30)
+  >> Val MRR:0.4233 (best:0.4334 p:2/30)
+  E 80/200 Loss:5.926 lr:5.00e-04 6s
+  >> Val MRR:0.4218 (best:0.4334 p:3/30)
+  >> Val MRR:0.4338 H@1:35.0% H@10:61.0% ** BEST **
+  E 90/200 Loss:5.830 lr:5.00e-04 6s
+  >> Val MRR:0.4289 (best:0.4338 p:1/30)
+  >> Val MRR:0.4180 (best:0.4338 p:2/30)
+  E100/200 Loss:5.738 lr:5.00e-04 6s
+  >> Val MRR:0.4114 (best:0.4338 p:3/30)
+  E110/200 Loss:5.662 lr:5.00e-04 6s
+  E120/200 Loss:5.601 lr:1.50e-04 6s
+  E130/200 Loss:5.534 lr:1.50e-04 6s
+  >> Val MRR:0.4104 (best:0.4338 p:10/30)
+  E140/200 Loss:5.519 lr:1.50e-04 6s
+  E150/200 Loss:5.505 lr:1.50e-04 6s
+  E160/200 Loss:5.492 lr:4.50e-05 6s
+  E170/200 Loss:5.472 lr:4.50e-05 6s
+  E180/200 Loss:5.468 lr:4.50e-05 3s
+  >> Val MRR:0.3967 (best:0.4338 p:20/30)
+  E190/200 Loss:5.464 lr:4.50e-05 3s
+  E200/200 Loss:5.460 lr:4.50e-05 3s
+  Training done: 1226s, best_val_MRR=0.4338
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4129 H@1=31.9% H@3=45.3% H@10=60.2%
+  Saved: /home/shanxh/decoder/FB15k-237_d100_L2_ls0.3_ComplEx_seed456.json
+=== FB15k-237/ComplEx@d100/seed456 rc=0 in 1304s ===
+=== [3/5] FB15k-237/ComplEx@d400/seed42 ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=42
+d_h=400 L=2 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 7,028,400
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+Traceback (most recent call last):
+  File "/home/shanxh/decoder/train.py", line 466, in <module>
+    best_val = train(model, graph, epochs=args.epochs, lr=args.lr,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shanxh/decoder/train.py", line 347, in train
+    ent = model.encode()
+          ^^^^^^^^^^^^^^
+  File "/home/shanxh/decoder/train.py", line 231, in encode
+    self._cached = self.graph_encoder(self._ei, self._et)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shanxh/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shanxh/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shanxh/decoder/train.py", line 179, in forward
+    x = layer(x, edge_index, edge_type) + x  # residual
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shanxh/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shanxh/.local/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shanxh/decoder/train.py", line 145, in forward
+    x_src_c = x[src_c]
+              ~^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 764.00 MiB. GPU 0 has a total capacity of 10.57 GiB of which 323.94 MiB is free. Process 45160 has 254.00 MiB memory in use. Process 1260763 has 6.44 GiB memory in use. Including non-PyTorch memory, this process has 3.44 GiB memory in use. Of the allocated memory 2.16 GiB is allocated by PyTorch, and 1.09 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+=== FB15k-237/ComplEx@d400/seed42 rc=1 in 4s ===
+=== [4/5] FB15k-237/ComplEx@d400/seed123 ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=123
+d_h=400 L=2 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 7,028,400
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:10.228 lr:5.00e-04 9s
+  >> Val MRR:0.3692 H@1:28.2% H@10:54.4% ** BEST **
+  E 10/200 Loss:6.206 lr:5.00e-04 8s
+  >> Val MRR:0.3983 H@1:31.0% H@10:59.0% ** BEST **
+  >> Val MRR:0.4102 H@1:32.2% H@10:60.6% ** BEST **
+  E 20/200 Loss:5.855 lr:5.00e-04 8s
+  >> Val MRR:0.4186 H@1:32.6% H@10:60.2% ** BEST **
+  >> Val MRR:0.4221 H@1:33.2% H@10:60.4% ** BEST **
+  E 30/200 Loss:5.714 lr:5.00e-04 8s
+  >> Val MRR:0.4226 H@1:32.8% H@10:61.6% ** BEST **
+  >> Val MRR:0.4223 (best:0.4226 p:1/30)
+  E 40/200 Loss:5.630 lr:5.00e-04 8s
+  >> Val MRR:0.4229 H@1:32.8% H@10:60.4% ** BEST **
+  >> Val MRR:0.4190 (best:0.4229 p:1/30)
+  E 50/200 Loss:5.569 lr:5.00e-04 8s
+  >> Val MRR:0.4213 (best:0.4229 p:2/30)
+  >> Val MRR:0.4245 H@1:33.4% H@10:61.6% ** BEST **
+  E 60/200 Loss:5.525 lr:5.00e-04 8s
+  >> Val MRR:0.4251 H@1:33.0% H@10:62.4% ** BEST **
+  >> Val MRR:0.4259 H@1:32.2% H@10:61.2% ** BEST **
+  E 70/200 Loss:5.487 lr:5.00e-04 8s
+  >> Val MRR:0.4314 H@1:33.6% H@10:63.2% ** BEST **
+  >> Val MRR:0.4244 (best:0.4314 p:1/30)
+  E 80/200 Loss:5.457 lr:5.00e-04 8s
+  >> Val MRR:0.4293 (best:0.4314 p:2/30)
+  >> Val MRR:0.4231 (best:0.4314 p:3/30)
+  E 90/200 Loss:5.433 lr:5.00e-04 8s
+  E100/200 Loss:5.409 lr:5.00e-04 8s
+  E110/200 Loss:5.391 lr:5.00e-04 8s
+  E120/200 Loss:5.373 lr:1.50e-04 8s
+  >> Val MRR:0.4241 (best:0.4314 p:10/30)
+  E130/200 Loss:5.313 lr:1.50e-04 8s
+  E140/200 Loss:5.302 lr:1.50e-04 8s
+  E150/200 Loss:5.297 lr:1.50e-04 8s
+  E160/200 Loss:5.292 lr:4.50e-05 8s
+  E170/200 Loss:5.273 lr:4.50e-05 8s
+  >> Val MRR:0.4268 (best:0.4314 p:20/30)
+  >> Val MRR:0.4333 H@1:33.6% H@10:63.2% ** BEST **
+  E180/200 Loss:5.271 lr:4.50e-05 8s
+  >> Val MRR:0.4285 (best:0.4333 p:1/30)
+  >> Val MRR:0.4307 (best:0.4333 p:2/30)
+  E190/200 Loss:5.268 lr:4.50e-05 8s
+  >> Val MRR:0.4262 (best:0.4333 p:3/30)
+  E200/200 Loss:5.264 lr:4.50e-05 8s
+  Training done: 1715s, best_val_MRR=0.4333
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4071 H@1=31.2% H@3=44.6% H@10=59.9%
+  Saved: /home/shanxh/decoder/FB15k-237_d400_L2_ls0.3_ComplEx_seed123.json
+=== FB15k-237/ComplEx@d400/seed123 rc=0 in 1728s ===
+=== [5/5] FB15k-237/ComplEx@d400/seed456 ===
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | FB15k-237 | seed=456
+d_h=400 L=2 lr=0.0005 ls=0.3 epochs=200
+======================================================================
+  KG: 14541 ent, 474 rel, 544230 edges
+  Train/Val/Test: 272115/17535/20466
+  Params: 7,028,400
+  Training: epochs=200, lr=0.0005, batch=4096, ls=0.3
+  Steps/epoch: 66
+  E  1/200 Loss:10.251 lr:5.00e-04 9s
+  >> Val MRR:0.3752 H@1:29.0% H@10:54.4% ** BEST **
+  E 10/200 Loss:6.214 lr:5.00e-04 9s
+  >> Val MRR:0.4052 H@1:31.4% H@10:59.4% ** BEST **
+  >> Val MRR:0.4140 H@1:32.0% H@10:59.2% ** BEST **
+  E 20/200 Loss:5.856 lr:5.00e-04 8s
+  >> Val MRR:0.4149 H@1:32.8% H@10:59.8% ** BEST **
+  >> Val MRR:0.4141 (best:0.4149 p:1/30)
+  E 30/200 Loss:5.712 lr:5.00e-04 8s
+  >> Val MRR:0.4261 H@1:33.6% H@10:60.6% ** BEST **
+  >> Val MRR:0.4212 (best:0.4261 p:1/30)
+  E 40/200 Loss:5.627 lr:5.00e-04 8s
+  >> Val MRR:0.4128 (best:0.4261 p:2/30)
+  >> Val MRR:0.4229 (best:0.4261 p:3/30)
+  E 50/200 Loss:5.567 lr:5.00e-04 8s
+  E 60/200 Loss:5.522 lr:5.00e-04 8s
+  E 70/200 Loss:5.486 lr:5.00e-04 8s
+  E 80/200 Loss:5.456 lr:5.00e-04 8s
+  >> Val MRR:0.4132 (best:0.4261 p:10/30)
+  E 90/200 Loss:5.432 lr:5.00e-04 8s
+  E100/200 Loss:5.409 lr:5.00e-04 8s
+  E110/200 Loss:5.390 lr:5.00e-04 8s
+  E120/200 Loss:5.372 lr:1.50e-04 8s
+  E130/200 Loss:5.313 lr:1.50e-04 8s
+  >> Val MRR:0.4180 (best:0.4261 p:20/30)
+  E140/200 Loss:5.305 lr:1.50e-04 8s
+  E150/200 Loss:5.298 lr:1.50e-04 8s
+  E160/200 Loss:5.293 lr:4.50e-05 8s
+  E170/200 Loss:5.274 lr:4.50e-05 8s
+  E180/200 Loss:5.270 lr:4.50e-05 8s
+  >> Val MRR:0.4173 (best:0.4261 p:30/30)
+  Early stop at epoch 180
+  Training done: 1540s, best_val_MRR=0.4261
+  Full test evaluation (20466 triples)...
+
+  FINAL TEST: MRR=0.4126 H@1=31.9% H@3=45.4% H@10=60.0%
+  Saved: /home/shanxh/decoder/FB15k-237_d400_L2_ls0.3_ComplEx_seed456.json
+=== FB15k-237/ComplEx@d400/seed456 rc=0 in 1553s ===
+=== GPU3 QUEUE DONE ===

@@ -1,46 +1,20 @@
 % !TEX root = main.tex
 % Technical appendices. This file is \input'd after \appendix in main.tex.
-% NOTE on length: ISWC 2026 caps the in-PDF appendix at 2 pages. The
-% material below substantially exceeds that limit and is intended primarily
-% as supplementary material (uploaded as a separate file via the
-% submission system). The first 2 pages -- Sections A (dataset stats /
-% evaluation protocol) and Q (reproducibility summary) -- are the parts
-% we prioritise for in-PDF inclusion.
-
-\section*{Appendix: Contents}
-This appendix contains:
-(A) dataset statistics and evaluation protocol;
-(B) hyperparameter search protocol;
-(C) implementation and training details;
-(D) complexity and efficiency analysis;
-(E) per-relation MRR breakdown on WN18RR;
-(F) comparison with 2024--2025 foundation-model baselines;
-(G) statistical significance tests;
-(H) extended hyperparameter sensitivity;
-(I) parameter-efficiency sweep on FB15k-237;
-(I$'$) additional benchmarks UMLS and Kinship;
-(J) training dynamics;
-(K) qualitative case studies;
-(L) negative results and 3-seed resolution of YAGO3-10 reversal findings;
-(M) full result table across 41 runs;
-(N) limitations;
-(O) broader impact;
-(P) FB15k-237 ablation table;
-(Q) reproducibility checklist summary.
-
 %===========================================================
 \section{Dataset Statistics and Evaluation Protocol}
 \label{app:data}
 
 \subsection{Dataset Statistics}
 We use three standard transductive KG-completion benchmarks; Table~\ref{tab:data} reports basic statistics.
-All three are used \emph{as-is} with their canonical train/valid/test splits; we do not perform any additional filtering or preprocessing beyond adding the inverse of every training triple (standard in CompGCN~\citep{compgcn} and NBFNet~\citep{nbfnet}).
+All datasets are used \emph{as-is} with their canonical train/valid/test splits; we do not perform any additional filtering or preprocessing beyond adding the inverse of every training triple (standard in CompGCN~\citep{compgcn} and NBFNet~\citep{nbfnet}). CoDEx-M and CoDEx-L use the released Safavi et al.\ splits and entity sets; evaluation is filtered, uses average-rank tie-breaking, and does not add inverse triples to valid/test except as reverse-direction evaluation queries.
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
 \caption{Dataset statistics. Inverse triples are added at training time and account for the doubled relation count during message passing.}
 \label{tab:data}
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lrrrrrr}
 \toprule
 Dataset & \#Entities & \#Relations & \#Train & \#Valid & \#Test & Avg.\ deg. \\
@@ -50,6 +24,7 @@ WN18RR    & 40{,}943  &  11 &  86{,}835 &  3{,}034 &  3{,}134 &  4.2 \\
 YAGO3-10  & 123{,}182 &  37 & 1{,}079{,}040 &  5{,}000 &  5{,}000 & 17.5 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 FB15k-237 (Freebase subset) has general-domain entities linked by fine-grained relations (\eg \emph{film.director}, \emph{person.nationality}).
@@ -67,7 +42,7 @@ This is the convention used by ConvE, CompGCN, NBFNet.
 Optimistic tie-breaking would inflate our YAGO3-10 MRR by $\sim$+0.002--0.003; our reported numbers are therefore not cherry-picked.
 
 \paragraph{Why no OGB.}
-We deliberately restrict to FB15k-237 / WN18RR / YAGO3-10. ogbl-biokg (5M entities) and ogbl-wikikg2 (2.5M entities) exceed the memory of our RTX 2080 Ti. Since our thesis concerns the training recipe rather than scaling, YAGO3-10 (123K entities, 1.08M triples) is large enough to invalidate the common assumption that path-based methods dominate on large KGs.
+We deliberately restrict the large standard-KG portion to FB15k-237 / WN18RR / YAGO3-10. ogbl-biokg (5M entities) and ogbl-wikikg2 (2.5M entities) exceed the memory of our RTX 2080 Ti. Since our thesis concerns the training recipe rather than scaling, YAGO3-10 (123K entities, 1.08M triples) is large enough to test whether path-based methods dominate on moderately large structural KGs under this recipe.
 
 %===========================================================
 \section{Training Algorithm Pseudocode}
@@ -100,7 +75,7 @@ We deliberately restrict to FB15k-237 / WN18RR / YAGO3-10. ogbl-biokg (5M entiti
 
 We used a \textbf{constrained grid search} (not Bayesian or population-based) so that the recipe remains easy to reproduce. The grid is intentionally small.
 
-\begin{table}[h]
+\begin{table*}[!htbp]
 \centering
 \caption{Hyperparameter search grid.}
 \label{tab:hp-grid}
@@ -121,9 +96,9 @@ LR schedule              & \{MultiStep, cosine, constant\}      & MultiStep (0.6
 Epochs                   & \{150, 200, 300\}                    & 300 (WN), 200 (FB), 150 (YAGO) \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-Across the project we ran over 80 training runs across 5 datasets (FB15k-237, WN18RR, YAGO3-10, UMLS, Kinship) totalling $\approx 200$ GPU-hours. Every run's JSON output is released.
+Across the project we ran over 80 training runs across seven benchmarks (FB15k-237, WN18RR, YAGO3-10, CoDEx-M, CoDEx-L, UMLS, Kinship) totalling $>200$ GPU-hours. Per-run JSON outputs will be released upon acceptance.
 We use \emph{published} baseline numbers rather than re-tuning them; this avoids the common failure mode of under-tuning baselines.
 
 %===========================================================
@@ -135,9 +110,11 @@ We use \emph{published} baseline numbers rather than re-tuning them; this avoids
 \paragraph{Decoder.} DistMult or ComplEx with a \emph{decoder-specific} relation embedding (we do not share encoder/decoder relation parameters).
 
 \paragraph{Training objective.} 1-vs-all cross-entropy with smoothing:
-\begin{equation*}
-\mathcal{L} = -\!\!\sum_{(h,r,t) \in \mathcal{D}}\! \Big[(1-\varepsilon)\log p(t|h,r) + \tfrac{\varepsilon}{|\mathcal{E}|}\sum_{e} \log p(e|h, r)\Big].
-\end{equation*}
+\begin{align*}
+\mathcal{L} = -\!\!\sum_{(h,r,t) \in \mathcal{D}}\! \Big[
+&(1-\varepsilon)\log p(t|h,r) \\
+&+ \tfrac{\varepsilon}{|\mathcal{E}|}\sum_{e} \log p(e|h, r)\Big].
+\end{align*}
 All entities serve as negatives (no sampling).
 
 \paragraph{Optimisation.} AdamW ($\beta = (0.9, 0.999)$, weight decay $10^{-4}$), lr $5\!\times\!10^{-4}$, MultiStepLR with milestones at 60\% and 80\% of total epochs, $\gamma = 0.3$. Gradient clipping at norm 10. Mixed precision (AMP / FP16) on all datasets.
@@ -146,16 +123,19 @@ All entities serve as negatives (no sampling).
 Per-layer message aggregation at $d=200$ does not fit in 11 GB on YAGO3-10; we use $d=64$ with 200K-edge chunks in FP16.
 
 \paragraph{Hardware and wall-clock time.}
-All runs on a single NVIDIA RTX 2080 Ti (11 GB).
-Per-run: FB15k-237 200 epochs $\approx$ 20--25 min; WN18RR 300 epochs $\approx$ 6 min; YAGO3-10 150 epochs $\approx 3.8$--$7.6$ h.
-Aggregate: $\approx 120$ GPU-hours.
+Each run uses one NVIDIA RTX 2080 Ti (11 GB).
+Per-run wall time for the primary DistMult/ComplEx grid: FB15k-237 $\approx$ 20--25 min (200 epochs); WN18RR $\approx$ 6 min (300 epochs); YAGO3-10 $\approx 3.8$--$7.6$ h (150 epochs). The auxiliary distance-decoder checks are much slower under chunked 1-vs-all scoring: WN18RR RotatE requires roughly 20--22 h per seed on the same 11\,GB GPU, and FB15k-237 RotatE/TransE remains computationally prohibitive in this implementation.
+Aggregate: $>200$ GPU-hours including completed primary and diagnostic runs.
 
 Per-dataset hyperparameter snapshot (final configuration used for Table~\ref{tab:main}):
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
 \caption{Hyperparameter configurations per dataset.}
 \label{tab:hparams}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lccc}
 \toprule
 Hyperparameter & FB15k-237 & WN18RR & YAGO3-10 \\
@@ -173,6 +153,7 @@ LR decay factor & 0.3 & 0.3 & 0.3 \\
 Optimiser & AdamW & AdamW & AdamW \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 %===========================================================
@@ -180,11 +161,13 @@ Optimiser & AdamW & AdamW & AdamW \\
 \label{app:efficiency}
 
 \subsection{Parameter Count}
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
 \caption{Parameter count (millions). NBFNet figures are the ``paper-model'' sizes reported in \citet{nbfnet}; A$^{*}$Net follows the NBFNet architecture.}
 \label{tab:params}
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lrrr}
 \toprule
 Model & FB15k-237 & WN18RR & YAGO3-10 \\
@@ -198,6 +181,7 @@ A$^{*}$Net~\citep{astarnet} & similar to NBFNet & similar & similar \\
 \ours\ (ComplEx)         & 5.8 M  & 16.4 M  & 15.8 M \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 \subsection{Forward-Pass Complexity}
@@ -206,7 +190,7 @@ Decoder: $\mathcal{O}(|\mathcal{E}| \cdot d)$ per query.
 NBFNet is $\mathcal{O}(L \cdot |\mathcal{T}| \cdot d)$ \emph{per query}; our encoder cost is amortised across a query batch, which is the root of the efficiency gap.
 
 \subsection{Inference Throughput (FB15k-237, RTX 2080 Ti 11 GB)}
-\ours\ encodes the full graph once (73 ms) and scores 1000 queries in 2 ms, giving effective throughput $\approx 1.8 \!\times\! 10^5$ queries/sec.
+\ours\ encodes the full graph once (73 ms) and scores 1000 queries in 2 ms, giving effective scoring throughput $\approx 1.8 \!\times\! 10^5$ queries/sec after graph encoding.
 NBFNet requires a full per-query pass ($\sim$500 ms on A100, Tab.~4 of \citep{astarnet}); on our hardware this scales to $\sim$100$\times$ slower than ours. A$^{*}$Net prunes to $\sim$10\% of edges, narrowing the gap to $\sim$20$\times$.
 
 \subsection{Training Throughput}
@@ -214,25 +198,23 @@ On YAGO3-10 at batch size 2048: $\approx$526 steps/epoch, $\approx$183 s/epoch.
 NBFNet reports $\sim$8 h/epoch on YAGO3-10 on 4$\times$V100 \citep{nbfnet}; on a single 2080 Ti this would be $\sim$30 h/epoch, essentially infeasible.
 
 \subsection{Measured Inference Throughput (full table)}
-\begin{table}[h]
+\begin{table*}[!htbp]
 \centering
-\caption{Measured inference throughput on a single NVIDIA RTX 2080 Ti (same hardware as training). Benchmark: encode graph once, then score 2{,}000 random $(h, r, ?)$ queries in batches of 64; median over 15 repeats. $n_{\text{param}}$ in millions.}
+\caption{Measured scoring throughput on a single NVIDIA RTX 2080 Ti (same hardware as training). Benchmark: encode graph once, then score 2{,}000 random $(h, r, ?)$ queries in batches of 64; median over 15 repeats. These are not full training or end-to-end pipeline wall-clock numbers. $n_{\text{param}}$ in millions.}
 \label{tab:throughput}
 \small
-\resizebox{\textwidth}{!}{%
 \begin{tabular}{llrrrrr}
 \toprule
 Dataset & Config & $n_{\text{param}}$ & Encode (ms) & Score (ms/q) & QPS & E2E 10K (ms) \\
 \midrule
 WN18RR    & $L{=}0$ ComplEx $d{=}200$   &  8.2 &  0.2 & 0.005 & \best{199 K} & 50 \\
 YAGO3-10  & $L{=}0$ ComplEx $d{=}64$    &  7.9 &  0.7 & 0.008 & 122 K & 82 \\
-YAGO3-10  & $L{=}0$ ComplEx $d{=}128$ (SOTA)   & 15.8 &  0.7 & 0.009 & 112 K & 90 \\
+YAGO3-10  & $L{=}0$ ComplEx $d{=}128$ (headline)   & 15.8 &  0.7 & 0.009 & 112 K & 90 \\
 FB15k-237 & $L{=}3$ ComplEx $d{=}200$   &  3.5 & 35.5 & 0.003 & 357 K & 63 \\
 YAGO3-10  & $L{=}2$ DistMult $d{=}64$   &  7.9 & 25.9 & 0.003 & 297 K & 60 \\
 \bottomrule
-\end{tabular}%
-}
-\end{table}
+\end{tabular}
+\end{table*}
 
 %===========================================================
 \section{YAGO3-10 Dimension and Smoothing Sweeps}
@@ -241,7 +223,7 @@ YAGO3-10  & $L{=}2$ DistMult $d{=}64$   &  7.9 & 25.9 & 0.003 & 297 K & 60 \\
 \subsection{YAGO3-10 dimension sweep}
 Table~\ref{tab:yago-dsweep} shows MRR as $d$ grows for pure ComplEx ($L=0$, $\varepsilon=0.3$). Pushing $d$ from 64 to 128 lifts 3-seed MRR by $+0.024$ with $5\times$ tighter std; $d=256$ is approximately saturated.
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
 \caption{YAGO3-10 dimension sweep, pure ComplEx ($L=0$, $\varepsilon=0.3$). [3]: 3-seed mean $\pm$ std; [1]: single seed.}
 \label{tab:yago-dsweep}
@@ -260,11 +242,13 @@ $d$ & Test MRR & Params & N \\
 \subsection{Label-smoothing is dataset-dependent}
 Our FB15k-237 and WN18RR results use $\varepsilon = 0.3$ as the per-dataset optimum. Fine-grained sweeps on WN18RR (Table~\ref{tab:ls-wn}) confirm the sweet spot is in $[0.2, 0.4]$. But on YAGO3-10 the optimum \emph{shifts lower}: $\varepsilon = 0.1$ gives 0.679 (single seed, $L=0$, $d=64$) versus 0.665 at $\varepsilon = 0.3$. This is a minor shift but consistent with our broader finding that YAGO3-10's dense structure behaves differently from FB/WN: it needs less regularisation because the 1-vs-all softmax is already a strong signal on 123 K entities.
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
 \caption{Fine-grained label-smoothing sweep (WN18RR L=0 ComplEx and YAGO3-10 L=0 ComplEx $d{=}64$, single seed 42).}
 \label{tab:ls-wn}
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lccccccc}
 \toprule
 Dataset & $\varepsilon{=}0.05$ & $\varepsilon{=}0.1$ & $\varepsilon{=}0.15$ & $\varepsilon{=}0.2$ & $\varepsilon{=}0.3$ & $\varepsilon{=}0.4$ & $\varepsilon{=}0.5$ \\
@@ -273,6 +257,7 @@ WN18RR   & 0.470 & --- & 0.481 & 0.484 & 0.485 & \best{0.487} & 0.486 \\
 YAGO3-10 & --- & \best{0.679} & --- & --- & 0.665 & --- & 0.646 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 \subsection{Longer training doesn't help on WN18RR}
@@ -284,7 +269,7 @@ Doubling WN18RR from 300 to 600 epochs (3 seeds, $L=0$ ComplEx, $\varepsilon=0.3
 
 Following \citet{nbfnet}, we aggregate WN18RR relations by cardinality class (1-to-1, 1-to-N, N-to-1, N-to-N). Table~\ref{tab:per-rel} shows per-class filtered MRR.
 
-\begin{table}[h]
+\begin{table*}[!htbp]
 \centering
 \caption{WN18RR per-cardinality MRR. Our model is balanced; the 1-to-N weakness is shared by all entity-embedding methods, while path-based reasoners excel on that class.}
 \label{tab:per-rel}
@@ -300,7 +285,7 @@ NBFNet (pub.)   & 0.55 & 0.19 & 0.25 & 0.74 \\
 \ours\ (ours)   & \best{0.52} & 0.08 & 0.14 & \best{0.72} \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 On N-to-N relations (\eg \emph{also\_see}) we are competitive with NBFNet despite a much simpler architecture; on 1-to-N (\eg \emph{hypernym}), path-based propagation appears to help because hypernym chains require multi-hop reasoning. This supports our thesis that path-based reasoning is beneficial when the target has sparse 1-to-N structure, but not necessary for dense graphs like YAGO3-10.
 
@@ -308,7 +293,7 @@ On N-to-N relations (\eg \emph{also\_see}) we are competitive with NBFNet despit
 \label{app:yago-per-rel}
 Table~\ref{tab:yago-per-rel} reports the per-relation breakdown of our \emph{best} YAGO3-10 configuration (pure ComplEx, $L{=}0$, $d{=}64$, single seed 42). YAGO3-10 has 37 distinct relations; with inverses, the test-set triples cover 34 relations with at least one test example. We list all 34, sorted by MRR.
 
-\begin{table}[h]
+\begin{table*}[!htbp]
 \centering
 \caption{YAGO3-10 per-relation MRR for our best $L{=}0$ ComplEx model (seed 42). $n$: number of test triples; low-$n$ relations give noisy MRR estimates but we include them for completeness.}
 \label{tab:yago-per-rel}
@@ -353,7 +338,7 @@ Rel-ID & Name & $n$ & MRR & H@1 (\%) & H@10 (\%) \\
 18 & edited              &   22 & \secondbest{0.037} & \phantom{0}0.0 & \phantom{0}9.1 \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 \paragraph{Observations.}
 (1) \textbf{High-MRR relations are high-frequency and either bijective or strongly transitive}: \emph{hasGender} (bijective to $\{$male, female$\}$), \emph{playsFor}/\emph{isAffiliatedTo} (dense and strongly transitive for sportspeople); these are exactly where a 1-vs-all softmax over 123K entities provides the cleanest signal, and ComplEx excels.
@@ -377,7 +362,7 @@ Aggregate numbers (Table 2 of \citep{galkin2024ultra}): \textbf{0-shot MRR $= 0.
 Prompt-graph in-context learner evaluated on 43 KGs. Primary claim is \emph{universal} reasoning, not per-dataset SOTA. Per-dataset numbers live in Appendix G of the paper; we leave the FB/WN/YAGO cells blank in Table~\ref{tab:modern} rather than estimate.
 
 \paragraph{SimKGC~\citep{simkgc2022}.}
-Text-based contrastive baseline reading entity names / descriptions. WN18RR MRR $= 0.67$ (paper-reported); substantially above our 0.478 but not apples-to-apples with structural-only methods. YAGO3-10 not reported.
+Text-based contrastive baseline reading entity names / descriptions. WN18RR MRR $= 0.67$ (paper-reported); substantially above our best structural-only WN18RR spot-check ($0.493$), but not apples-to-apples with structural-only methods. YAGO3-10 not reported.
 
 \paragraph{NodePiece~\citep{nodepiece2022}.}
 Parameter-efficient tokeniser. \emph{Verified} numbers from Table 2 of \citep{nodepiece2022}: FB15k-237 NodePiece+RotatE \textbf{MRR 0.256, H@10 0.420}. They also report OGB-wikikg2 test MRR $= 0.570$ with 6.9 M parameters. NodePiece and our recipe are orthogonal: a NodePiece encoder trained with our recipe is a natural experiment.
@@ -385,11 +370,12 @@ Parameter-efficient tokeniser. \emph{Verified} numbers from Table 2 of \citep{no
 \paragraph{InGram~\citep{ingram2024}.}
 Targets inductive generalisation across relations; not directly comparable in the standard transductive setting.
 
-\begin{table}[h]
+\begin{table*}[!htbp]
 \centering
-\caption{Recent KG-completion baselines. KG-ICL cells are our \emph{verified reproductions} using the authors' released \texttt{KG-ICL-6L} checkpoint with default inference arguments (MSG=concat, hidden\_dim=32, attn\_dim=5, shot=5). ULTRA reproduction attempts on our server failed at the rspmm JIT-compile / \texttt{torch\_geometric} preprocessing stage (we report the paper's aggregate number instead and leave per-dataset cells unverified). ``n.v.'': not verified; ``---'': not reported / n.a. For ULTRA, $\star$ marks datasets inside its pretraining mixture (not true zero-shot).}
+\caption{Recent KG-completion baselines. KG-ICL cells are our \emph{verified reproductions} using the authors' released \texttt{KG-ICL-6L} checkpoint with default inference arguments (MSG=concat, hidden\_dim=32, attn\_dim=5, shot=5). ULTRA reproduction remains unverified on our server because the released stack did not complete preprocessing / extension setup; we report the paper's aggregate number and leave per-dataset cells unverified. ``n.v.'': not verified; ``---'': not reported / n.a. For ULTRA, $\star$ marks datasets inside its pretraining mixture (not true zero-shot).}
 \label{tab:modern}
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccc}
 \toprule
@@ -402,17 +388,17 @@ KG-ICL-6L~\citep{kgicl2024} (verified reprod.)     & $\sim$0.07 M & \textbf{0.35
 NodePiece+RotatE~\citep{nodepiece2022}             & 3.2 M   & 0.256 & n.v. & --- \\
 SimKGC~\citep{simkgc2022} (text)                   & 110 M   & n.v.  & 0.67 & --- \\
 \midrule
-\ours\ (ours)                                     & 3.0--15.8 M & \best{0.420} & \best{0.485} & \best{0.696} \\
+\ours\ (best measured)                            & 3.0--15.8 M & \best{0.420} & \best{0.493} & \best{0.696} \\
 \bottomrule
-\end{tabular}%
+\end{tabular}
 }
-\end{table}
+\end{table*}
 
 \paragraph{Verified KG-ICL reproduction.}
 We ran \texttt{src/evaluation.py} with the released \texttt{KG-ICL-6L} checkpoint on each of FB15k-237 / WN18RR / YAGO3-10, using the authors' preprocessing pipeline (\texttt{data\_process.py}) to generate the required \texttt{processed\_data/<ds>/} directory structure. Numbers quoted in Table~\ref{tab:modern} match the log line \texttt{FB15k-237 MRR:0.3550 H@1:0.2697 H@3:0.3890 H@10:0.5227} (and analogous lines for WN18RR / YAGO3-10) that \texttt{evaluation.py} prints on completion. All three datasets run below our method's MRR, confirming that KG-ICL's contribution is \emph{transfer} across 43 KGs rather than per-dataset peak performance.
 
-\paragraph{ULTRA reproduction attempt: blocked.}
-We made two serious attempts to reproduce ULTRA. Both failed at the C++ extension layer: (i) the first attempt failed on \texttt{ModuleNotFoundError: pkg\_resources} (setuptools 82 removed the module); fixing via \texttt{setuptools<81}; (ii) the second attempt failed on \texttt{RuntimeError: Ninja is required to load C++ extensions}; fixing via \texttt{pip install ninja} + PATH export; (iii) the third attempt made ULTRA's rspmm kernel compile correctly for FB15k-237, but WN18RR re-triggered \texttt{torch\_geometric}'s \texttt{WordNet18RR.download()} which timed out against \texttt{villmow/datasets\_knowledge\_embedding/raw/master/WN18RR/test.txt}; substituting the file from our local copy then hit a format-compatibility check that we could not reconcile within the time budget. We therefore report only ULTRA's paper-reported aggregate numbers. Given the caveat that FB15k-237 and WN18RR are both in ULTRA's pretraining mixture (so their ``0-shot'' numbers are in-distribution anyway), the comparison we care about---ULTRA fine-tuned on held-out YAGO3-10 vs.\ our $0.696 \pm 0.001$---remains an open item that a future reviewer / revision can address on a compatible machine.
+\paragraph{ULTRA reproduction attempt: pending.}
+We made several attempts to reproduce ULTRA. The released stack did not complete on our server: (i) the first attempt failed on \texttt{ModuleNotFoundError: pkg\_resources} (setuptools 82 removed the module); fixing via \texttt{setuptools<81}; (ii) the second attempt failed on \texttt{RuntimeError: Ninja is required to load C++ extensions}; fixing via \texttt{pip install ninja} + PATH export; (iii) the third attempt made ULTRA's rspmm kernel compile correctly for FB15k-237, but WN18RR re-triggered \texttt{torch\_geometric}'s \texttt{WordNet18RR.download()}, which timed out against \url{https://github.com/villmow/datasets_knowledge_embedding/raw/master/WN18RR/test.txt}; substituting the file from our local copy then hit a format-compatibility check that we could not reconcile within the time budget. We therefore report only ULTRA's paper-reported aggregate numbers. Because FB15k-237 and WN18RR are both in ULTRA's pretraining mixture, and because our verified per-dataset reproduction is still pending, we do not use ULTRA as a primary win/loss comparison.
 
 \paragraph{Take-away.}
 (1) ULTRA and KG-ICL contribute \emph{transfer}, not per-dataset peak; the aggregate ULTRA numbers sit below our per-dataset numbers.
@@ -424,7 +410,7 @@ We made two serious attempts to reproduce ULTRA. Both failed at the C++ extensio
 \section{Statistical Significance}
 \label{app:stats}
 
-We supplement the 3-seed mean $\pm$ std with a \textbf{paired bootstrap} over the YAGO3-10 test triples to test whether our \ours\ (L=2) result is significantly better than the previous SOTA ComplEx (MRR $= 0.587$).
+We supplement the 3-seed mean $\pm$ std with a \textbf{paired bootstrap} over the YAGO3-10 test triples to test whether our \ours\ (L=2) result is significantly better than the previous published structural ComplEx number (MRR $= 0.587$).
 
 \paragraph{Procedure.} 10{,}000 bootstrap resamples of the 5{,}000 YAGO3-10 test triples, recording the sign of $\mathrm{MRR}(\ours) - \mathrm{MRR}(\text{ComplEx})$.
 
@@ -436,11 +422,13 @@ For NBFNet the gap is $[0.071,\ 0.084]$, also highly significant.
 \section{Extended Hyperparameter Sensitivity}
 \label{app:sensitivity}
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
 \caption{WN18RR extended sensitivity (single seed, baseline config). A $d$-sweep on FB15k-237 is in Appendix~\ref{app:param-sweep}.}
 \label{tab:sens}
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lc}
 \toprule
 Configuration & Test MRR \\
@@ -460,6 +448,7 @@ LR schedule $=$ constant                & 0.4530 \\
 LR schedule $=$ cosine                  & 0.4682 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 (1) AdamW and MultiStepLR are both meaningful: swapping either for a common alternative (Adam / cosine / constant) costs 0.0--0.018 MRR.
@@ -471,7 +460,7 @@ LR schedule $=$ cosine                  & 0.4682 \\
 \section{Parameter-Efficiency Sweep (FB15k-237)}
 \label{app:param-sweep}
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
 \caption{FB15k-237 parameter-efficiency sweep ($L=3$, ComplEx, $\varepsilon=0.3$, 200 epochs). The $d\!=\!100$ optimum is validated with 3 seeds ($\pm$ std column). $d\!=\!50$ is also 3-seed; $d\!=\!\{200, 400\}$ are single seed.}
 \label{tab:param-sweep}
@@ -499,13 +488,15 @@ Our main-paper FB15k-237 number ($0.420$ at $d=200$) can therefore be replaced b
 \section{Additional Benchmarks: UMLS and Kinship}
 \label{app:umls-kinship}
 
-To test whether our recipe generalises \emph{beyond} the three main-paper benchmarks, we additionally evaluate on the small KG benchmarks \textbf{UMLS} (135 entities, 46 relations, 5{,}216 / 652 / 661 train/valid/test) and \textbf{Kinship} (104 entities, 25 relations, 8{,}544 / 1{,}068 / 1{,}074). Both are 3-seed trained with the same hyperparameters as our WN18RR configuration ($d=200, L=2, \varepsilon=0.3$, 300 epochs); only the dataset name changed. This is a strong generalisation test: no dataset-specific tuning.
+To test whether our recipe generalises \emph{beyond} the three main-paper benchmarks, we additionally evaluate on the small KG benchmarks \textbf{UMLS} (135 entities, 46 relations, 5{,}216 / 652 / 661 train/valid/test) and \textbf{Kinship} (104 entities, 25 relations, 8{,}544 / 1{,}068 / 1{,}074). The headline small-KG numbers in the main paper use 6 seeds. Table~\ref{tab:umls-kinship} is the earlier 3-seed validation table, trained with the same hyperparameters as our WN18RR configuration ($d=200, L=2, \varepsilon=0.3$, 300 epochs); it is retained as supplementary evidence because it includes the full Hits@$k$ columns. There is no dataset-specific tuning.
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
-\caption{UMLS and Kinship under our recipe (3 seeds, mean $\pm$ std). Same configuration as WN18RR main. No per-dataset tuning.}
+\caption{Preliminary UMLS and Kinship validation under our recipe (3 seeds, mean $\pm$ std). The main-paper headline uses 6 seeds; this earlier supplementary table is retained for Hits@$k$ detail. Same configuration as WN18RR main. No per-dataset tuning.}
 \label{tab:umls-kinship}
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{llcccc}
 \toprule
 Dataset & Decoder & MRR & Hits@1 (\%) & Hits@3 (\%) & Hits@10 (\%) \\
@@ -519,11 +510,12 @@ Dataset & Decoder & MRR & Hits@1 (\%) & Hits@3 (\%) & Hits@10 (\%) \\
   & ComplEx  & \best{$0.759 \pm 0.008$} & \best{$64.1 \pm 1.5$} & \best{$85.1 \pm 0.7$} & \best{$96.5 \pm 0.5$} \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 \paragraph{Observations.}
 (1) The recipe transfers: all four configurations reach high MRR (0.68--0.87) without any per-dataset tuning, using the same 300-epoch, $\varepsilon=0.3$, AdamW, MultiStepLR recipe that worked on WN18RR.
-(2) UMLS prefers DistMult (+0.041 MRR); Kinship prefers ComplEx (+0.083 MRR). The decoder choice flips with dataset structure, consistent with our main-paper finding that decoder is a dataset-dependent hyperparameter (ComplEx wins on FB/WN but DistMult wins on YAGO3-10).
+(2) UMLS prefers DistMult (+0.041 MRR in this preliminary table; +0.045 in the 6-seed headline); Kinship prefers ComplEx (+0.083 MRR in this table). The decoder choice flips with dataset structure, consistent with our main-paper finding that decoder is a dataset-dependent hyperparameter: ComplEx wins modestly on the five standard transductive KGs in Table~\ref{tab:decoder-diagnostic}, while UMLS is the small-KG counterexample.
 (3) Variance is tight across seeds ($\le 0.009$ MRR std on both datasets), indicating the recipe is stable at small-KG scale as well.
 (4) These two benchmarks are tiny (UMLS has 10{,}432 training edges; Kinship 17{,}088), so they mainly validate that our 1-vs-all label-smoothed CE objective still works when the softmax-over-entities is over only $\sim$100 classes---an edge case for label smoothing. The fact that $\varepsilon=0.3$ remains optimal (we did not re-tune) is a non-trivial robustness result.
 
@@ -533,20 +525,20 @@ Published comparisons on these datasets are fragmented (UMLS and Kinship are mos
 \section{Training Dynamics}
 \label{app:training}
 
-\begin{figure}[h]
+\begin{figure*}[!htbp]
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
-\centering\includegraphics[width=\textwidth]{fig_s1_loss_curves.pdf}
+\centering\includegraphics[width=0.8\textwidth]{fig_s1_loss_curves.pdf}
 \caption{Training loss across datasets.}
 \label{fig:loss-curves}
 \end{subfigure}\hfill
 \begin{subfigure}[b]{0.48\textwidth}
-\centering\includegraphics[width=\textwidth]{fig_s2_val_curves.pdf}
+\centering\includegraphics[width=0.8\textwidth]{fig_s2_val_curves.pdf}
 \caption{Validation MRR across datasets.}
 \label{fig:val-curves}
 \end{subfigure}
 \caption{Training dynamics. X-axis is normalised training progress (epoch / total epochs) so datasets with different training lengths overlay. Shaded vertical bands mark the LR-drop points at 60\% and 80\% of total epochs.}
-\end{figure}
+\end{figure*}
 
 On WN18RR and FB15k-237, validation MRR rises rapidly in the first 60--100 epochs and then plateaus before the first LR drop. YAGO3-10 shows a slower climb---consistent with its larger, denser graph---supporting the main-paper point that YAGO3-10 benefits from shallower depth ($L=2$) rather than longer training or removed regularisation.
 
@@ -554,23 +546,26 @@ On WN18RR and FB15k-237, validation MRR rises rapidly in the first 60--100 epoch
 \section{Case Studies}
 \label{app:case}
 
-\begin{table}[h]
+\begin{table*}[!htbp]
 \centering
 \caption{Qualitative examples on WN18RR test set. Correct tail entity in \best{bold}. Top-5 predictions shown.}
 \label{tab:case}
-\small
-\begin{tabular}{p{0.30\textwidth}p{0.58\textwidth}c}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{0.28\textwidth}p{0.55\textwidth}c}
 \toprule
 Query (head, relation, ?) & Top-5 predictions (score-ordered) & Rank of gold \\
 \midrule
 (\emph{dog.n.01}, \emph{hypernym}, ?) & \best{canine.n.02}, carnivore.n.01, animal.n.01, mammal.n.01, vertebrate.n.01 & 1 \\
-(\emph{piano.n.01}, \emph{derivationally\_related}, ?) & \best{pianist.n.01}, keyboard.n.01, pianoforte.n.01, musician.n.01, instrument.n.01 & 1 \\
+(\emph{piano.n.01}, \emph{deriv\_related}, ?) & \best{pianist.n.01}, keyboard.n.01, pianoforte.n.01, musician.n.01, instrument.n.01 & 1 \\
 (\emph{run.v.01}, \emph{verb\_group}, ?) & move.v.01, walk.v.01, \best{jog.v.01}, race.v.01, hurry.v.01 & 3 \\
 (\emph{forest.n.01}, \emph{has\_part}, ?) & tree.n.01, ecosystem.n.01, plant.n.02, \best{undergrowth.n.01}, canopy.n.01 & 4 \\
 (\emph{Mozart}, \emph{profession}, ?) & composer.n.01, \best{musician.n.01}, pianist.n.01, artist.n.01, performer.n.01 & 2 \\
 \bottomrule
 \end{tabular}
-\end{table}
+}
+\end{table*}
 
 Errors are near-miss semantic confusions, suggesting the learned embedding geometry captures meaningful relational structure.
 
@@ -589,12 +584,12 @@ GAT-style attention over edges cost $-0.005$ MRR on WN18RR and $-0.002$ on FB15k
 \paragraph{Query-conditioned encoder.}
 Conditioning the encoder on the query head (NBFNet-style) inside an otherwise identical recipe under-performed by $-0.02$ MRR on WN18RR and broke batch-amortisation of the encoder.
 
-\paragraph{YAGO3-10 single-seed reversal findings.}
+\paragraph{YAGO3-10 preliminary single-seed observations.}
 Initial single-seed runs on YAGO3-10 suggested $L=2$ (MRR 0.642) and $\varepsilon = 0$ (MRR 0.636) both outperformed our $(L=3, \varepsilon=0.3)$ default (0.626 single-seed; 0.618$\pm$0.005 3-seed).
-We ran both at seeds 123 and 456 to validate.
+We ran both at seeds 123 and 456 for 3-seed validation.
 \begin{itemize}
-  \item \textbf{Confirmed}: $L=2$ gives $\mathrm{MRR} = 0.640 \pm 0.004$ over 3 seeds, a robust $+0.022$ improvement. This is the basis of the updated headline number in Table~\ref{tab:main}.
-  \item \textbf{Refuted}: $\varepsilon=0$ gives $\mathrm{MRR} = 0.620 \pm 0.015$ over 3 seeds --- statistically indistinguishable from the $\varepsilon=0.3$ baseline (0.618). The single-seed 0.636 was the high end of a wide distribution. We retract the ``LS=0 helps on YAGO3-10'' claim.
+  \item The depth observation validated: $L=2$ gives $\mathrm{MRR} = 0.640 \pm 0.004$ over 3 seeds, a robust $+0.022$ improvement over the earlier $L=3$ baseline.
+  \item The label-smoothing observation did not validate: $\varepsilon=0$ gives $\mathrm{MRR} = 0.620 \pm 0.015$ over 3 seeds, statistically indistinguishable from the $\varepsilon=0.3$ baseline (0.618). The single-seed 0.636 was the high end of a wide distribution, so the validated result is that removing label smoothing does not reliably help YAGO3-10.
 \end{itemize}
 
 Per-seed test MRR:
@@ -610,7 +605,7 @@ Single-seed YAGO3-10 observations are unreliable. Per-seed variance is 5--15$\ti
 \section{Full Result Table}
 \label{app:full-results}
 
-\begin{table}[h]
+\begin{table*}[!htbp]
 \centering
 \caption{Full experimental results across all configurations on three datasets. [3]: mean $\pm$ std over 3 seeds; [1]: single seed.}
 \label{tab:full}
@@ -640,7 +635,7 @@ YAGO3-10  & 64 & 3 & 0.0 & DistMult & 3 & $0.620 \pm 0.015$ \\
 YAGO3-10  & 64 & 3 & 0.3 & ComplEx  & 3 & $0.628 \pm 0.011$ \\
 YAGO3-10  & 64 & 3 & 0.3 & DistMult & 3 & $0.618 \pm 0.005$ \\
 \midrule
-\multicolumn{7}{l}{\emph{$L = 0$ (pure ComplEx, no graph encoder) + our recipe; see Sec.~\ref{sec:gcn-necessity}}} \\
+\multicolumn{7}{l}{\emph{$L = 0$ (pure ComplEx, no graph encoder) + our recipe; see Sec.~\ref{sec:depth-decoder-interaction}}} \\
 FB15k-237 & 200 & 0 & 0.3 & ComplEx  & 3 & $0.4060 \pm 0.002$ \\
 WN18RR    & 200 & 0 & 0.3 & ComplEx  & 3 & \best{$0.4849 \pm 0.002$} \\
 YAGO3-10  &  64 & 0 & 0.3 & ComplEx  & 3 & \best{$0.6713 \pm 0.005$} \\
@@ -659,7 +654,7 @@ Kinship   & 200 & 2 & 0.3 & DistMult & 3 & $0.676 \pm 0.009$ \\
 Kinship   & 200 & 2 & 0.3 & ComplEx  & 3 & \best{$0.759 \pm 0.008$} \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 %===========================================================
 \section{Limitations}
@@ -688,66 +683,214 @@ Knowledge graph completion is widely deployed (search, recommendation, biomedica
 Our contribution is methodological: we identify a training recipe that improves the accuracy--compute frontier.
 Potential benefits: reduced compute cost (fewer GPU-hours per model = lower energy), better accuracy for downstream applications, cheaper reproducibility for smaller groups.
 Potential risks: (i) automated completion of social-graph or medical KGs can amplify biases in the training data; our work does not address bias mitigation; (ii) a more efficient KG embedding is easier to deploy in low-oversight settings where incorrect or stereotyped facts could cause harm.
-We encourage users of our released code to apply downstream fairness auditing (\eg per-relation error analysis, disparate-impact metrics) before deployment.
+We encourage users of the released code to apply downstream fairness auditing (\eg per-relation error analysis, disparate-impact metrics) before deployment.
 Datasets we use (FB15k-237, WN18RR, YAGO3-10) are public and contain no PII beyond what is already in Freebase / WordNet / YAGO.
 
-%===========================================================
-\section{FB15k-237 Training-Recipe Ablation and Supporting Figures}
-\label{app:fb-ablation}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{fig3_ablation_wn18rr.pdf}
-\caption{WN18RR training-recipe ablation (3 seeds). Removing label smoothing costs $-0.041$ MRR---larger than any architectural change. ComplEx decoder contributes $+0.011$ MRR.}
-\label{fig:ablation-wn}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{fig5_ls_consistency.pdf}
-\caption{Label-smoothing effect on WN18RR vs.\ FB15k-237. Both benchmarks show a consistent benefit from $\varepsilon = 0.3$.}
-\label{fig:ls-consistency}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{fig6_yago_spotlight.pdf}
-\caption{YAGO3-10 MRR: pure ComplEx ($L{=}0$, $d{=}128$) with our recipe exceeds the previous SOTA (ComplEx, 0.587) by $+10.8$ points and NBFNet (0.563) by $+13.3$ points.}
-\label{fig:yago}
-\end{figure}
-
-
-\begin{table}[h]
-\centering
-\caption{FB15k-237 training-recipe ablation. 3 seeds where indicated; 1 seed otherwise. Consistent with WN18RR: label smoothing drives the biggest effect, depth matters less.}
-\label{tab:ablation-fb}
-\small
-\begin{tabular}{lcccc}
-\toprule
-Configuration & MRR & H@1 (\%) & H@3 (\%) & H@10 (\%) \\
-\midrule
-Baseline (d=200, L=3, LS=0.3)\ [3 seeds] & 0.4169 $\pm$ 0.002 & 32.2 & 45.9 & 60.5 \\
-$+$ ComplEx decoder\ [3 seeds] & \best{0.4202 $\pm$ 0.002} & \best{32.6} & \best{46.2} & \best{60.8} \\
-$-$ shallower (L=2) & 0.4164 & 32.0 & 45.9 & 60.5 \\
-$-$ shallower (L=1)\ [3 seeds] & 0.4050 $\pm$ 0.006 & 31.4 & 44.3 & 58.9 \\
-$-$ weaker smoothing (LS=0.1) & 0.3973 & 30.3 & 43.8 & 58.5 \\
-$-$ no smoothing (LS=0.0)\ [3 seeds] & 0.3997 $\pm$ 0.002 & 30.8 & 43.7 & 58.3 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-%===========================================================
 \section{Reproducibility Summary}
 \label{app:repro}
 
-\paragraph{Code and data.} All code (training / evaluation / plotting scripts) and JSON result files will be released at \texttt{[anonymised URL]} under an MIT licence.
+\paragraph{Code and data.} All code (training / evaluation / plotting scripts) and JSON result files will be released at an anonymous URL or upon acceptance under an MIT licence.
 
 \paragraph{Datasets.} Standard public splits of FB15k-237~\citep{fb15k237}, WN18RR~\citep{wn18rr}, YAGO3-10~\citep{yago310}, unmodified. FB15k-237 and WN18RR obtained from the ConvE repository (\url{https://github.com/TimDettmers/ConvE}); YAGO3-10 from the RotatE repository (\url{https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding}).
 
-\paragraph{Hardware.} Single NVIDIA RTX 2080 Ti (11 GB) with AMP / FP16. Total $\approx 120$ GPU-hours across 59 runs.
+\paragraph{Hardware.} Each run uses one NVIDIA RTX 2080 Ti (11 GB) with AMP / FP16. Total $>200$ GPU-hours including completed primary and diagnostic runs.
 
 \paragraph{Random seeds.} Three seeds (42, 123, 456) for all 3-seed rows (\texttt{torch.manual\_seed}, \texttt{numpy.random.seed}, \texttt{random.seed}, \texttt{torch.cuda.manual\_seed\_all}).
 
 \paragraph{Licences.} FB15k-237: CC-BY 2.5 (Freebase). WN18RR: Princeton WordNet licence. YAGO3-10: CC-BY 3.0. Our code: MIT.
 
-\paragraph{ISWC reproducibility checklist.} The ISWC 2026 reproducibility checklist is filled on the EasyChair submission form rather than embedded in the PDF; we list every checked item in the supplementary material upload.
+\paragraph{Reproducibility checklist.} The conference reproducibility checklist is filled on the submission form rather than embedded in the PDF; we list every checked item in the supplementary material upload.
+
+%===========================================================
+\section{Additional Diagnostic Tables}
+
+\paragraph{FB15k-237 recipe ablation.}
+Table~\ref{tab:ablation-fb} mirrors the WN18RR ablation in the main paper. Label smoothing remains the largest single recipe effect.
+
+\begin{table}[H]
+\centering
+\caption{FB15k-237 training-recipe ablation. 3 seeds where indicated; 1 seed otherwise.}
+\label{tab:ablation-fb}
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Configuration & MRR & H@1 & H@3 & H@10 \\
+\midrule
+Baseline [3] & 0.4169 $\pm$ 0.002 & 32.2 & 45.9 & 60.5 \\
+$+$ ComplEx [3] & \best{0.4202 $\pm$ 0.002} & \best{32.6} & \best{46.2} & \best{60.8} \\
+$-$ shallower (L=2) & 0.4164 & 32.0 & 45.9 & 60.5 \\
+$-$ shallower (L=1) [3] & 0.4050 $\pm$ 0.006 & 31.4 & 44.3 & 58.9 \\
+$-$ weaker LS=0.1 & 0.3973 & 30.3 & 43.8 & 58.5 \\
+$-$ no LS [3] & 0.3997 $\pm$ 0.002 & 30.8 & 43.7 & 58.3 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\paragraph{YAGO3-10 decomposition.}
+Table~\ref{tab:decomposition} decomposes the $+0.110$ MRR gain over the Trouillon-2016 ComplEx setting.
+
+\begin{table}[H]
+\centering
+\caption{Recipe decomposition on YAGO3-10. Leave-one-out from our best configuration; ``$\to$ original'' uses the Trouillon-2016 ComplEx setting~\citep{complex}.}
+\label{tab:decomposition}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lc}
+\toprule
+Recipe component (original $\to$ ours) & $\Delta$ MRR \\
+\midrule
+Logistic loss + 50 sampled neg.\ $\to$ 1-vs-all CE & $+0.040$ \\
+$\varepsilon = 0$ $\to$ $\varepsilon = 0.3$ & $+0.0024$ \\
+$d = 100$ $\to$ $d = 128$ & $+0.006$ \\
+50 epochs $\to$ 150 epochs & $+0.0015$ \\
+Adagrad $\to$ AdamW + MultiStepLR & $+0.060$ \\
+\midrule
+\textbf{Total} & $+0.110$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\paragraph{Decoder diagnostics.}
+Tables~\ref{tab:edges-per-rel}--\ref{tab:smallkg-lscan} give the supporting diagnostics for the UMLS reversal and small-KG encoder-depth claim.
+
+\begin{table}[H]
+\centering
+\caption{Edges per relation as a first-cut decoder-winner heuristic. This predictor table covers the six-dataset diagnostic pass used for the heuristic (UMLS/Kinship 6 seeds; others 3); CoDEx-L is excluded from this predictor analysis although its $L{=}0$ decoder spot-check is reported in Table~\ref{tab:decoder-diagnostic}.}
+\label{tab:edges-per-rel}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Dataset & \#train & \#rel & e/r & Dec.\ $\Delta$ \\
+\midrule
+UMLS      & 5{,}216 & 46 & $\mathbf{113}$ & $\mathbf{-0.045}$ \\
+Kinship   & 8{,}544 & 25 & 342 & $+0.089$ \\
+FB15k-237 & 272{,}115 & 237 & 1{,}148 & $+0.005$ \\
+CoDEx-M   & 185{,}000 & 51 & 3{,}627 & $+0.010$ \\
+WN18RR    & 86{,}835 & 11 & 7{,}894 & $+0.012$ \\
+YAGO3-10  & 1{,}079{,}040 & 37 & 29{,}163 & $+0.006$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Targeted four-decoder spot-check under the same recipe ($d{=}200$, $L{=}2$, 3 seeds). This is a matched 3-seed diagnostic; the main UMLS/Kinship DistMult-vs-ComplEx headline uses the larger 6-seed estimate. WN18RR RotatE uses chunked 1-vs-all scoring (batch 128, entity chunk 2048) to fit on an 11\,GB GPU; FB15k-237 RotatE/TransE remains computationally prohibitive in this implementation and is therefore not included.}
+\label{tab:decoder-spotcheck}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Dataset & DistMult & ComplEx & RotatE & TransE \\
+\midrule
+UMLS    & $\mathbf{0.8705{\pm}0.0109}$ & $0.8344{\pm}0.0020$ & $0.8490{\pm}0.0065$ & $0.1005{\pm}0.0087$ \\
+Kinship & $0.6750{\pm}0.0113$ & $\mathbf{0.7626{\pm}0.0094}$ & $0.7266{\pm}0.0091$ & $0.0472{\pm}0.0044$ \\
+WN18RR  & $0.4659{\pm}0.0042$ & $0.4781{\pm}0.0019$ & $\mathbf{0.4930{\pm}0.0021}$ & $0.2069{\pm}0.0023$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\paragraph{Reading the decoder spot-check.}
+The additional decoders do not overturn the primary DistMult-vs-ComplEx diagnosis on the two small KGs. On UMLS, RotatE is competitive but remains between DistMult and ComplEx; on Kinship, it is also between the primary pair. On WN18RR, RotatE exceeds both primary decoders under the same $L{=}2$ recipe, but still remains below NBFNet's path-based result reported in the main paper. TransE is weak in this 1-vs-all recipe on all completed datasets. We therefore keep DistMult/ComplEx as the controlled main axis and treat RotatE/TransE as a targeted robustness spot-check rather than a full decoder benchmark.
+
+\begin{table}[H]
+\centering
+\caption{Decoder MRR vs.\ embedding dim $d$, $L{=}2$ recipe held fixed, 3 seeds per cell (6 for UMLS/Kinship $d{=}200$).}
+\label{tab:dscan}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llccc}
+\toprule
+Dataset & Scorer & $d{=}100$ & $d{=}200$ & $d{=}400$ \\
+\midrule
+\multirow{2}{*}{UMLS} & DM & $0.798$ & $\mathbf{0.875}$ & $0.840$ \\
+                      & CX & $0.752$ & $0.830$ & $\mathbf{0.843}$ \\
+\midrule
+\multirow{2}{*}{Kinship} & DM & $0.621$ & $\mathbf{0.674}$ & $0.633$ \\
+                         & CX & $0.680$ & $0.763$ & $\mathbf{0.823}$ \\
+\midrule
+\multirow{2}{*}{WN18RR} & DM & $0.465$ & $0.467$ & $\mathbf{0.470}$ \\
+                        & CX & $0.470$ & $0.481$ & $\mathbf{0.481}$ \\
+\midrule
+\multirow{2}{*}{FB15k-237} & DM & $0.413$ & $\mathbf{0.416}$ & $0.408$ \\
+                           & CX & $0.415$ & $\mathbf{0.421}$ & $0.412$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Stratified subsample e/r sweeps on FB15k-237 and WN18RR ($d{=}200$, $L{=}2$, 3 seeds). Actual e/r is below nominal $r$ for large $r$ on FB15k-237 due to long-tail relations.}
+\label{tab:er-sweep}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{rrccc}
+\toprule
+$r$ & actual e/r & DM & CX & Dec.\ $\Delta$ \\
+\midrule
+\multicolumn{5}{l}{\emph{FB15k-237:}} \\
+50 & 49.9 & 0.0310 & 0.0304 & $\mathbf{-0.0006}$ \\
+100 & 99.7 & 0.1360 & 0.1380 & $+0.0020$ \\
+200 & 180.7 & 0.2105 & 0.2123 & $+0.0018$ \\
+400 & 295.2 & 0.2356 & 0.2384 & $+0.0027$ \\
+800 & 444.0 & 0.2654 & 0.2687 & $+0.0033$ \\
+full & 1148.2 & 0.4162 & 0.4211 & $+0.0049$ \\
+\midrule
+\multicolumn{5}{l}{\emph{WN18RR:}} \\
+50 & 50.0 & 0.0033 & 0.0012 & $\mathbf{-0.0021}$ \\
+100 & 98.2 & 0.0060 & 0.0014 & $\mathbf{-0.0046}$ \\
+200 & 189.1 & 0.0095 & 0.0011 & $\mathbf{-0.0085}$ \\
+full & 7894.1 & 0.4670 & 0.4810 & $+0.0140$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{UMLS / Kinship encoder-depth $\times$ decoder grid (3 seeds; 6 for the $L{=}2$ baseline). $L{=}0$ collapses on both small KGs --- a marked departure from the WN18RR pattern (Sec.~\ref{sec:depth-decoder-interaction}). DistMult wins at every $L$ on UMLS; ComplEx wins at every $L$ on Kinship.}
+\label{tab:smallkg-lscan}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llccc}
+\toprule
+Dataset & Scorer & $L{=}0$ & $L{=}2$ & $L{=}3$ \\
+\midrule
+\multirow{2}{*}{UMLS}    & DistMult & $0.7157 \pm 0.0079$ & $0.8748 \pm 0.0096$ & $\mathbf{0.8950 \pm 0.0044}$ \\
+                         & ComplEx  & $0.5498 \pm 0.0051$ & $0.8302 \pm 0.0086$ & $\mathbf{0.8466 \pm 0.0080}$ \\
+\midrule
+\multirow{2}{*}{Kinship} & DistMult & $0.5528 \pm 0.0033$ & $0.6744 \pm 0.0078$ & $\mathbf{0.6975 \pm 0.0044}$ \\
+                          & ComplEx  & $0.5992 \pm 0.0067$ & $0.7634 \pm 0.0065$ & $\mathbf{0.7814 \pm 0.0099}$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+%===========================================================
+\section{Extended Related Work}
+\label{app:related-extended}
+
+\paragraph{Shallow embeddings.}
+TransE~\citep{transe}, DistMult~\citep{distmult}, ComplEx~\citep{complex}, HolE~\citep{nickel2016hole}, RotatE~\citep{rotate}, TuckER~\citep{balazevic2019tucker}, QuatE~\citep{zhang2019quate}, HAKE~\citep{hake}, CompoundE~\citep{ge2023compounde}, TripleRE~\citep{yu2022triplere} all score triples from endpoint embeddings alone.
+
+\paragraph{Graph encoders.}
+R-GCN~\citep{rgcn} specialises GCN~\citep{gcn} to relation-specific message passing; CompGCN~\citep{compgcn} shares weights via a compositional operator; HittER~\citep{chen2021hitter}, M$^2$GNN~\citep{wang2021m2gnn}, and LGF~\citep{mai2019cycle} are further variants.
+
+\paragraph{Path-based reasoners.}
+NBFNet~\citep{nbfnet}, A$^*$Net~\citep{astarnet}, RED-GNN~\citep{redgnn}, DeepPath~\citep{xiong2017deeppath}, AnyBURL~\citep{meilicke2019anyburl}, C-MPNN~\citep{huang2023theoryrwl} encode graph structure per-query.
+
+\paragraph{Foundation models / text augmentation.}
+The 2024 foundation-model line (ULTRA~\citep{galkin2024ultra}, KG-ICL~\citep{kgicl2024}, InGram~\citep{ingram2024}, GraphAny~\citep{zhao2024graphany}) targets cross-graph transfer. Parameter-efficient tokenisation (NodePiece~\citep{nodepiece2022}) and text-based scoring (SimKGC~\citep{simkgc2022}, KG-BERT~\citep{kgbert2019}, KG-LLM~\citep{kgllm2024}) are orthogonal directions to our structural-only setting.

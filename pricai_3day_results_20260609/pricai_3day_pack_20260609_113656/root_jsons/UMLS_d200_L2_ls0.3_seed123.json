@@ -1,0 +1,24 @@
+{
+  "dataset": "UMLS",
+  "seed": 123,
+  "config": {
+    "d_h": 200,
+    "layers": 2,
+    "lr": 0.0005,
+    "epochs": 300,
+    "batch_size": 1024,
+    "score_chunk_size": 0,
+    "label_smooth": 0.3,
+    "dropout": 0.2
+  },
+  "params": 243800,
+  "train_time_s": 17.242661237716675,
+  "best_val_mrr": 0.941019842009842,
+  "test": {
+    "MRR": 0.9209025583475355,
+    "Hits@1": 88.04841149773071,
+    "Hits@3": 95.15885022692889,
+    "Hits@10": 98.9409984871407,
+    "MR": 1.62178517397882
+  }
+}

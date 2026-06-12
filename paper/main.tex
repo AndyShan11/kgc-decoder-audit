@@ -1,32 +1,35 @@
-% ISWC 2026 (Bari, Italy) Research Track submission.
-% Format: Springer LNCS (llncs.cls v2.24).
-% Page limit: 15 pages excluding references + optional 2-page appendix.
-% Submission is dual-anonymous.
+﻿% PRICAI 2026 submission.
+% Format: Springer Lecture Notes in Artificial Intelligence / LNCS style.
+% Page limit: 16 pages including references.
+% Submission is double anonymous.
 
 \documentclass[runningheads]{llncs}
+\setlength{\paperwidth}{210mm}
+\setlength{\paperheight}{297mm}
+\AtBeginDocument{\pdfpagewidth=\paperwidth\pdfpageheight=\paperheight}
 
+\usepackage{times}
+\usepackage{latexsym}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+
 \usepackage{graphicx}
+\graphicspath{{../figures/}}
 \usepackage{booktabs}
 \usepackage{amsfonts,amsmath,amssymb}
 \usepackage{nicefrac}
-\usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{multirow}
-\usepackage{subcaption}
 \usepackage{xspace}
 \usepackage{array}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage[numbers,square,sort&compress]{natbib}
-\usepackage{hyperref}
-\usepackage{url}
-\renewcommand\UrlFont{\color{blue}\rmfamily}
-\urlstyle{rm}
+\usepackage[numbers,sort&compress]{natbib}
 
 % --- Macros ---
-\newcommand{\ours}{\textsc{RC}\xspace}
+\newcommand{\ours}{\textsc{RCDA}\xspace}
 \newcommand{\eg}{\emph{e.g.}\xspace}
 \newcommand{\ie}{\emph{i.e.}\xspace}
 \newcommand{\etal}{\emph{et~al.}\xspace}
@@ -34,116 +37,58 @@
 \newcommand{\secondbest}[1]{\underline{#1}}
 \newcommand{\checkbx}{\ensuremath{\boxtimes}}
 
-\begin{document}
+\title{Recipe-Controlled Decoder Audit for Structural Knowledge-Graph Completion}
+\titlerunning{Recipe-Controlled Decoder Audit for Structural KGC}
 
-\title{The Decoder Is the Lever, Not the Encoder: A Recipe-Controlled Audit of Knowledge-Graph Completion}
-\titlerunning{The Decoder Is the Lever}
-
-\author{Anonymous Author(s)}
+\author{Anonymous PRICAI 2026 Submission}
 \authorrunning{Anonymous}
-\institute{Anonymised for double-blind review}
+\institute{}
 
+\begin{document}
 \maketitle
 
 \begin{abstract}
-A KG-completion model has three orthogonal levers: the \emph{decoder} (ComplEx, DistMult, $\ldots$), the \emph{encoder} (a CompGCN-style message-passing layer on top of raw embeddings, or none), and the \emph{training recipe} (loss, optimiser, regularisation). Two of the three have been audited under controlled comparison --- \citet{ruffinelli2020olderboys} on the recipe, \citet{zhang2022rethinking} on the encoder, both finding small or zero effects. The decoder axis has been left to folklore: ComplEx supersedes DistMult because it handles antisymmetric relations. We run the missing audit and find this folklore wrong by a margin that exceeds the entire encoder effect. Across seven transductive benchmarks (FB15k-237, WN18RR, YAGO3-10, CoDEx-M, CoDEx-L, UMLS, Kinship) under one fixed recipe, the encoder $\Delta$ (with vs.\ without CompGCN) ranges from $+0.014$ MRR (FB15k-237) to $-0.061$ MRR (CoDEx-L), spread $0.075$. The decoder $\Delta$ (ComplEx $-$ DistMult) ranges from $-0.045$ on UMLS to $+0.089$ on Kinship --- spread $0.134$, $1.78\times$ wider, and dataset-dependent in sign. The UMLS reversal is the most extreme: DistMult beats ComplEx by $+0.045$ MRR ($0.8748 \pm 0.0096$ vs.\ $0.8302 \pm 0.0086$; Welch $t = 8.5$ across 6 seeds, $p < 10^{-5}$), contradicting the standard biomedical-KG recommendation. Direct measurement falsifies the ``UMLS is symmetric-rich'' explanation (Manabe-2018 empirical symmetry: UMLS $0.133$, Kinship $0.207$): UMLS is in fact \emph{less} symmetric than Kinship. The actual axis is \emph{edges per relation}. ComplEx's imaginary half doubles its per-relation parameter budget, and below $\sim\!200$ edges/rel that budget overfits while DistMult's lower-variance symmetric-only scoring wins as a regulariser. UMLS at $113$ edges/rel is the lone DistMult-winner; the other six datasets all sit above the threshold. The single integer $|\mathcal{D}_{\text{train}}|/|\mathcal{R}|$ predicts the decoder winner correctly on $6/6$ measured datasets. Two further consequences fall out. (i) YAGO3-10 capacity saturates at $d \approx 128$ ($16\times$ smaller than \citet{lacroix2018complex}'s $d{=}2000$); the bottleneck was decoder + recipe, not capacity. (ii) On WN18RR the full $L \in \{0,1,2,3\}$ grid shows ComplEx peaking at $L{=}0$ ($0.4849$) and DistMult at $L{=}3$ ($0.4743$, within seed std of its encoder-free $L{=}0$ baseline $0.4731$); both decoders share an $L{=}1$ dip. Future encoder ablations must report the full $\{$decoder$\} \times \{L\}$ grid, not its row-wise minimum. Pure ComplEx with our recipe reaches MRR $0.6968 \pm 0.0023$ on YAGO3-10 (6 seeds; a new published best within \emph{structural} KGC --- no text features, no path-based propagation, no cross-graph pretraining) and $0.5379$ ($\sigma{<}0.001$) on CoDEx-M. Code, datasets, and per-run JSONs released.
+We present a recipe-controlled decoder audit (\ours) for structural transductive knowledge-graph completion (KGC). The audit asks a simple reporting question: before attributing gains to an encoder or training recipe, what changes when the decoder is swapped under the same recipe? Using ComplEx and DistMult as the primary controlled pair, with targeted RotatE/TransE spot-checks, we evaluate seven benchmarks. On five standard KGs, ComplEx-vs-DistMult differences are modest but consistent under our recipe ($+0.005$ to $+0.012$ MRR), whereas CompGCN-style encoder effects vary more by dataset. On small KGs, decoder effects become the main diagnostic: Kinship shows a stable ComplEx advantage of $+0.143$ MRR (6 seeds), while UMLS favours ComplEx by $+0.022$ MRR in a clean 6-seed server rerun but reverses in an earlier provenance variant. We therefore treat small-KG decoder choice as recipe- and provenance-sensitive rather than as a fixed dataset winner. We further show that decoder choice interacts with encoder depth on WN18RR, and that under our recipe $L{=}0$ ComplEx on YAGO3-10 reaches $0.6971 \pm 0.0048$ MRR at $d{=}128$. The result is a compact audit protocol: report matched decoder rows, log small-KG provenance, and sweep decoder $\times$ depth before making encoder-level claims.
 
-\keywords{Knowledge graph completion \and Decoder choice \and Inductive bias \and Recipe-controlled audit \and Reproducibility.}
 \end{abstract}
 
 \section{Introduction}
 \label{sec:intro}
 
-\paragraph{Three levers, two well-studied, one ignored.}
-A KG-completion model has three independent levers: the \emph{decoder} (the scoring function: ComplEx~\citep{complex}, DistMult~\citep{distmult}, RotatE~\citep{rotate}, $\ldots$), the \emph{encoder} (whether and how to apply message passing on top of raw embeddings: $L \in \{0, 2, 3\}$ CompGCN~\citep{compgcn} layers, etc.), and the \emph{training recipe} (loss, optimiser, learning-rate schedule, regularisation). Two of these have been systematically audited under controlled comparison. \citet{ruffinelli2020olderboys} did the recipe audit on FB15k-237 and WN18RR, showing that older bilinear models match newer ones once the recipe is held fixed. \citet{zhang2022rethinking} did the encoder audit, showing that the graph-structure-modelling component of GCN encoders is largely unnecessary for KGC and that the linear transformations alone explain the apparent gain. The decoder axis---specifically, whether ComplEx is uniformly better than DistMult---has been left to folklore: ComplEx handles antisymmetric relations and DistMult does not, therefore ComplEx is preferred. This paper runs the missing audit and finds the folklore wrong on KGs with low edges per relation --- a single computable statistic, not a relation-semantic property --- by a margin larger than any encoder effect we measure, while on large dense KGs the two decoders are nearly identical. The decoder $\times$ dataset axis carries more variance than the encoder $\times$ dataset axis on which the CompGCN-lineage literature has concentrated.
+A structural KG-completion model has three independent levers: the \emph{decoder} (ComplEx~\cite{complex}, DistMult~\cite{distmult}, RotatE~\cite{rotate}, $\ldots$), the \emph{encoder} (e.g., CompGCN~\cite{compgcn} message passing), and the \emph{training recipe}. Prior audits cover recipe choice~\cite{ruffinelli2020olderboys} and CompGCN-style encoders~\cite{zhang2022rethinking}; the head-to-head DistMult-vs-ComplEx decoder axis under one recipe has not been audited at comparable breadth. We study structural transductive KGC on seven benchmarks, primarily with ComplEx/DistMult and CompGCN-style encoders, plus a small RotatE/TransE spot-check.
 
-\paragraph{Headline finding: decoder $\times$ dataset variance exceeds encoder $\times$ dataset variance.}
-Across seven transductive benchmarks, under one fixed training recipe, the encoder $\Delta$ (with vs.\ without a CompGCN layer) ranges from $+0.014$ MRR on FB15k-237 to $-0.061$ MRR on CoDEx-L---a spread of $0.075$. The decoder $\Delta$ (ComplEx $-$ DistMult) ranges from $-0.045$ MRR on UMLS to $+0.089$ MRR on Kinship---a spread of $0.134$, $1.78{\times}$ wider. Both axes are dataset-dependent in sign, but the decoder axis carries more leverage. The published convention---fix ComplEx, sweep the encoder---therefore optimises the smaller-leverage axis under the assumption that ComplEx is universally optimal, an assumption our data falsifies on UMLS at Welch $t \approx 8.5$ across 6 seeds (Sec.~\ref{sec:umls-spotlight}).
-
-\paragraph{The UMLS reversal: an edges-per-relation phase transition.}
-A widely-cited biomedical-KG tutorial states that ``DistMult performs poorly on these datasets [UMLS, Kinship] as many relations are antisymmetric in UMLS (causal links, anatomical hierarchies)''~\citep{graph4nlp_kgc}, recommending ComplEx as the default. Under our recipe (1-vs-all softmax CE, label smoothing $\varepsilon{=}0.3$, AdamW + MultiStepLR, $L{=}2$ CompGCN, $d{=}200$, 6 seeds), UMLS DistMult MRR $= 0.8748 \pm 0.0096$ vs.\ ComplEx $= 0.8302 \pm 0.0086$: DistMult wins by $+0.045$ MRR (Welch $t = 8.5$, df $\approx 10$, $p < 10^{-5}$). The simplest explanation --- UMLS being symmetric-rich, so DistMult's symmetric prior acts as a useful bias --- turns out to be empirically wrong. The Manabe-2018 empirical symmetry score gives UMLS $0.133$ and Kinship $0.207$: UMLS is in fact \emph{less} symmetric. The actual axis is \emph{edges per relation}. ComplEx splits its $d$-dim embedding into real and imaginary halves, doubling its per-relation parameter budget over DistMult's; UMLS has only $\approx 113$ training edges per relation, against Kinship's $342$ and the five standard benchmarks' $> 1{,}000$. Below a transition near $200{-}300$ edges/rel, ComplEx's imaginary-part parameters cannot be reliably estimated and overfit per-relation antisymmetric noise; DistMult's lower-variance symmetric scoring wins as a regulariser. Above the threshold, ComplEx's extra capacity pays for itself, with the gap shrinking asymptotically as edges/rel grows further: Kinship (just above the threshold, $342$~e/r) gives the largest ComplEx gap we measure ($+0.0889$ MRR; $0.7634 \pm 0.0065$ vs.\ $0.6744 \pm 0.0078$, Welch $t \approx 21.5$), WN18RR at $7{,}894$~e/r gives only $+0.012$, YAGO3-10 at $29{,}163$~e/r gives $+0.006$. The single integer $|\mathcal{D}_{\text{train}}|/|\mathcal{R}|$ predicts the decoder winner correctly on all $6$ measured datasets.
-
-\paragraph{Two consequences of taking the decoder axis seriously.}
-First, the YAGO3-10 progress narrative needs revising. \citet{lacroix2018complex} reported $\approx\!0.58$ MRR on YAGO3-10 with ComplEx-N3 at $d{=}2000$, framing the bottleneck as a capacity issue addressed by N3 nuclear-3-norm regularisation. Our $L{=}0$ ComplEx at $d{=}128$ reaches $0.6959 \pm 0.0022$ ($+0.116$ MRR over Lacroix at $16{\times}$ smaller dimension), and a sweep $d \in \{64, 100, 128, 256\}$ shows MRR saturating at $d{\approx}128$ ($0.6713 \to 0.6906 \to 0.6959 \to 0.7003$): increasing $d$ further yields essentially no gain. The bottleneck on YAGO3-10 was never capacity; it was the recipe + decoder pair (logistic loss + Adagrad + N3 vs.\ 1-vs-all CE + AdamW + MultiStepLR). Second, on WN18RR encoder depth and decoder choice \emph{interact non-trivially}. Across the full $L \in \{0,1,2,3\} \times \{$ComplEx, DistMult$\}$ grid, ComplEx peaks at $L{=}0$ ($0.4849$, no encoder); DistMult peaks at $L{=}3$ ($0.4743$), but its encoder-free $L{=}0$ baseline ($0.4731$) is within seed std of the peak --- so the encoder's marginal benefit on DistMult is essentially nil even where it nominally ``helps''. \emph{Both decoders share a robust dip at $L{=}1$} ($0.4533$ ComplEx, $0.4410$ DistMult), which we attribute to a single GCN layer being insufficient to compose useful relational structure while still adding optimisation noise. The ``does the encoder help?'' question lacks a decoder-independent answer; future encoder ablations must report the full $\{$decoder$\} \times \{L\}$ grid, not its row-wise minimum.
+\paragraph{Headline: decoder choice is a reporting confound.}
+Our goal is not to introduce a new KGC architecture or to rank decoders universally. Instead, we turn decoder choice into an explicit audit axis. On standard large KGs, the ComplEx-vs-DistMult gap is small but consistent under our recipe; on small KGs, the same swap can change the diagnostic conclusion; and on WN18RR, the best encoder depth depends on the decoder. The actionable recommendation is therefore narrow and practical: structural KGC papers should report a matched DistMult-vs-ComplEx row, and should avoid treating decoder choice as an implementation detail when making encoder or recipe claims.
 
 \paragraph{Contributions.}
-\begin{enumerate}
-    \item \textbf{Decoder $\times$ Dataset diagnostic across seven benchmarks (Sec.~\ref{sec:decoder-diagnostic}).} Under one recipe the decoder $\Delta$ (ComplEx $-$ DistMult) spans $-0.045$ (UMLS) to $+0.089$ (Kinship), $1.78{\times}$ wider than the encoder $\Delta$ across the same datasets ($-0.061$ to $+0.014$). The decoder, not the encoder, is the higher-leverage axis. Table~\ref{tab:decoder-diagnostic}.
-    \item \textbf{The UMLS reversal as a falsification of practitioner advice, with a one-statistic predictor (Sec.~\ref{sec:umls-spotlight}).} DistMult $>$ ComplEx by $+0.045$ MRR on UMLS (Welch $t \approx 8.5$ across 6 seeds, df $\approx 10$, $p < 10^{-5}$), contradicting the practitioner-tutorial recommendation that UMLS antisymmetric biomedical relations require ComplEx~\citep{graph4nlp_kgc}. Direct measurement falsifies the natural ``UMLS is symmetric-rich'' explanation (UMLS empirical symmetry $= 0.133$ vs.\ Kinship $0.207$). The actual phase-transition axis is \emph{edges per relation}: UMLS's $\approx 113$ training edges per relation is below a critical threshold $\sim\!200{-}300$, above which ComplEx's imaginary-part parameters can be reliably estimated. This single statistic predicts the decoder winner on $6/6$ of our measured datasets.
-    \item \textbf{YAGO3-10 capacity saturation at $d{\approx}128$ (Sec.~\ref{sec:yago-saturation}).} A four-point dimension sweep on YAGO3-10 shows MRR saturates by $d{=}128$. The Lacroix-2018 narrative of a $d{=}2000$ capacity bottleneck on YAGO3-10 is empirically wrong; the bottleneck is decoder $+$ recipe, not capacity.
-    \item \textbf{Encoder-depth $\times$ decoder interaction on WN18RR (Sec.~\ref{sec:depth-decoder-interaction}).} Across the full $4 \times 2$ grid, ComplEx peaks at $L{=}0$ and DistMult at $L{=}3$ (the latter within seed std of its $L{=}0$ baseline); both decoders share a robust $L{=}1$ dip. The ``does the encoder help?'' answer depends on the decoder, invalidating the standard ``hold the decoder fixed, sweep the encoder'' protocol used in CompGCN/R-GCN ablations.
-    \item \textbf{Recipe-controlled audit, with new published bests (Sec.~\ref{sec:main}).} Under our recipe, $L{=}0$ ComplEx reaches MRR $= 0.6968 \pm 0.0023$ on YAGO3-10 (6 seeds, new published best for structural KGC, $+13.4$ over NBFNet~\citep{nbfnet}) and $0.5379$ ($\sigma{<}0.001$) on CoDEx-M, both at 3.0--15.8\,M parameters and $\sim\!10^5$ queries/sec on a single 11\,GB GPU.
-\end{enumerate}
-
-\paragraph{Scope and honesty.}
-Our scope is transductive structural KGC. We do not evaluate inductive splits (where path-based methods retain a genuine structural advantage), OGB-scale KGs, or text-augmented methods such as SimKGC~\citep{simkgc2022}. We rely on published baseline numbers for path-based reasoners (NBFNet, KG-ICL~\citep{kgicl2024}); we attempted reproductions and report which succeeded (KG-ICL-6L, all three datasets verified) and which failed at the C++ extension layer (ULTRA, NBFNet). The most important remaining open question is whether NBFNet under our recipe would reverse our FB15k-237 comparison ($+0.005$ in our favour, well within recipe-tuning range); the YAGO3-10 gap ($+13.4$) is large enough that no plausible recipe would close it. We also acknowledge that the encoder-uselessness component of our finding overlaps substantially with \citet{zhang2022rethinking}; our increment over them is (a) the decoder-axis re-framing, (b) extension to YAGO3-10 / CoDEx-M / CoDEx-L / UMLS / Kinship beyond their FB/WN evaluation, and (c) the decoder $\times$ encoder-depth interaction.
+(C1) We propose \ours, a recipe-controlled decoder-audit protocol for structural KGC. (C2) We provide a seven-benchmark ComplEx/DistMult diagnostic with targeted RotatE/TransE spot-checks, separating shared-grid evidence from small-KG decoder-only sensitivity. (C3) We show that Kinship has a large stable ComplEx advantage, while UMLS changes winner across provenance variants; edges/relation and symmetry are useful descriptors but not winner rules. (C4) We show decoder--encoder interaction on WN18RR: optimal $L$ depends on the decoder. (C5) We provide a recipe-controlled structural reference grid, including $0.6971 \pm 0.0048$ MRR on YAGO3-10 ($d{=}128$) and $0.5379$ on CoDEx-M.
 
 \section{Related Work}
 \label{sec:related}
 
-\paragraph{The two prior audits, by axis.}
-Our work sits at the intersection of two earlier audits along orthogonal axes.
-\emph{The recipe axis} was audited by \citet{ruffinelli2020olderboys}, who showed on FB15k-237 and WN18RR that older KGE models (DistMult, ComplEx, RESCAL) under careful hyperparameter search match newer translation-based methods. \citet{ali2021hparam} (PyKEEN), \citet{wang2022kgesurvey}, \citet{akrami2020realistic}, and \citet{sun2020reevaluation} are further audits of evaluation protocol and recipe.
-\emph{The encoder axis} was audited by \citet{zhang2022rethinking} (WWW 2022): they decomposed CompGCN/R-GCN/WGCN encoders and found that the graph-structure-modelling component does not significantly affect KGC performance, and that linear transformations alone explain the apparent gain (their proposed LTE-KGE achieves comparable performance with much less compute). Our encoder $\Delta$ measurements (Sec.~\ref{sec:depth-decoder-interaction}) reproduce their conclusion at the dataset-aggregate level and extend it to YAGO3-10 / CoDEx-M / CoDEx-L. Our increment over \citet{zhang2022rethinking} is along the orthogonal \emph{decoder axis}: we show the decoder-vs-decoder comparison spans larger MRR variance than the encoder-vs-no-encoder comparison they audit, and we identify the edges-per-relation phase transition that produces the UMLS reversal --- a single computable statistic that predicts the decoder winner on $6/6$ of our measured datasets.
+\paragraph{Prior audits.}
+Recipe audits show that older KGE models can match newer methods under careful training~\cite{ruffinelli2020olderboys,ali2021hparam,akrami2020realistic,sun2020reevaluation}. Encoder audits decompose R-GCN/CompGCN-style gains and find that graph-structure modelling is often less decisive than expected~\cite{zhang2022rethinking}. Our increment is orthogonal: we hold one recipe fixed, vary the decoder, and report when the decoder check changes the diagnostic conclusion.
 
 \paragraph{The decoder axis: prior conceptual hypothesis, no direct measurement.}
-The decoder axis has been studied at the level of single-dataset benchmark numbers but not as a controlled comparison. The closest prior is \citet{manabe2018datadependent} (AAAI 2018), who proposed an L1 regulariser on ComplEx imaginary parts that pushes them to zero for empirically-symmetric relations, on the conceptual ground that ``parameters in [ComplEx] are superfluous for relations that are either symmetric or antisymmetric.'' They did not measure the dataset-level reversal directly: vanilla DistMult outperforming vanilla ComplEx on a KG with low edges per relation. We do (Sec.~\ref{sec:umls-spotlight}); we also report that the dataset-scale reversal is \emph{not} explained by Manabe's relation-symmetry score (UMLS is in fact less symmetric than Kinship empirically) but by per-relation sample size. \citet{kazemi2018simple} introduced SimplE which interpolates between DistMult and ComplEx via two embedding heads. \citet{trouillon2017complex} (the JMLR-extended ComplEx paper) reports DistMult and ComplEx side-by-side on FB15k and WN18 but does not include the low-edges-per-relation benchmarks (UMLS, Kinship) where the decoder axis flips sign.
+The decoder axis has been studied at the level of single-dataset benchmark numbers but not as a controlled comparison. The closest prior is \cite{manabe2018datadependent} (AAAI 2018), who proposed an L1 regulariser on ComplEx imaginary parts that pushes them to zero for empirically-symmetric relations, on the conceptual ground that ``parameters in [ComplEx] are superfluous for relations that are either symmetric or antisymmetric.'' They did not measure how a vanilla DistMult-vs-ComplEx choice behaves under matched structural recipes. We do (Sec.~\ref{sec:umls-spotlight}); we also report that low-edge small KGs are recipe-sensitive, so relation symmetry and edges/relation should be treated as audit descriptors rather than sufficient winner rules. \cite{kazemi2018simple} introduced SimplE which interpolates between DistMult and ComplEx via two embedding heads. \cite{trouillon2017complex} (the JMLR-extended ComplEx paper) reports DistMult and ComplEx side-by-side on FB15k and WN18 but does not include the low-edges-per-relation benchmarks (UMLS, Kinship) where the decoder axis is most sensitive.
 
-\paragraph{Shallow embeddings, encoders, and path-based reasoners.}
-\emph{Shallow bilinear / geometric embeddings} (TransE~\citep{transe}, DistMult~\citep{distmult}, ComplEx~\citep{complex}, HolE~\citep{nickel2016hole}, RotatE~\citep{rotate}, TuckER~\citep{balazevic2019tucker}, QuatE~\citep{zhang2019quate}, HAKE~\citep{hake}, CompoundE~\citep{ge2023compounde}, TripleRE~\citep{yu2022triplere}) score triples from endpoint embeddings alone.
-\emph{Graph-encoder extensions} add a GNN layer on top: R-GCN~\citep{rgcn} specialises GCN~\citep{gcn} to relation-specific message passing; CompGCN~\citep{compgcn} shares weights via a compositional operator; HittER~\citep{chen2021hitter}, M$^2$GNN~\citep{wang2021m2gnn}, and LGF~\citep{mai2019cycle} are further variants. \emph{Path-based reasoners} encode graph structure per-query: NBFNet~\citep{nbfnet}, A$^*$Net~\citep{astarnet}, RED-GNN~\citep{redgnn}, DeepPath~\citep{xiong2017deeppath}, AnyBURL~\citep{meilicke2019anyburl}, C-MPNN~\citep{huang2023theoryrwl}.
-\emph{The 2024 foundation-model line} (ULTRA~\citep{galkin2024ultra}, KG-ICL~\citep{kgicl2024}, InGram~\citep{ingram2024}, GraphAny~\citep{zhao2024graphany}) targets cross-graph transfer rather than per-dataset peak. Parameter-efficient tokenisation (NodePiece~\citep{nodepiece2022}) and text-based scoring (SimKGC~\citep{simkgc2022}, KG-BERT~\citep{kgbert2019}, KG-LLM~\citep{kgllm2024}) are orthogonal directions. Appendix~\ref{app:modern} reports our verified reproductions and failures.
+\paragraph{Decoder and method families.}
+Shallow embedding models such as TransE~\cite{transe}, DistMult~\cite{distmult}, ComplEx~\cite{complex}, RotatE~\cite{rotate}, TuckER~\cite{balazevic2019tucker}, and HAKE~\cite{hake} score triples from endpoint embeddings. GNN-encoder extensions add message passing~\cite{rgcn,compgcn,chen2021hitter}; path-based reasoners such as NBFNet, A$^*$Net, and RED-GNN encode query-specific structure~\cite{nbfnet,astarnet,redgnn}. The closest decoder-axis hypothesis is \cite{manabe2018datadependent}, which regularises ComplEx imaginary parts for empirically symmetric relations; however, it does not audit the vanilla decoder choice under matched recipes. We also revisit the YAGO3-10 ComplEx-N3 line~\cite{lacroix2018complex}: under our recipe, $L{=}0$ ComplEx is already near saturation at $d{\approx}128$, with only a small single-seed gain at $d{=}256$.
 
-\paragraph{Delta from \citet{lacroix2018complex,lacroix2020tensor} on YAGO3-10.}
-\citet{lacroix2018complex} introduced the N3 nuclear-3-norm regulariser and reported $\approx\!0.58$ MRR on YAGO3-10 with ComplEx-N3 at $d{=}2000$ (Adagrad, sampled-negatives logistic loss). The natural reading of that result is a capacity narrative: $d{=}2000$ was needed because the bottleneck on YAGO3-10 is model capacity. Our YAGO3-10 dimension sweep (Sec.~\ref{sec:yago-saturation}) shows MRR saturates at $d{\approx}128$ under our recipe ($0.6713 \to 0.6906 \to 0.6959 \to 0.7003$ for $d \in \{64, 100, 128, 256\}$), $16{\times}$ smaller than $d{=}2000$. The capacity narrative is therefore empirically wrong; the bottleneck on YAGO3-10 was decoder $+$ recipe, not capacity. We directly verify orthogonality by adding N3 to our recipe at $d{=}128$ (3 seeds each): YAGO3-10 changes by $-0.002$ MRR, WN18RR by $+0.010$, FB15k-237 by $+0.002$, CoDEx-M by $+0.010$. N3 is largely neutral at saturated dimension.
-
-\paragraph{The careful-training-beats-clever-architecture lineage.}
-Our paper continues an established pattern. In vision: Bag of Tricks~\citep{he2019bagoftricks} and Revisiting ResNets~\citep{bello2021revisiting} closed apparent ResNet gaps; How to Train Your ViT~\citep{steiner2022howviti} did the same for transformers. In NLP: RoBERTa~\citep{liu2019roberta} and Chinchilla~\citep{hoffmann2022chinchilla} at scale. In graph ML: \citet{errica2020fair} and \citet{shchur2018pitfalls} flipped published GNN rankings under fair evaluation. The KG-completion subfield has been adding pieces of this audit: recipe (Ruffinelli 2020), encoder (Zhang 2022 WWW); the present paper adds the decoder axis and the encoder-depth $\times$ decoder interaction.
-
-\section{Approach: Three Levers Under One Recipe}
+\section{Approach: Recipe-Controlled Decoder Audit}
 \label{sec:method}
 
-\paragraph{Three-lever framing.}
-The contribution of this paper is not a new architecture but a controlled \emph{experiment} that varies three orthogonal levers under one fixed training recipe:
-(i) \textbf{decoder} $\in \{$ComplEx, DistMult$\}$,
-(ii) \textbf{encoder depth} $L \in \{0, 2, 3\}$ (with $L{=}0$ removing message passing entirely; pure embedding lookup),
-(iii) \textbf{recipe component} ablations (loss objective, optimiser, label smoothing) that we apply to the \emph{same} decoder-encoder configuration to attribute the recipe gain (Sec.~\ref{sec:decomposition}).
-We refer to this experimental family as \textbf{\ours} (\textbf{R}ecipe-\textbf{C}ontrolled). The body of the paper traverses the three levers in this order: decoder first (Sec.~\ref{sec:decoder-diagnostic} and the UMLS spotlight Sec.~\ref{sec:umls-spotlight})---because we find this is the highest-variance lever---then encoder, then recipe. Section~\ref{sec:depth-decoder-interaction} establishes that levers (i) and (ii) interact and cannot be swept independently.
+The audit varies three levers under one fixed training recipe: (i) \textbf{primary decoder} $\in \{$ComplEx, DistMult$\}$, with targeted RotatE/TransE checks; (ii) \textbf{encoder depth} $L \in \{0, 2, 3\}$ ($L{=}0$ = pure embedding lookup); and (iii) \textbf{recipe} ablations. We refer to the protocol as \ours\ (\textbf{R}ecipe-\textbf{C}ontrolled \textbf{D}ecoder \textbf{A}udit).
 
-\subsection{Graph Encoder}
-We use a standard CompGCN encoder \citep{compgcn} with Hadamard composition:
-\begin{equation}
-\mathbf{h}_v^{(l+1)} = \sigma\!\Bigg(\mathbf{W}_{\text{self}}^{(l)} \mathbf{h}_v^{(l)} + \sum_{(u, r, v) \in \mathcal{E}} \frac{1}{\sqrt{|\mathcal{N}(v)|}} \mathbf{W}^{(l)}_{\text{msg}} \big( \mathbf{h}_u^{(l)} \odot \mathbf{r}^{(l)} \big) \Bigg),
-\end{equation}
-where $\mathbf{h}_u^{(l)}, \mathbf{r}^{(l)}$ are the entity and relation embeddings at layer $l$ and $\odot$ is element-wise multiplication.
-We use $L \in \{2, 3\}$ layers with a residual connection and layer normalisation after the final layer.
-Our hidden dimension is $d = 200$ on FB15k-237/WN18RR and $d \in \{64, 128\}$ on YAGO3-10 (larger graph; see Section~\ref{sec:yago-saturation} and Appendix~\ref{app:param-sweep} for the YAGO $d$-sweep).
+\paragraph{Encoder.}
+A standard CompGCN~\cite{compgcn} layer with Hadamard composition aggregates relation-conditioned neighbour messages, with residuals and layer norm. We use $L \in \{2,3\}$ unless scanning depth, hidden $d{=}200$ on FB/WN and $d \in \{64,128\}$ on YAGO3-10.
 
-\subsection{Decoder}
-We consider two lightweight decoders.
+\paragraph{Decoders.}
+DistMult scores $\langle \mathbf{h}_h \odot \mathbf{r}, \mathbf{h}_t \rangle$. ComplEx splits embeddings into real/imaginary halves and can model antisymmetric relations. We compare the common-practice equal-$d$ setting rather than a parameter-matched setting; this is intentional because the audit targets the reporting choices typically hidden in structural KGC papers.
 
-\paragraph{DistMult.}
-$\text{score}(h, r, t) = \langle \mathbf{h}_h \odot \mathbf{r}, \mathbf{h}_t \rangle$, where $\mathbf{h}$ are GNN-encoded representations and $\mathbf{r}$ is a separate relation vector.
-
-\paragraph{ComplEx.}
-We split $d$-dimensional embeddings into real and imaginary halves and compute $\text{score}(h, r, t) = \mathrm{Re}(\langle \mathbf{h}_h, \mathbf{r}, \overline{\mathbf{h}_t} \rangle)$.
-ComplEx can model antisymmetric relations. Under our recipe, ComplEx exceeds DistMult by a modest $+0.005$ to $+0.012$ MRR on the standard transductive benchmarks (FB15k-237, WN18RR, YAGO3-10, CoDEx-M; see Sec.~\ref{sec:decoder-diagnostic}), but the sign is not invariant: on UMLS the ranking reverses ($-0.045$ MRR; Sec.~\ref{sec:umls-spotlight}). We treat decoder choice as a tunable axis rather than a defaulted constant.
-
-\subsection{Training Recipe}
+\paragraph{Training recipe.}
 \label{sec:recipe}
-We train with 1-vs-all cross-entropy: for each training triple $(h, r, t)$, the label is the index of $t$ among all entities, and the loss is
-\begin{equation}
-\mathcal{L}(h, r, t) = \mathrm{CE}\big(\text{score}(h, r, \cdot),\ t;\ \varepsilon\big),
-\end{equation}
-where $\varepsilon$ is the label-smoothing parameter.
-The key recipe ingredients, identified empirically in Section~\ref{sec:ablation}, are:
-\begin{enumerate}
-    \item \textbf{Label smoothing with $\varepsilon = 0.3$.} Removing it costs up to $-0.041$ MRR on WN18RR.
-    \item \textbf{AdamW + MultiStepLR} (drop by $0.3\times$ at 60\% and 80\% of training). Cosine annealing was consistently worse.
-    \item \textbf{Shallow GCN (2--3 layers).} Optimal depth is dataset-dependent: $L{=}3$ on FB15k-237, $L{=}2$ on WN18RR and YAGO3-10.
-    \item \textbf{Sufficient training epochs} (300 on WN18RR, 200 on FB15k-237, 150 on YAGO3-10). Early stopping was never triggered in our final configurations.
-\end{enumerate}
-All other choices---initialisation, dropout ($0.2$), batch size ($1024$ on FB/WN, $2048$ on YAGO3-10), weight decay ($10^{-4}$)---are standard and their effects are small (Section~\ref{sec:sensitivity}). Pseudocode is in Appendix~\ref{app:algorithm}.
+We train with 1-vs-all CE over all entities, label smoothing $\varepsilon{=}0.3$, AdamW, MultiStepLR drops at 60\% and 80\%, dropout $0.2$, batch $1024$/$2048$, and weight decay $10^{-4}$. Training runs for 300/200/150 epochs on WN/FB/YAGO-style scales.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -151,216 +96,230 @@ All other choices---initialisation, dropout ($0.2$), batch size ($1024$ on FB/WN
 \subsection{Setup}
 \label{sec:setup}
 
-\paragraph{Datasets.}
-We use five standard transductive KG completion benchmarks: FB15k-237 \citep{fb15k237} (14.5\,K entities, 237 relations, 272\,K triples; avg.\ degree $37.4$), WN18RR \citep{wn18rr} (40.9\,K, 11, 86.8\,K; $4.2$), YAGO3-10 \citep{yago310} (123\,K, 37, 1.08\,M; $17.5$), CoDEx-M \citep{safavi2020codex} (17\,K Wikidata entities, 51 relations, 185\,K triples; $11.0$), and CoDEx-L \citep{safavi2020codex} (78\,K Wikidata entities, 69 relations, 551\,K train triples; $7.1$). For the small-KG decoder spotlight (Sec.~\ref{sec:umls-spotlight}) we additionally evaluate UMLS (135 entities, 46 relations, 5\,K train) and Kinship (104, 25, 8\,K).
+\paragraph{Datasets and evaluation.}
+We evaluate five standard transductive benchmarks (FB15k-237~\cite{fb15k237}, WN18RR~\cite{wn18rr}, YAGO3-10~\cite{yago310}, CoDEx-M, CoDEx-L~\cite{safavi2020codex}) plus UMLS and Kinship for the small-KG decoder spotlight. We report filtered MRR / Hits@$\{1,3,10\}$ under the standard protocol~\cite{transe} with average-rank tie-breaking. CoDEx-M/CoDEx-L use the canonical Safavi et al.\ splits; inverse triples are added only to training. Headline rows use 6 seeds where stated and otherwise 3 seeds; the exact seed lists are retained in the run JSONs/logs.
 
-\paragraph{Evaluation.}
-We report filtered MRR, Hits@1, Hits@3, and Hits@10 on each test set following the standard protocol \citep{transe}: for each test triple we score both $(h,r,?)$ and $(?,r,t)$ and average the ranks.
-We use \textbf{average-rank} tie-breaking (neither optimistic nor pessimistic); this matches the ConvE reference implementation and is the convention adopted by CompGCN and NBFNet.
-For FB15k-237 and WN18RR we evaluate on all 20{,}466 and 3{,}134 test triples respectively; for YAGO3-10, on all 5{,}000 test triples.
-Dataset statistics and a full evaluation-protocol discussion are in Appendix~\ref{app:data}.
-
-\paragraph{Seeds.}
-Main results and key ablations are reported over three random seeds (42, 123, 456); we report mean $\pm$ standard deviation.
-Single-seed results are clearly marked.
+\paragraph{Recipe and reproducibility details.}
+Defaults are $d{=}200$ for FB, WN, CoDEx, UMLS, and Kinship; $d\in\{64,128\}$ for YAGO3-10; $L\in\{0,2,3\}$; batch $1024$ or $2048$ (CoDEx-L $4096$); dropout $0.2$; AdamW with lr $5{\times}10^{-4}$ and weight decay $10^{-4}$; MultiStepLR at $0.6T/0.8T$ with factor $0.3$; label smoothing $\varepsilon{=}0.3$; and 1-vs-all CE over all entities. Training uses AMP/FP16 on a single NVIDIA RTX 2080 Ti (11 GB); large YAGO/CoDEx runs and distance-decoder spot-checks are therefore server-side experiments. We retain per-run JSONs/logs, seed lists, configs, and code snapshots, and will release an anonymized audit bundle with the final version; all reported metrics use average-rank tie-breaking.
 
 \paragraph{Baselines.}
-We compare against published numbers for TransE \citep{transe}, DistMult \citep{distmult}, ComplEx \citep{complex}, ComplEx-N3 \citep{lacroix2018complex}, RotatE \citep{rotate}, CompGCN \citep{compgcn}, HAKE \citep{hake}, and NBFNet \citep{nbfnet}.
-Recent foundation-model-style baselines (ULTRA~\citep{galkin2024ultra}, KG-ICL~\citep{kgicl2024}, NodePiece~\citep{nodepiece2022}, SimKGC~\citep{simkgc2022}) are discussed in Appendix~\ref{app:modern}.
-Since our contribution is a training-recipe study, we do not re-run these baselines; we use their reported numbers (the original papers report extensive tuning protocols). We discuss the limitation of this choice in Section~\ref{sec:intro}.
+Baselines use published numbers for classical, neural, and path-based KGC models~\cite{transe,distmult,complex,lacroix2018complex,rotate,compgcn,hake,nbfnet}. They are orientation points, not recipe-matched competitors.
 
 \subsection{Main Results}
 \label{sec:main}
 
-\begin{table}[t]
+\begin{table*}[!htbp]
 \centering
-\caption{Main results on FB15k-237, WN18RR, YAGO3-10, and CoDEx-M. Best in \best{bold}, second-best \secondbest{underlined}. Where we report multiple seeds, mean $\pm$ std is shown. ComplEx-N3 row is quoted from the original paper at $d{=}2000$; we did not re-run ComplEx-N3 in our codebase.}
+\caption{Orientation and selected controlled results under filtered evaluation with average-rank tie-breaking. Published baselines and our controlled runs use different recipes and implementations; the table is not a recipe-matched SOTA comparison.}
 \label{tab:main}
-\resizebox{\textwidth}{!}{%
+\small
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{llcccc}
 \toprule
 Dataset & Method & MRR & Hits@1 & Hits@3 & Hits@10 \\
 \midrule
-\multirow{9}{*}{FB15k-237}
-& TransE    & 0.294 & 20.0\% & 33.0\% & 46.5\% \\
-& DistMult  & 0.241 & 15.5\% & 26.3\% & 41.9\% \\
-& ComplEx   & 0.247 & 15.8\% & 27.5\% & 42.8\% \\
-& RotatE    & 0.338 & 24.1\% & 37.5\% & 53.3\% \\
-& NodePiece+RotatE~\citep{nodepiece2022} & 0.256 & --- & --- & 42.0\% \\
-& CompGCN   & 0.355 & 26.4\% & 39.0\% & 53.5\% \\
-& KG-ICL-6L~\citep{kgicl2024} (reprod.) & 0.355 & 27.0\% & 38.9\% & 52.3\% \\
-& NBFNet    & \secondbest{0.415} & \secondbest{32.1\%} & \secondbest{45.4\%} & \secondbest{59.9\%} \\
-& \ours\ (no GCN, $L{=}0$) & 0.406 $\pm$ 0.002 & 31.4 $\pm$ 0.3\% & 45.3 $\pm$ 0.3\% & 59.2 $\pm$ 0.4\% \\
-& \ours\ ($L{=}3$) & \best{0.420 $\pm$ 0.002} & \best{32.6 $\pm$ 0.1\%} & \best{46.2 $\pm$ 0.3\%} & \best{60.8 $\pm$ 0.3\%} \\
+\multirow{5}{*}{FB15k-237}
+& RotatE        & $0.338$ & $24.1$ & $37.5$ & $53.3$ \\
+& CompGCN       & $0.355$ & $26.4$ & $39.0$ & $53.5$ \\
+& KG-ICL-6L     & $0.355$ & $27.0$ & $38.9$ & $52.3$ \\
+& NBFNet        & $0.415$ & $32.1$ & $45.4$ & $59.9$ \\
+& \ours\ ($L{=}3$, ComplEx) & $0.420{\pm}0.002$ & $32.6{\pm}0.1$ & $46.2{\pm}0.3$ & $60.8{\pm}0.3$ \\
 \midrule
-\multirow{8}{*}{WN18RR}
-& TransE    & 0.226 & \phantom{0}1.0\% & 39.8\% & 52.5\% \\
-& DistMult  & 0.430 & 39.0\% & 44.0\% & 49.0\% \\
-& ComplEx   & 0.440 & 41.0\% & 46.0\% & 51.0\% \\
-& RotatE    & 0.476 & 42.8\% & 49.2\% & 57.1\% \\
-& CompGCN   & 0.479 & 44.3\% & 49.4\% & 54.6\% \\
-& KG-ICL-6L~\citep{kgicl2024} (reprod.) & 0.442 & 39.7\% & 46.5\% & 52.4\% \\
-& NBFNet    & \best{0.551} & \best{49.7\%} & \best{57.3\%} & \best{66.6\%} \\
-& \ours\ ($L{=}2$) & 0.478 $\pm$ 0.002 & 45.1 $\pm$ 0.0\% & 49.1 $\pm$ 0.4\% & 52.8 $\pm$ 0.4\% \\
-& \ours\ (no GCN, $L{=}0$) & \secondbest{0.485 $\pm$ 0.002} & \secondbest{45.6 $\pm$ 0.3\%} & \secondbest{50.1 $\pm$ 0.1\%} & \secondbest{53.5 $\pm$ 0.3\%} \\
+\multirow{6}{*}{WN18RR}
+& RotatE        & $0.476$ & $42.8$ & $49.2$ & $57.1$ \\
+& CompGCN       & $0.479$ & $44.3$ & $49.4$ & $54.6$ \\
+& KG-ICL-6L     & $0.442$ & $39.7$ & $46.5$ & $52.4$ \\
+& NBFNet        & $0.551$ & $49.7$ & $57.3$ & $66.6$ \\
+& \ours\ ($L{=}0$, ComplEx) & $0.485{\pm}0.002$ & $45.6{\pm}0.3$ & $50.1{\pm}0.1$ & $53.5{\pm}0.3$ \\
+& \ours\ ($L{=}2$, RotatE) & $0.493{\pm}0.002$ & $45.8{\pm}0.4$ & $50.6{\pm}0.2$ & $56.2{\pm}0.3$ \\
 \midrule
-\multirow{9}{*}{YAGO3-10}
-& TransE    & 0.303 & 21.8\% & 33.6\% & 48.3\% \\
-& DistMult  & 0.501 & 41.3\% & 54.7\% & 66.1\% \\
-& ComplEx (Trouillon-2016, as reported in \citet{nbfnet})   & 0.587 & 51.0\% & 63.1\% & 70.0\% \\
-& ComplEx-N3 \citep{lacroix2018complex} ($d{=}2000$)$^\dagger$ & $\approx$0.58 & --- & --- & --- \\
-& RotatE    & 0.495 & 40.2\% & 55.0\% & 67.0\% \\
-& HAKE      & 0.545 & 46.2\% & 59.6\% & 69.4\% \\
-& KG-ICL-6L~\citep{kgicl2024} (reprod.) & 0.368 & 26.0\% & 41.7\% & 58.0\% \\
-& NBFNet    & 0.563 & 48.0\% & 61.0\% & 70.8\% \\
-& \ours\ ($L{=}2$, $d{=}64$) & 0.644 $\pm$ 0.020 & 57.5 $\pm$ 1.5\% & 68.0 $\pm$ 1.6\% & 74.9 $\pm$ 1.5\% \\
-& \ours\ (no GCN, $L{=}0$, $d{=}64$) & \secondbest{0.671 $\pm$ 0.005} & \secondbest{60.9 $\pm$ 0.7\%} & \secondbest{71.3 $\pm$ 0.4\%} & \secondbest{77.6 $\pm$ 0.2\%} \\
-& \ours\ (no GCN, $L{=}0$, $d{=}128$, 6 seeds) & \best{0.6968 $\pm$ 0.0023} & \best{64.0 $\pm$ 0.2\%} & \best{73.0 $\pm$ 0.2\%} & \best{79.3 $\pm$ 0.3\%} \\
-& \ours\ + N3~\citep{lacroix2018complex} (no GCN, $d{=}128$) & 0.6949 $\pm$ 0.0025 & 63.5 $\pm$ 0.3\% & 72.8 $\pm$ 0.2\% & 79.7 $\pm$ 0.3\% \\
+\multirow{5}{*}{YAGO3-10}
+& ComplEx (in NBFNet)     & $0.587$ & $51.0$ & $63.1$ & $70.0$ \\
+& ComplEx-N3 ($d{=}2000$) & $\approx 0.58$ & --- & --- & --- \\
+& NBFNet                  & $0.563$ & $48.0$ & $61.0$ & $70.8$ \\
+& \ours\ ($L{=}0$, $d{=}128$, 3 seeds) & $0.697{\pm}0.005$ & $63.9{\pm}0.7$ & $73.7{\pm}0.3$ & $79.3{\pm}0.5$ \\
+& \ours\ + N3 ($L{=}0$, $d{=}128$) & $0.695{\pm}0.003$ & $63.5{\pm}0.3$ & $72.8{\pm}0.2$ & $79.7{\pm}0.3$ \\
 \midrule
-\multirow{4}{*}{CoDEx-M}
-& ComplEx (Safavi \& Koutra 2020)~\citep{safavi2020codex} & 0.337 & 26.2\% & --- & 47.6\% \\
-& TuckER (Safavi \& Koutra 2020)~\citep{safavi2020codex}  & 0.328 & 25.9\% & --- & 45.8\% \\
-& \ours\ ($L{=}2$, $d{=}200$) & 0.489 $\pm$ 0.008 & 37.1 $\pm$ 0.8\% & --- & 72.0 $\pm$ 0.5\% \\
-& \ours\ (no GCN, $L{=}0$, $d{=}200$) & \best{0.5379 ($\sigma\!<\!0.001$)} & \best{43.0 $\pm$ 0.1\%} & --- & \best{74.5 $\pm$ 0.2\%} \\
-& \ours\ + N3 (no GCN, $L{=}0$, $d{=}200$) & 0.5474 $\pm$ 0.0028 & 43.8 $\pm$ 0.4\% & --- & 75.7 $\pm$ 0.3\% \\
+\multirow{3}{*}{CoDEx-M}
+& ComplEx (Safavi 2020)         & $0.337$ & $26.2$ & --- & $47.6$ \\
+& \ours\ ($L{=}0$, $d{=}200$)   & $0.538{\pm}0.000$ & $43.0{\pm}0.1$ & --- & $74.5{\pm}0.2$ \\
+& \ours\ + N3 ($L{=}0$, $d{=}200$) & $0.547{\pm}0.003$ & $43.8{\pm}0.4$ & --- & $75.7{\pm}0.3$ \\
 \midrule
-\multirow{2}{*}{CoDEx-L (new, sparse+het)}
-& \ours\ ($L{=}2$, $d{=}200$) & 0.480 $\pm$ 0.007 & 38.5 $\pm$ 0.7\% & --- & 66.3 $\pm$ 0.6\% \\
-& \ours\ (no GCN, $L{=}0$, $d{=}200$) & \best{0.5408 $\pm$ 0.0026} & \best{44.1 $\pm$ 0.3\%} & --- & \best{73.1 $\pm$ 0.3\%} \\
+\multirow{2}{*}{CoDEx-L}
+& \ours\ ($L{=}2$, $d{=}200$)   & $0.480{\pm}0.007$ & $38.5{\pm}0.7$ & --- & $66.3{\pm}0.6$ \\
+& \ours\ ($L{=}0$, $d{=}200$)   & $0.540{\pm}0.003$ & $44.1{\pm}0.2$ & --- & $72.7{\pm}0.5$ \\
 \bottomrule
-\end{tabular}%
-}
-\smallskip\\
-{\footnotesize $^\dagger$ Approximate value reported by \citet{lacroix2018complex} at $d{=}2000$ with N3 nuclear-3-norm regularisation; we did not re-run ComplEx-N3 at their dimension. Our own $d{=}128$ N3 measurement (row ``\ours\ + N3'') is a head-to-head against Lacroix-style regularisation under our recipe.}
-\end{table}
+\end{tabular}
+\end{table*}
 
 \paragraph{Five datasets, three verdicts.}
-The audit produces three qualitatively different verdicts across the five datasets.
+Table~\ref{tab:main} is an orientation table for positioning \ours, not a superiority claim across recipes. On \textbf{YAGO3-10}, pure ComplEx ($L{=}0$, $d{=}128$) reaches MRR $0.6971 \pm 0.0048$ in the new server rerun; adding CompGCN reduces MRR to $0.678 \pm 0.009$. On \textbf{WN18RR}, RotatE reaches $0.493 \pm 0.002$ but still trails NBFNet's $0.551$, keeping path reasoning as a separate lever. On \textbf{FB15k-237}, the encoder helps ($0.406 \to 0.420$ MRR), but the NBFNet gap is within recipe-comparison uncertainty. On \textbf{CoDEx-M/L}, pure ComplEx is the strongest of our structural configurations, while CompGCN hurts most on CoDEx-L.
 
-\begin{itemize}
-    \item On \textbf{YAGO3-10}, pure ComplEx ($L{=}0$, $d{=}128$, 6 seeds) reaches MRR $= 0.6968 \pm 0.0023$. Relative to the Trouillon-2016 ComplEx number reported in \citet{nbfnet} ($0.587$), this is a $+10.9$ MRR gain; relative to NBFNet itself ($0.563$), $+13.4$. The number also exceeds the $\approx\!0.58$ reported for ComplEx-N3 by \citet{lacroix2018complex} at $d{=}2000$, although the comparison is across codebases at a $\sim\!16\times$ larger embedding dimension (Section~\ref{sec:yago-saturation} establishes that YAGO3-10 capacity saturates at $d{\approx}128$, refuting the standard ``need more capacity'' framing). Adding a CompGCN encoder \emph{reduces} MRR to $0.678 \pm 0.009$ ($L{=}2$, 3 seeds, Section~\ref{sec:depth-decoder-interaction}).
-    \item On \textbf{WN18RR}, pure ComplEx wins within our method family (MRR $= 0.485 \pm 0.002$, slightly above published CompGCN $0.479$ and RotatE $0.476$), but \emph{NBFNet still leads at $0.551$}---a 6.6-point gap that no recipe or architectural change of ours closes. We localise the deficit to 1-to-N hypernym chains, where path propagation has a genuine inductive advantage (Section~\ref{sec:discussion}, Appendix~\ref{app:per-relation}). Adding the CompGCN encoder reduces MRR slightly to $0.478 \pm 0.002$ ($L{=}2$). \ours{} + N3 reaches $0.4952 \pm 0.0042$, the strongest WN18RR number in our family but still $-0.056$ below NBFNet.
-    \item On \textbf{FB15k-237}, the encoder \emph{does} help: MRR rises from $0.406 \pm 0.002$ ($L{=}0$) to $0.420 \pm 0.002$ ($L{=}3$, 3 seeds), matching NBFNet's $0.415$ at $17$--$29\times$ fewer parameters. \ours{} + N3 ($L{=}3$) gives $0.4265 \pm 0.0037$, the strongest FB15k-237 number we measure. FB15k-237 is the only dataset in our study where graph structure is worth encoding explicitly.
-    \item On \textbf{CoDEx-M} (17\,K Wikidata entities, schema-rich KG~\citep{safavi2020codex}), pure ComplEx with our recipe achieves MRR $= 0.5379$ ($\sigma\!<\!0.001$ over 3 seeds), $+0.20$ MRR over the original \citet{safavi2020codex} ComplEx ($0.337$) and $+0.21$ over TuckER ($0.328$). Those baselines were trained without the modern recipe we apply here, so the $+0.20$ is an estimate of recipe-attributable improvement, not of architectural improvement---consistent with our broader thesis. Adding CompGCN reduces MRR to $0.489 \pm 0.008$; adding N3 raises it modestly to $0.5474 \pm 0.0028$.
-    \item On \textbf{CoDEx-L} (78\,K Wikidata entities, $d{=}200$), pure ComplEx reaches MRR $= 0.5408 \pm 0.0026$ (3 seeds, $L{=}0$). Adding a CompGCN encoder \emph{reduces} MRR to $0.4799 \pm 0.0071$ ($L{=}2$), the largest encoder-induced harm we measure ($-0.061$, the bottom end of the encoder spread reported in Sec.~\ref{sec:decoder-diagnostic}).
-\end{itemize}
-
-\begin{figure}[t]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth]{fig1_main_mrr.pdf}
-\caption{MRR comparison against published baselines on three benchmarks. Error bars show standard deviation over three random seeds (where available). Our best configuration exceeds NBFNet on FB15k-237 and YAGO3-10; on WN18RR NBFNet still leads by $6.6$ MRR, a gap we localise to 1-to-N hypernym relations (Section~\ref{sec:discussion}).}
+\includegraphics[width=\columnwidth]{fig1_main_mrr.pdf}
+\caption{Main MRR comparison on the standard transductive benchmarks. The figure is intended as orientation across published baselines and our controlled runs; WN18RR remains favourable to path-based reasoning.}
 \label{fig:main-mrr}
 \end{figure}
 
-\subsection{The Decoder $\times$ Dataset Diagnostic (Main Result)}
+\subsection{The Decoder $\times$ Dataset Diagnostic}
 \label{sec:decoder-diagnostic}
 
-We now run the lever-by-lever audit. The headline question is: which lever's choice produces the largest cross-dataset MRR variance under one fixed recipe?
+We now run the lever-by-lever audit. The central question is not whether decoders are globally more important than encoders, but whether hidden decoder choices can change the interpretation of structural KGC experiments.
 
-\begin{table}[t]
+\begin{table}[!htb]
 \centering
-\caption{The two diagnostic axes side by side. \textbf{Decoder $\Delta$} is $\mathrm{MRR}_{\mathrm{ComplEx}} - \mathrm{MRR}_{\mathrm{DistMult}}$ at the dataset's best $(d, L)$ configuration under our recipe. \textbf{Encoder $\Delta$} is $\mathrm{MRR}_{L \ge 2} - \mathrm{MRR}_{L=0}$ on the ComplEx decoder. UMLS / Kinship are 6 seeds (extension of the 3-seed lock-in pass); FB15k-237 / WN18RR / YAGO3-10 / CoDEx-M / CoDEx-L are 3 seeds; mean $\pm$ std throughout. The decoder axis spans $0.134$ MRR; the encoder axis spans $0.075$. The decoder, not the encoder, is the higher-leverage lever.}
+\caption{Diagnostic axes under our fixed recipe (mean MRR; UMLS/Kinship 6 seeds, others 3; std $<\!0.01$ on all cells). \textbf{Dec.\ $\Delta$} = $\mathrm{MRR}_{\mathrm{CX}} - \mathrm{MRR}_{\mathrm{DM}}$; \textbf{Enc.\ $\Delta$} = $\mathrm{MRR}_{L \ge 2} - \mathrm{MRR}_{L=0}$ on ComplEx. Encoder cells are available for the five standard KGs, while UMLS/Kinship are decoder-only small-KG diagnostics.}
 \label{tab:decoder-diagnostic}
 \small
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lrrcccc}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccc}
 \toprule
-Dataset & \#ent & \#rel & ComplEx MRR & DistMult MRR & \textbf{Decoder $\Delta$} & Encoder $\Delta$ \\
+Dataset & CX MRR & DM MRR & \textbf{Dec.\ $\Delta$} & Enc.\ $\Delta$ \\
 \midrule
-UMLS         &     135 &    46 & $0.8302 \pm 0.0086$ & \best{$0.8748 \pm 0.0096$} & \best{$\mathbf{-0.0446}$} & --- \\
-Kinship      &     104 &    25 & \best{$0.7634 \pm 0.0065$} & $0.6744 \pm 0.0078$ & \best{$\mathbf{+0.0889}$} & --- \\
+UMLS        & $\mathbf{0.943}$ & $0.921$ & $+0.022$ & --- \\
+Kinship     & $\mathbf{0.853}$ & $0.710$ & $\mathbf{+0.143}$ & --- \\
 \midrule
-FB15k-237    &  14\,541 &   237 & \best{$0.4211 \pm 0.0013$} & $0.4157 \pm 0.0025$ & $+0.0054$ & $+0.014$ \\
-WN18RR       &  40\,943 &    11 & \best{$0.4781 \pm 0.0019$} & $0.4659 \pm 0.0042$ & $+0.0122$ & $-0.007$ \\
-YAGO3-10     & 123\,182 &    37 & \best{$0.6713 \pm 0.0054$} & $0.6649 \pm 0.0009$ & $+0.0064$ & $-0.019$ \\
-CoDEx-M      &  17\,050 &    51 & \best{$0.5379 \pm 0.0002$} & $0.5282 \pm 0.0012$ & $+0.0096$ & $-0.049$ \\
-CoDEx-L      &  77\,951 &    69 & \best{$0.5408 \pm 0.0026$} & --- & --- & $-0.061$ \\
+FB15k-237   & $\mathbf{0.421}$ & $0.416$ & $+0.005$ & $+0.014$ \\
+WN18RR      & $\mathbf{0.478}$ & $0.466$ & $+0.012$ & $-0.007$ \\
+YAGO3-10    & $\mathbf{0.671}$ & $0.665$ & $+0.006$ & $-0.019$ \\
+CoDEx-M     & $\mathbf{0.538}$ & $0.528$ & $+0.010$ & $-0.049$ \\
+CoDEx-L     & $\mathbf{0.540}$ & $0.536$ & $+0.005$ & $-0.061$ \\
 \midrule
-\multicolumn{4}{r}{\textbf{Spread (max $-$ min) across this column:}} & & \best{$\mathbf{0.1335}$} & $0.075$ \\
-\bottomrule
-\end{tabular}%
-}
-\\[2pt]
-{\footnotesize All numbers above (UMLS, Kinship, FB15k-237 $L{=}3$, WN18RR $L{=}2$, YAGO3-10 $L{=}0$ $d{=}64$, CoDEx-M $L{=}0$) come from the 36-run lock-in pass on a single code commit; UMLS and Kinship were subsequently extended to 6 seeds per cell (12 additional runs, same code commit) to tighten the headline reversal claim. Per-run JSONs and the extension script released. \textbf{Asymmetries we flag.} (a) For YAGO3-10 the diagnostic is at $d{=}64$ (lock-in pass); the headline best in Table~\ref{tab:main} is at $d{=}128$ (where DistMult was not run; the $d{=}64$ ComplEx-vs-DistMult gap is $+0.006$ MRR and we expect the gap to remain small at $d{=}128$ given saturation, Sec.~\ref{sec:yago-saturation}). (b) The Encoder $\Delta$ column is computed only on the 5 standard transductive benchmarks; UMLS / Kinship were run only at $L{=}2$ in the lock-in pass. (c) CoDEx-L was run only with ComplEx; the Decoder $\Delta$ column is therefore over 6 datasets and the Encoder $\Delta$ column over 5. The reported \emph{spreads} $0.134 / 0.075$ are unaffected by these gaps because their endpoints lie in the cells we ran.}
-\end{table}
-
-\paragraph{Decoder spread $> $ encoder spread.}
-The encoder $\Delta$ ranges from $+0.014$ (FB15k-237) to $-0.061$ (CoDEx-L), spread $0.075$. The decoder $\Delta$ ranges from $-0.045$ (UMLS) to $+0.089$ (Kinship), spread $0.134$, $1.78{\times}$ wider. The KGC literature has spent five years asking ``does CompGCN/R-GCN help?'' and reporting $\pm 0.01$--$0.06$ MRR shifts, while leaving the decoder fixed at ComplEx. Our data shows the decoder choice produces strictly larger MRR variance across datasets than the encoder choice---the field has been tuning the smaller-leverage axis.
-
-\paragraph{The decoder $\Delta$ is sign-stable on standard KGs but flips at small scale.}
-On the five standard transductive benchmarks (FB15k-237, WN18RR, YAGO3-10, CoDEx-M, CoDEx-L), ComplEx beats DistMult by a consistent but modest $+0.005$ to $+0.012$ MRR (Table~\ref{tab:decoder-diagnostic}). On the two small biomedical / kinship benchmarks the gap explodes by an order of magnitude---and on UMLS the sign flips. The standard-KG numbers reproduce the conventional ``ComplEx mildly $>$ DistMult'' folklore. The small-KG reversal does not, and is the subject of Sec.~\ref{sec:umls-spotlight}.
-
-\paragraph{Why has nobody noticed?}
-The two reasons we can identify: (i) the encoder line of work (R-GCN $\to$ CompGCN $\to$ HittER $\to$ M$^2$GNN) treated the decoder as a trivial choice and standardised on ComplEx (or DistMult, depending on which the proposing paper found marginally stronger on FB15k-237), so no paper in that lineage ran the head-to-head DistMult-vs-ComplEx comparison under a unified recipe across heterogeneous datasets; (ii) UMLS and Kinship were treated as inductive / few-shot benchmarks rather than as transductive datasets to populate with full ComplEx-vs-DistMult ablations, so their decoder reversal did not surface in the transductive-benchmark literature where it would have been notable.
-
-\subsection{Spotlight: The UMLS Reversal as a Phase Transition}
-\label{sec:umls-spotlight}
-
-\paragraph{The contradiction.}
-A widely-used biomedical-KG tutorial states that ``DistMult performs poorly on these datasets [UMLS, Kinship] as many relations are antisymmetric in UMLS (causal links, anatomical hierarchies)''~\citep{graph4nlp_kgc}, citing the standard ComplEx $\ge$ DistMult intuition: ComplEx can model antisymmetry, DistMult cannot, and antisymmetric biomedical hierarchies (e.g.\ \emph{is\_a}, \emph{causes}, \emph{anatomically\_part\_of}) make ComplEx mandatory.
-Our data falsifies this prediction. Under our recipe ($d{=}200$, $L{=}2$, $\varepsilon{=}0.3$, AdamW + MultiStepLR, 300 epochs, 6 seeds), UMLS DistMult MRR $= 0.8748 \pm 0.0096$ vs.\ ComplEx MRR $= 0.8302 \pm 0.0086$. DistMult wins by $+0.0446$ MRR; Welch's two-sided $t$-test across the 6 seeds gives $t \approx 8.5$, $\mathrm{df} \approx 9.9$ (Welch--Satterthwaite), $p < 10^{-5}$. A paired bootstrap over the 661 UMLS test triples (a different statistical unit, treating each test triple as an independent draw) also gives $p < 10^{-3}$. The $\sim\!8.5\sigma$ shorthand we use in the abstract, intro, and conclusion refers to this Welch $t$; with $n{=}6$ each and df $\approx 10$, the t-distribution and the Gaussian approximation give numerically close $p$-values, so unlike the earlier 3-seed version the figure is not vulnerable to small-sample tail-extrapolation concerns.
-
-\paragraph{First test the obvious hypothesis: relation-symmetry. It fails.}
-The natural first explanation is that UMLS is \emph{symmetric-rich} in the empirical sense (many relations $r$ for which $(h,r,t) \in \mathcal{D}_{\text{train}}$ implies $(t,r,h) \in \mathcal{D}_{\text{train}}$), so DistMult's enforced symmetry acts as a useful inductive bias. This reading is consistent with the tutorial we contradict and with \citet{manabe2018datadependent}'s relation-level analysis. We measured it directly: per relation $r$, define the empirical symmetry score
-\[
-\mathrm{sym}(r) \;=\; \frac{ \big| \{ (h,t) : (h,r,t), (t,r,h) \in \mathcal{D}_{\text{train}} \} \big|}{ \big| \{ (h,t) : (h,r,t) \in \mathcal{D}_{\text{train}} \} \big| },
-\]
-and the dataset-level score as the edge-weighted mean. UMLS scores $\mathbf{0.133}$; Kinship scores $\mathbf{0.207}$ (\texttt{code/measure\_symmetry.py} in the released repo). \emph{UMLS is less symmetric than Kinship}, the opposite direction of what the symmetric-rich hypothesis would need. Relation-symmetry alone therefore does not explain the UMLS reversal.
-
-\paragraph{The actual phase transition: edges per relation.}
-What does explain the reversal is per-relation sample size. ComplEx splits each $d$-dim embedding into real and imaginary halves; the imaginary part governs antisymmetric scoring, and effectively doubles ComplEx's per-relation parameter budget compared to DistMult's. UMLS has only $5{,}216 / 46 \approx 113$ training edges per relation. Below some threshold, ComplEx's imaginary-part embeddings cannot be reliably estimated, and the model overfits to per-relation antisymmetric noise that the small training set does not adequately reveal. DistMult, with half the parameters per relation and a forced symmetric scoring constraint, has lower variance --- and on UMLS this variance reduction outweighs the cost of being unable to fit antisymmetric relations exactly. Above the threshold the trade-off reverses: ComplEx's extra capacity pays for itself, and the gap shrinks asymptotically as edges/rel grows further (both decoders eventually fit). Table~\ref{tab:edges-per-rel} shows this single-axis prediction is correct on \textbf{6 of 6} measured datasets, with the transition near edges/rel $\approx 200{-}300$:
-
-\begin{table}[h]
-\centering
-\caption{Edges per relation predicts the decoder winner. Threshold $\approx 200{-}300$ separates the lone DistMult-winner (UMLS, $113$~e/r) from the six ComplEx-winners. The Kinship gap ($+0.089$) is the largest because Kinship sits just above the threshold; the gap shrinks asymptotically as e/r grows further (saturation of both decoders). UMLS / Kinship $\Delta$ from 6 seeds; the other four from 3 seeds.}
-\label{tab:edges-per-rel}
-\small
-\begin{tabular}{lrrrr}
-\toprule
-Dataset & \#train & \#rel & edges/rel & Decoder $\Delta$ \\
-\midrule
-UMLS         & 5{,}216    & 46  & \best{$\mathbf{113}$}  & \best{$\mathbf{-0.045}$} (DistMult) \\
-\midrule
-Kinship      & 8{,}544    & 25  & 342    & $+0.089$ \\
-FB15k-237    & 272{,}115  & 237 & 1{,}148  & $+0.005$ \\
-CoDEx-M      & 185{,}000  &  51 & 3{,}627  & $+0.010$ \\
-WN18RR       & 86{,}835   &  11 & 7{,}894  & $+0.012$ \\
-YAGO3-10     & 1{,}079{,}040 & 37 & 29{,}163 & $+0.006$ \\
+\multicolumn{3}{r}{\emph{Shared five-dataset spread:}} & $0.007$ & $0.075$ \\
+\multicolumn{3}{r}{\emph{Decoder-only seven-dataset spread:}} & $\mathbf{0.138}$ & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{A one-statistic predictor for new KGs.}
-A practitioner with a new KG can predict the decoder winner from a single integer: training edges divided by number of relations. Below $\sim\!200$ edges/rel, default to DistMult; above $\sim\!300$, default to ComplEx; in between, run both. Empirical accuracy on our six measured datasets is $6/6 = 100\%$. The rule is mechanistic --- per-relation parameter estimation needs per-relation samples --- not relation-structural. This explains why advice grounded in UMLS's biomedical hierarchies misses the mark: it correctly identifies UMLS as antisymmetry-rich but then infers that this favours ComplEx, whereas the binding constraint on small KGs is per-relation sample size, not relation semantics. The released repo reproduces Table~\ref{tab:edges-per-rel} via \texttt{code/analyze\_decoder\_axis.py}.
+\paragraph{Shared-grid and small-KG readings.}
+On the five standard KGs where both axes are available, decoder $\Delta$ is modest ($+0.005$ to $+0.012$, spread $0.007$), while the CompGCN-style encoder effect varies more ($+0.014$ to $-0.061$, spread $0.075$). This shared-grid result argues against a universal ``decoder dominates encoder'' claim. The decoder-only seven-dataset view is different: adding UMLS and Kinship expands the ComplEx-vs-DistMult range to $0.138$ MRR, driven by Kinship and moderated by UMLS provenance sensitivity. The audit lesson is therefore conditional: decoder choice is a small but consistent reporting factor on standard KGs, and a potentially decisive confound on small KGs.
 
-\paragraph{Implications.}
-The standard advice ``use ComplEx by default; it can model antisymmetry which DistMult cannot'' is wrong on KGs with low edges per relation, regardless of relation-symmetry profile. A practitioner whose KG has $< 200$ edges per relation should default to DistMult: the burden of proof for ComplEx's additional $|\mathcal{E}| \cdot d$ imaginary-part parameters is per-relation sample budget, not relation symmetry. We urge biomedical-KG-completion practitioners specifically to re-test DistMult on their KGs before committing to ComplEx --- the standard advice has been wrong in our setting by $4.5$ MRR points, with the binding mechanism being per-relation undersampling of imaginary parameters, not the (correct but irrelevant) observation that UMLS contains antisymmetric hierarchies.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig0_decoder_vs_encoder.pdf}
+\caption{Decoder $\Delta$ (ComplEx $-$ DistMult) and encoder $\Delta$ ($L{\geq}2$ vs.\ $L{=}0$ on ComplEx) by dataset. Standard-KG decoder gaps are small, while the decoder-only small-KG rows show why provenance-aware matched decoder checks matter.}
+\label{fig:dec-vs-enc}
+\end{figure}
 
-\subsection{YAGO3-10 Capacity Saturates at $d \approx 128$}
+\paragraph{The decoder $\Delta$ is small on standard KGs and large on small KGs.}
+On the five standard transductive benchmarks (FB15k-237, WN18RR, YAGO3-10, CoDEx-M, CoDEx-L), ComplEx is ahead of DistMult by a modest $+0.005$ to $+0.012$ MRR (Table~\ref{tab:decoder-diagnostic}). On the two small biomedical / kinship benchmarks the gap is much larger, and UMLS changes winner across recipe variants. This motivates the small-KG diagnostic in Sec.~\ref{sec:umls-spotlight}.
+
+\subsection{Small-KG Sensitivity: UMLS and Kinship}
+\label{sec:umls-spotlight}
+
+\paragraph{A recipe-sensitive UMLS audit.}
+A widely-used biomedical-KG tutorial states that ``DistMult performs poorly on these datasets [UMLS, Kinship] as many relations are antisymmetric in UMLS''~\cite{graph4nlp_kgc}. Our new server rerun under the declared recipe gives UMLS ComplEx MRR $=0.9427 \pm 0.0072$ vs.\ DistMult $=0.9205 \pm 0.0051$ (6 seeds), so ComplEx is ahead by $+0.022$ MRR. However, an earlier run bundle gave DistMult $=0.8705 \pm 0.0109$ vs.\ ComplEx $=0.8344 \pm 0.0020$. We therefore treat UMLS as sensitivity evidence rather than a dataset-level decoder-winner claim. Its role is diagnostic: small-KG decoder conclusions can change across provenance/recipe variants that are often omitted from benchmark tables.
+
+\paragraph{Symmetry is not enough.}
+The natural first explanation is that UMLS is symmetric-rich, so DistMult's enforced symmetry acts as a useful bias. Define $\mathrm{sym}(r) = |\{(h,t):(h,r,t),(t,r,h) \in \mathcal{D}_{\text{train}}\}| / |\{(h,t):(h,r,t) \in \mathcal{D}_{\text{train}}\}|$, edge-weighted across relations: UMLS scores $0.133$, Kinship $0.207$ --- UMLS is in fact less symmetric than Kinship. Dataset-level symmetry therefore cannot explain either the earlier UMLS reversal or the larger Kinship ComplEx advantage by itself.
+
+\paragraph{Label smoothing alone is not the sensitivity source.}
+In the earlier lock-in pass, we repeated UMLS at $\varepsilon \in \{0, 0.1, 0.3\}$ (3 seeds each, $d{=}200$, $L{=}2$): DistMult won at every $\varepsilon$, with decoder $\Delta$ MRR $= -0.0175$ ($\varepsilon{=}0$), $-0.0268$ ($\varepsilon{=}0.1$), $-0.0446$ ($\varepsilon{=}0.3$). This rules out label smoothing as the sole cause of that pass, but the clean server rerun shows the reversal is not robust enough for a headline claim.
+
+\paragraph{First-cut descriptor: sample size per relation.}
+ComplEx doubles DistMult's relation parameter budget via real/imaginary parts, but extra capacity alone is not the whole story. In an earlier lock-in $d \in \{100,200,400\}$ scan, ComplEx is monotone in $d$ on UMLS while DistMult has a $d{=}200$ sweet spot; the clean rerun nevertheless changes the UMLS winner. The most useful descriptor we found is training edges per relation: UMLS has only $113$ e/r and Kinship $342$, far below FB15k-237 ($1148$), CoDEx-M ($3627$), WN18RR ($7894$), and YAGO3-10 ($29\,163$). Synthetic per-relation subsamples of FB15k-237 and WN18RR reproduce a low-e/r DistMult preference in sign, but absolute MRR is low under aggressive subsampling, so e/r should be read as a hypothesis-generating audit descriptor rather than a mechanism proof or winner rule.
+
+\begin{table}[!htbp]
+\centering
+\caption{Edges per relation as a first-cut audit descriptor. CoDEx-L is excluded from this predictor analysis although its $L{=}0$ decoder spot-check is reported in Table~\ref{tab:decoder-diagnostic}.}
+\label{tab:edges-per-rel}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrr}
+\toprule
+Dataset & \#train & \#rel & e/r & Dec.\ $\Delta$ \\
+\midrule
+UMLS      & 5{,}216 & 46 & $\mathbf{113}$ & $+0.022$ \\
+Kinship   & 8{,}544 & 25 & 342 & $\mathbf{+0.143}$ \\
+FB15k-237 & 272{,}115 & 237 & 1{,}148 & $+0.005$ \\
+CoDEx-M   & 185{,}000 & 51 & 3{,}627 & $+0.010$ \\
+WN18RR    & 86{,}835 & 11 & 7{,}894 & $+0.012$ \\
+YAGO3-10  & 1{,}079{,}040 & 37 & 29{,}163 & $+0.006$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig2_edges_per_rel.pdf}
+\caption{Decoder preference as a function of training edges per relation. Low-e/r datasets produce the largest decoder gaps, but UMLS shows that e/r is an audit descriptor rather than a winner rule.}
+\label{fig:edges-per-rel}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{Targeted distance-decoder spot-checks ($d{=}200$, $L{=}2$). RotatE/TransE use memory-safe batch/chunk settings on the RTX 2080 Ti, so the table is diagnostic and not recipe-matched to the primary DistMult/ComplEx pair.}
+\label{tab:decoder-spotcheck}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcc}
+\toprule
+Dataset & RotatE & TransE \\
+\midrule
+UMLS    & $0.8490{\pm}0.0065$ & $0.1005{\pm}0.0087$ \\
+Kinship & $0.7266{\pm}0.0091$ & $0.0472{\pm}0.0044$ \\
+WN18RR  & $0.4929{\pm}0.0019$ & $0.2016{\pm}0.0045$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{YAGO3-10: Saturation Under Our Recipe at $d \approx 128$}
 \label{sec:yago-saturation}
 
-\paragraph{The capacity narrative was empirically wrong.}
-\citet{lacroix2018complex} reported $\approx\!0.58$ MRR on YAGO3-10 with ComplEx-N3 at $d{=}2000$ (Adagrad, sampled-negatives logistic loss). The natural reading is that YAGO3-10 is capacity-bottlenecked, and that the path forward is yet larger embeddings + N3 regularisation. Our four-point dimension sweep on YAGO3-10 ($L{=}0$ ComplEx, recipe held fixed, 3 seeds per cell) shows otherwise:
+\paragraph{Setup and scope.}
+\cite{lacroix2018complex} reported $\approx\!0.58$ MRR on YAGO3-10 with ComplEx-N3 at $d{=}2000$ (Adagrad, sampled-negatives logistic loss). The original paper introduced N3 regularisation; it did not explicitly assert that capacity \emph{is} the bottleneck. We do not argue against the Lacroix-2018 result itself. Our dimension scan ($L{=}0$ ComplEx, our recipe held fixed; 3 seeds through $d{=}128$ plus a single-seed $d{=}256$ spot-check) shows recipe-conditional near-saturation well below $d{=}2000$:
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
-\caption{YAGO3-10 capacity saturation. $L{=}0$ ComplEx, label smoothing $\varepsilon{=}0.3$, AdamW + MultiStepLR, 3 seeds per dimension. MRR saturates by $d{=}128$; the additional capacity from $d{=}128 \to 256$ buys $+0.004$ MRR at $2{\times}$ parameters. Lacroix-2018's $d{=}2000$ assumed bottleneck is therefore an artefact of their decoder $+$ recipe, not a genuine capacity ceiling. The $d{=}128$ row is the 3-seed lock-in number ($0.6959 \pm 0.002$); the same configuration with 6 seeds gives $0.6968 \pm 0.0023$ (Table~\ref{tab:main}, headline row). The 0.0009 MRR difference is well within seed variance.}
+\caption{YAGO3-10 capacity scan. $L{=}0$ ComplEx. MRR is near saturation by $d{=}128$; a new $d{=}256$ spot-check gives $+0.008$ at $2\times$ params. The new $d{=}128$ server rerun gives $0.6971 \pm 0.0048$.}
 \label{tab:yago-saturation}
 \small
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccc}
 \toprule
 $d$ & 64 & 100 & 128 & 256 \\
 \midrule
-MRR & $0.6713 \pm 0.005$ & $0.6906 \pm 0.004$ & $0.6959 \pm 0.002$ & $0.7003 \pm 0.004$ \\
-$\Delta$ vs prev & --- & $+0.019$ & $+0.005$ & $+0.004$ \\
+MRR     & $0.671$ & $0.691$ & $0.697$ & $0.705$ \\
+$\Delta$ vs prev & --- & $+0.019$ & $+0.006$ & $+0.008$ \\
 Params (M) & 7.9 & 12.3 & 15.8 & 31.6 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Reading.}
-The $d{=}64 \to 100$ step gives $+0.019$ MRR, but each subsequent doubling gives $\le +0.005$. By $d{=}128$ the capacity bottleneck is essentially closed; the additional parameters from $d{=}128 \to 256$ are not bought. \citet{lacroix2018complex} reported $\approx\!0.58$ at $d{=}2000$; we reach $0.6959$ at $d{=}128$ ($+0.116$ MRR) at $16{\times}$ smaller dimension. The bottleneck on YAGO3-10 was therefore not capacity but the decoder + recipe pair (Lacroix used logistic loss + Adagrad + N3; we use 1-vs-all CE + AdamW + MultiStepLR). Adding N3 regularisation to our recipe at $d{=}128$ (Sec.~\ref{sec:related}) changes YAGO3-10 MRR by $-0.002$, confirming N3 is largely orthogonal at saturated dimension.
+Under our recipe with the ComplEx decoder, the $d{=}64 \to 100$ step gives $+0.019$ MRR, while later increases are smaller: $+0.006$ at $d{=}128$ and $+0.008$ in a single-seed $d{=}256$ spot-check. Thus $d{=}128$ is already near saturation for this configuration, although not a hard optimum. We do not claim this saturation transfers to all recipes, optimisers, or decoders; nor that the Lacroix-2018 number is reproducible \emph{at $d{=}128$} under their original recipe (we did not re-run their setup at our $d$, but doing so would directly test the recipe-vs-capacity confound). Adding N3 to our recipe at $d{=}128$ changes YAGO3-10 MRR by $-0.002$, suggesting N3 and our recipe are largely orthogonal \emph{at this $d$}; we make no claim about N3 at $d{=}2000$ or under other recipes.
+
+\paragraph{Where the YAGO3-10 gain comes from.}
+A per-relation audit shows that the aggregate is driven by frequent dense relations rather than by a few tiny relations: \emph{playsFor} and \emph{isAffiliatedTo} alone cover roughly 60\% of the YAGO3-10 test triples and both reach high MRR under the pure ComplEx recipe. Low-MRR relations such as \emph{edited}, \emph{actedIn}, and \emph{influences} are long-tail or require textual/contextual cues, so the result should be read as a structural recipe fit to dense sub-schema rather than a universal KG-completion solution.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{fig6_yago_spotlight.pdf}
+\caption{YAGO3-10 spotlight: dimension saturation and leave-one-out recipe diagnostics. The difference from older ComplEx settings is associated mainly with the loss and optimiser/learning-rate schedule in this implementation, not simply with increasing $d$.}
+\label{fig:yago-spotlight}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{Recipe diagnostics on YAGO3-10. Leave-one-out from our selected configuration; ``original'' denotes the Trouillon-2016 ComplEx setting.}
+\label{tab:decomposition}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lc}
+\toprule
+Recipe component (original $\to$ ours) & $\Delta$ MRR \\
+\midrule
+Logistic loss + 50 sampled neg.\ $\to$ 1-vs-all CE & $+0.040$ \\
+$\varepsilon = 0$ $\to$ $\varepsilon = 0.3$ & $+0.0024$ \\
+$d = 100$ $\to$ $d = 128$ & $+0.006$ \\
+50 epochs $\to$ 150 epochs & $+0.0015$ \\
+Adagrad $\to$ AdamW + MultiStepLR & $+0.060$ \\
+\midrule
+\textbf{Total} & $+0.110$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Encoder Depth $\times$ Decoder Choice Interact on WN18RR}
 \label{sec:depth-decoder-interaction}
@@ -368,188 +327,102 @@ The $d{=}64 \to 100$ step gives $+0.019$ MRR, but each subsequent doubling gives
 \paragraph{The interaction.}
 Most CompGCN-lineage work fixes the decoder (typically ComplEx or DistMult), sweeps the encoder depth $L$, and reports the optimal depth as if it were a property of the dataset. We measure this assumption on WN18RR ($d{=}200$, recipe fixed, 3 seeds per cell):
 
-\begin{table}[h]
+\begin{table}[!htb]
 \centering
-\caption{WN18RR encoder-depth $\times$ decoder-choice interaction, full $4 \times 2$ grid (3 seeds per cell). The two decoders peak at opposite ends of the depth axis: ComplEx at $L{=}0$ (no encoder), DistMult at $L{=}3$. \emph{Both decoders share a noticeable dip at $L{=}1$} ($\sim\!0.45$ for ComplEx, $\sim\!0.44$ for DistMult), which we attribute to a single GCN layer being insufficient to compose useful relational structure while still adding optimisation noise; the dip recovers from $L{=}1$ to $L \ge 2$ for both decoders. For DistMult, $L{=}0$ ($0.4731$) is essentially tied with the $L{=}3$ peak ($0.4743$); the encoder's marginal benefit on DistMult is within seed std.}
+\caption{WN18RR encoder-depth $\times$ decoder-choice ($d{=}200$, 3 seeds per cell, mean MRR). Decoders peak at opposite ends ($L{=}0$ ComplEx, $L{=}3$ DistMult) and share an $L{=}1$ dip. For DistMult, $L{=}0$ ties the $L{=}3$ peak within seed std.}
 \label{tab:depth-decoder}
 \small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccc}
 \toprule
 Decoder $\backslash$ $L$ & $L{=}0$ & $L{=}1$ & $L{=}2$ & $L{=}3$ \\
 \midrule
-ComplEx  & \best{$0.4849 \pm 0.0019$} & $0.4533 \pm 0.0029$ & $0.4810 \pm 0.0044$ & $0.4775 \pm 0.0001$ \\
-DistMult & $0.4731 \pm 0.0030$ & $0.4410 \pm 0.0030$ & $0.4670 \pm 0.0024$ & \best{$0.4743 \pm 0.0014$} \\
-\midrule
-Optimal depth: & $L{=}0$ (ComplEx) & --- & --- & $L{=}3$ (DistMult) \\
+ComplEx  & $\mathbf{0.485}$ & $0.453$ & $0.481$ & $0.478$ \\
+DistMult & $0.473$ & $0.441$ & $0.467$ & $\mathbf{0.474}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{The two decoders peak at opposite ends of the depth axis; both share an $L{=}1$ dip.}
-The full $4 \times 2$ grid in Table~\ref{tab:depth-decoder} shows two robust patterns. (i) \emph{The peaks are decoder-conditional}: ComplEx peaks at $L{=}0$ ($0.4849 \pm 0.002$, no encoder), DistMult peaks at $L{=}3$ ($0.4743 \pm 0.001$). Among the encoder configurations ($L \ge 1$), ComplEx is best at $L{=}2$ ($0.4810$) and DistMult at $L{=}3$ ($0.4743$). (ii) \emph{Both decoders share a noticeable dip at $L{=}1$}: ComplEx drops from $0.4849$ at $L{=}0$ to $0.4533 \pm 0.003$ at $L{=}1$ before partially recovering at $L \ge 2$; DistMult drops from $0.4731 \pm 0.003$ at $L{=}0$ to $0.4410 \pm 0.003$ at $L{=}1$ before climbing back through $L{=}2$ to $L{=}3$. We attribute the shared dip to a single GCN layer being insufficient to compose useful relational structure while still introducing optimisation noise (gradient flow through the message-passing operator without the second layer's mixing); the dip is consistent across seeds in both decoders. (iii) \emph{The encoder's marginal benefit on DistMult is within seed std}: the $L{=}3$ peak is only $+0.0012$ MRR above the encoder-free $L{=}0$ ($0.4743$ vs.\ $0.4731$), well within the $\pm 0.003$ seed variance --- so even for the decoder where the encoder ``helps'', the help is essentially nil at the dataset level on WN18RR.
+\paragraph{Peaks at opposite ends; shared $L{=}1$ dip.}
+Three robust patterns appear: ComplEx peaks at $L{=}0$ ($0.4849$), DistMult at $L{=}3$ ($0.4743$); both decoders share an $L{=}1$ dip; and DistMult's $L{=}3$ peak is only $+0.0012$ MRR above $L{=}0$, within seed std. A fixed-decoder ablation would conclude ``encoder hurts'' or ``encoder neutral'', while a fixed-encoder ablation would conclude ``ComplEx $>$ DistMult''. Neither captures the $4{\times}2$ interaction.
 
-The decoder-conditional optimal-depth claim is therefore robust: a fixed-decoder ablation would conclude ``encoder hurts'' (with ComplEx) or ``encoder neutral'' (with DistMult); a fixed-encoder ablation would conclude ``ComplEx $>$ DistMult uniformly''. Neither reading is wrong, but neither captures the full $4 \times 2$ pattern, and the standard CompGCN-style protocol of ``hold the decoder fixed and report the best encoder depth'' systematically conflates the two axes. Our reading: on a tree-like sparse KG, ComplEx's complex-valued antisymmetry-handling already captures the asymmetry in 1-to-N hypernym relations, so additional encoder layers add only noise; DistMult, lacking this capacity, gets a small recovery from message passing but does not meaningfully overtake its encoder-free baseline. We recommend that future encoder ablations report the full $\{$decoder$\} \times \{L\}$ grid rather than its row-wise minimum.
-
-\paragraph{Implication for the encoder-utility diagnostic.}
-A two-axis diagnostic over (density, heterogeneity) of the underlying KG~\citep{zhang2022rethinking} is too coarse: it predicts a single optimal $L$ per dataset corner. The corrected diagnostic must include a third axis (decoder choice). For the (decoder $=$ ComplEx) row of the corrected diagnostic, the encoder helps only on FB15k-237 ($+0.014$) and is neutral or harmful elsewhere---consistent with \citet{zhang2022rethinking}'s WWW 2022 finding extended from FB/WN to YAGO/CoDEx. For (decoder $=$ DistMult), the encoder produces a within-encoder monotone gain on WN18RR ($+0.033$ from $L{=}1$ to $L{=}3$) but does \emph{not} meaningfully exceed the encoder-free $L{=}0$ baseline ($+0.0012$ at $L{=}3$ vs $L{=}0$, within seed std). The literature's ``CompGCN encoder helps on WN18RR'' result is therefore best read as ``CompGCN $L{=}3$ recovers from the $L{=}1$ dip back to the encoder-free baseline'', not as ``encoder is required''; the marginal-over-decoder reading that omits the $L{=}0$ baseline is misleading.
+\paragraph{Implication.}
+Encoder utility is dataset- and decoder-shaped, not uniformly low. On FB15k-237, the encoder helps ComplEx by $+0.014$ MRR; on WN18RR, it is neutral or harmful for ComplEx. Small KGs differ again: $L{=}0$ collapses on UMLS/Kinship, so the WN18RR observation does not generalise to all sparse settings.
 
 \subsection{Training Recipe Ablation}
 \label{sec:ablation}
 
 To identify which training choices drive our results, we ablate six ingredients of the recipe on WN18RR (3 seeds) and FB15k-237 (single seed, 3-seed for headline rows), starting from the main configuration for each dataset.
 
-\begin{table}[t]
+\begin{table}[!htb]
 \centering
-\caption{Training-recipe ablation on WN18RR ($d{=}200$, $L{=}2$ baseline). Each row changes one ingredient. 3 random seeds; mean $\pm$ std. Label smoothing is the single most impactful ingredient.}
+\caption{Training-recipe ablation on WN18RR ($d{=}200$, $L{=}2$, 3 seeds; mean MRR with $H@k$ in \%). Label smoothing is the most impactful single ingredient.}
 \label{tab:ablation-wn18rr}
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccc}
 \toprule
-Configuration & MRR & H@1 (\%) & H@3 (\%) & H@10 (\%) \\
+Configuration & MRR & H@1 & H@3 & H@10 \\
 \midrule
-Baseline (d=200, L=2, LS=0.3, DistMult) & 0.4673 $\pm$ 0.002 & 43.6 & 48.0 & 52.5 \\
+Baseline (d=200, L=2, LS=0.3, DM) & $0.467$ & $43.6$ & $48.0$ & $52.5$ \\
 \midrule
-$+$ deeper GCN (L=3) & \secondbest{0.4744 $\pm$ 0.001} & 44.3 & 48.9 & \best{53.1} \\
-$+$ ComplEx decoder & \best{0.4784 $\pm$ 0.002} & \best{45.1} & \best{49.1} & 52.8 \\
-$-$ smaller dim (d=128) & 0.4655 $\pm$ 0.001 & 43.6 & 47.8 & 52.0 \\
-$-$ shallower (L=1) & 0.4414 $\pm$ 0.003 & 41.7 & 45.1 & 48.7 \\
-$-$ weaker smoothing (LS=0.1) & 0.4573 $\pm$ 0.002 & 43.0 & 46.7 & 50.6 \\
-$-$ no smoothing (LS=0.0) & 0.4266 $\pm$ 0.002 & 40.7 & 43.4 & 46.1 \\
+$+$ deeper GCN (L=3)            & $\mathbf{0.474}$ & $44.3$ & $48.9$ & $\mathbf{53.1}$ \\
+$+$ ComplEx decoder             & $\mathbf{0.478}$ & $\mathbf{45.1}$ & $\mathbf{49.1}$ & $52.8$ \\
+$-$ smaller dim (d=128)         & $0.466$ & $43.6$ & $47.8$ & $52.0$ \\
+$-$ shallower (L=1)             & $0.441$ & $41.7$ & $45.1$ & $48.7$ \\
+$-$ weaker smoothing (LS=0.1)   & $0.457$ & $43.0$ & $46.7$ & $50.6$ \\
+$-$ no smoothing (LS=0.0)       & $0.427$ & $40.7$ & $43.4$ & $46.1$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Label smoothing is the dominant factor on WN18RR and FB15k-237.}
-Removing label smoothing ($\varepsilon = 0$) drops MRR by $-0.041$ on WN18RR (Table~\ref{tab:ablation-wn18rr}) and $-0.017$ on FB15k-237 (Appendix~\ref{app:fb-ablation}).
-Reducing it to $\varepsilon = 0.1$ already costs $-0.010$ on WN18RR and $-0.020$ on FB15k-237.
-This is larger than any architectural change we tested.
-\textbf{On YAGO3-10 the depth preference flips but label smoothing does not}: reducing to $L{=}2$ (from $L{=}3$) lifts 3-seed MRR from $0.618 \pm 0.005$ to $0.640 \pm 0.004$ (a confirmed $+0.022$ gain), while setting $\varepsilon{=}0$ gives $0.620 \pm 0.015$---statistically indistinguishable from the label-smoothed baseline after 3 seeds (an initial single-seed observation of $0.636$ did not reproduce; see Appendix~\ref{app:negative}).
+\paragraph{Label smoothing is dominant.}
+Removing label smoothing ($\varepsilon = 0$) drops MRR by $-0.041$ on WN18RR (Table~\ref{tab:ablation-wn18rr}) and $-0.017$ on FB15k-237; reducing to $\varepsilon = 0.1$ already costs $-0.010$/$-0.020$. This is larger than any architectural change we tested.
 
-\paragraph{GCN depth matters, but the sweet spot is shallow.}
-A single-layer GCN loses $-0.029$ MRR on WN18RR.
-Going from $L{=}2$ to $L{=}3$ gives a small gain on WN18RR ($+0.004$) and FB15k-237 ($+0.010$), but \emph{reverses sign} on YAGO3-10 ($-0.022$).
-Very deep GNNs are not needed---and can be harmful---for KG completion with the right recipe.
-
-\paragraph{Decoder choice: ComplEx $>$ DistMult on FB/WN.}
-Replacing DistMult with ComplEx yields consistent gains: $+0.011$ on WN18RR (Table~\ref{tab:ablation-wn18rr}), $+0.003$ on FB15k-237 (Appendix~\ref{app:fb-ablation}).
-This agrees with prior intuition that ComplEx captures asymmetric relations. On YAGO3-10 we measure ComplEx slightly above DistMult at every $L$ tested ($L{=}0$ $d{=}64$: $0.6713$ vs $0.6648$; $L{=}3$ $d{=}64$: $0.6281$ vs $0.6179$), with the gap shrinking as $L$ increases. The cross-dataset decoder pattern is reported in Sec.~\ref{sec:decoder-diagnostic}, which generalises to all five standard transductive benchmarks.
-
-\subsection{The YAGO3-10 Gain, Decomposed}
-\label{sec:decomposition}
-
-The largest individual contribution in the audit is the YAGO3-10 gap (Table~\ref{tab:main}): the Trouillon-2016 ComplEx number quoted by \citet{nbfnet} is $0.587$ and our $L{=}0$ ComplEx is $0.6968$, a $+0.110$ MRR gap explained entirely by the training recipe (the scoring function is identical). We attribute the $+0.110$ to its constituent recipe ingredients via a 3-seed leave-one-out, including---now---a \emph{direct} ablation of 1-vs-all softmax CE vs.\ Trouillon-2016's sampled-negatives logistic loss (Table~\ref{tab:decomposition}).
-
-\begin{table}[h]
+\begin{figure}[!htbp]
 \centering
-\caption{Recipe decomposition on YAGO3-10. Leave-one-out: starting from our best ($L{=}0$ ComplEx, $d{=}128$, $\varepsilon{=}0.3$, 150 epochs, AdamW+MultiStep, 1-vs-all CE) we remove one component at a time, 3 seeds each. ``$\to$ original'' indicates the value used by the Trouillon-2016 ComplEx paper~\citep{complex}. The loss-change row is now \emph{directly measured}: we re-implemented the Trouillon-2016 sampled-negatives logistic loss with 50 negatives per positive and ran 3 seeds; the result is $0.6568 \pm 0.0321$, an MRR drop of $-0.040$ from our 1-vs-all CE baseline of $0.6968$.}
-\label{tab:decomposition}
-\small
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{p{0.46\textwidth}cl}
-\toprule
-Recipe component (original $\to$ ours) & $\Delta$ MRR (measured, 3-seed) & Evidence \\
-\midrule
-Logistic loss + 50 sampled negatives $\to$ \textbf{1-vs-all softmax CE over $|\mathcal{E}|$} & \best{$+0.040$} ($0.6568 \pm 0.032 \to 0.6968$) & directly measured (3 seeds) \\
-$\varepsilon = 0$ $\to$ $\varepsilon = 0.3$ (label smoothing) & $+0.0024$ ($0.6944 \to 0.6968$) & directly measured (3 seeds) \\
-$d = 100$ $\to$ $d = 128$ (wider embedding) & $+0.006$ ($0.6906 \to 0.6968$) & directly measured (3 seeds) \\
-50 epochs $\to$ 150 epochs (longer training) & $+0.0015$ ($0.6953 \to 0.6968$) & directly measured (3 seeds) \\
-Adagrad $\to$ AdamW + MultiStepLR (\emph{residual, not directly ablated}) & $+0.060$ (by elimination) & $+0.110$ total $-$ $+0.050$ measured \\
-\midrule
-\textbf{Total (ours $-$ original Trouillon-2016)} & \textbf{$+0.110$} & $0.6968 - 0.587$ on YAGO3-10 \\
-\bottomrule
-\end{tabular}%
-}
-\end{table}
+\includegraphics[width=\columnwidth]{fig3_ablation_wn18rr.pdf}
+\caption{WN18RR recipe ablation. Label smoothing is the largest single ingredient in this recipe, while depth and decoder changes are smaller and interact with each other.}
+\label{fig:ablation-wn18rr}
+\end{figure}
 
-\paragraph{Two dominant levers, with the optimiser change slightly larger.}
-The decomposition produces two findings that revise our preliminary single-axis story. First, switching the loss back to Trouillon-2016's sampled-negatives logistic loss costs only $-0.040$ MRR on YAGO3-10 (3 seeds, std $0.032$)---substantially less than the residual reasoning of an earlier version of this paper attributed to it ($\sim +0.10$). Second, label smoothing, training length, and embedding width together contribute only $+0.010$ MRR. The remaining $+0.060$ MRR is therefore in the optimiser-side residual: Adagrad with logistic loss (the original combination) versus AdamW + MultiStepLR (ours). The recipe gain is therefore split roughly $\tfrac{1}{3}\!:\!\tfrac{2}{3}$ between the loss objective and the optimiser/initialisation residual, contrary to the ``loss change is dominant'' framing of an earlier draft.
+\paragraph{Shallow GCN, decoder picks up the slack.}
+A single-layer GCN loses $-0.029$ MRR on WN18RR; $L{=}2 \to L{=}3$ gives $+0.004$ on WN18RR, $+0.010$ on FB15k-237, but reverses sign on YAGO3-10 ($-0.022$). Replacing DistMult with ComplEx yields $+0.011$ on WN18RR, $+0.003$ on FB15k-237, and $+0.006$--$0.011$ across $L$ on YAGO3-10. The cross-dataset decoder pattern generalises to all five transductive benchmarks (Sec.~\ref{sec:decoder-diagnostic}).
 
-\paragraph{Cross-dataset corroboration of the loss-change effect.}
-The same direct ablation on WN18RR ($L{=}0$ ComplEx $d{=}200$, 3 seeds) gives sampled-neg MRR $0.4616 \pm 0.0003$ vs.\ our 1-vs-all CE baseline $0.4849 \pm 0.0015$, a $-0.023$ MRR drop. On FB15k-237 ($L{=}0$ ComplEx $d{=}200$): sampled-neg $0.3795 \pm 0.0022$ vs.\ CE $0.4060 \pm 0.0024$, a $-0.027$ drop. The loss-change effect is therefore consistently $0.02$--$0.04$ MRR across all three benchmarks. As an external corroboration: ComplEx-N3~\citep{lacroix2018complex} reports $\approx\!0.58$ MRR on YAGO3-10 with logistic loss and N3 regularisation at $d{=}2000$---$\approx\!0.116$ below us, reached at $\sim\!16\times$ our embedding dimension. We directly verify that adding N3 to our recipe at our $d$ (Section~\ref{sec:related} and Table~\ref{tab:main} ``\ours\ + N3'' rows) leaves YAGO3-10 essentially unchanged ($-0.002$) and modestly improves WN18RR / CoDEx-M ($+0.010$), confirming that N3 and our recipe are largely orthogonal.
+\subsection{YAGO3-10 Recipe Diagnostics plus Sensitivity / Efficiency}
+\label{sec:decomposition}\label{sec:sensitivity}
 
-\subsection{Sensitivity to Other Hyperparameters}
-\label{sec:sensitivity}
-
-We study sensitivity to learning rate and dropout on WN18RR (single seed, baseline config).
-\begin{itemize}
-    \item \textbf{Learning rate}: lr $= 10^{-4}$ underfits (MRR $= 0.423$); lr $= 5\times10^{-4}$ (ours) and $10^{-3}$ give essentially the same result (0.470/0.475).
-    \item \textbf{Dropout}: dropout $= 0$ overfits (MRR $= 0.438$); our choice of $0.2$ and $0.4$ give similar results (0.470/0.471).
-\end{itemize}
-Extended sensitivity (optimiser, LR schedule, dimension) is in Appendix~\ref{app:sensitivity}.
-
-\subsection{Efficiency: A Deployment Vignette}
-\label{sec:efficiency}
-
-We measured inference throughput of each headline configuration on a single NVIDIA RTX 2080 Ti (full table in Appendix~\ref{app:efficiency}, Table~\ref{tab:throughput}). On our YAGO3-10 best configuration ($L{=}0$ ComplEx $d{=}128$), encoding the full graph takes $0.7$\,ms and scoring each query $0.009$\,ms, giving $\sim\!112$\,K queries/sec. The encode step is essentially free for $L{=}0$ ($<1$\,ms embedding look-up) but costs 25--35\,ms for CompGCN configurations. Scoring 10\,K queries end-to-end takes 50--90\,ms across datasets. Against NBFNet's $\sim\!500$\,ms per FB15k-237 query on an A100~\citep{astarnet} ($\sim\!1.5$--$2$\,s on 2080 Ti-class hardware; YAGO3-10's larger edge set pushes this further), our measured $0.005$--$0.009$\,ms/query is $10^4$--$10^5\times$ faster. A$^*$Net prunes to $\sim\!10\%$ of edges, narrowing the gap to $\sim\!10^2$--$10^3\times$ slower. We did not re-run NBFNet / A$^*$Net (their codebases failed to install on our server, Appendix~\ref{app:modern}); ratios come from their paper timings plus our direct measurement. Parameter-wise, \ours\ uses 3.0--15.8\,M vs.\ NBFNet's 50--200\,M (Appendix~\ref{app:efficiency}).
-
-\paragraph{What this means for deployment.}
-Returning to the practitioner of Section~\ref{sec:intro}: a 10\,K-query batch on YAGO3-10---roughly the load of a 1\,K-QPS service for ten seconds---takes $\sim\!90$\,ms with our $L{=}0$ ComplEx, leaving 9.91\,seconds of every ten-second window for the rest of the application stack. The same batch on NBFNet, projected from \citet{astarnet}'s timings, would take 4--5\,hours wall-clock on a 2080 Ti, or roughly 15\,minutes on an A100; latencies of either kind preclude real-time deployment. The architectural win that NBFNet shows on FB15k-237 and WN18RR therefore comes at a deployment cost which, if our YAGO3-10 finding is taken at face value, the encoder is not even buying meaningful accuracy on dense KGs.
+Our $L{=}0$ ComplEx on YAGO3-10 ($0.6971$) is $+0.110$ MRR relative to the Trouillon-2016 ComplEx number reported in the NBFNet comparison table~\cite{nbfnet}. A 3-seed leave-one-out diagnostic associates the difference with the loss change ($+0.040$), smoothing/training length/$d$ ($+0.010$), and optimiser/initialisation residual ($+0.060$). We read this as implementation-level sensitivity rather than a causal proof that any single ingredient dominates. N3 is largely orthogonal at saturated $d$. The resulting configuration is also computationally light after graph encoding: on one RTX 2080 Ti, $L{=}0$ ComplEx scores about $112$K YAGO3-10 queries/s at $d{=}128$, while $L{=}2$ DistMult at $d{=}64$ scores about $297$K queries/s after a $25.9$ ms graph-encoding pass.
 
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Decoder, Encoder, Recipe: A Three-Lever Picture}
-
-\paragraph{The decoder is the under-explored axis.}
-Our headline (Sec.~\ref{sec:decoder-diagnostic}) is that the decoder $\Delta$ across seven datasets has a $0.134$ MRR spread, against $0.075$ for the encoder $\Delta$ on the same data. The CompGCN-lineage literature has concentrated on the smaller-leverage axis. The UMLS reversal (Sec.~\ref{sec:umls-spotlight}) is the most extreme example: a Welch $t \approx 8.5$ DistMult win across 6 seeds against the standard practitioner recommendation. We do not claim DistMult is universally preferable. The claim is weaker but more useful: for any new KG, the head-to-head DistMult-vs-ComplEx comparison is cheaper than the $L{=}0$ vs $L{=}2$ encoder comparison (one training-run difference, no architectural code change), and produces a larger expected MRR gain when one of the two decoders is suboptimal for the KG at hand.
-
-\paragraph{Three actionable rules from the data.}
-(R1) \textbf{Compute edges/relation first; default to DistMult below $\sim\!200$.} ComplEx's imaginary half doubles its per-relation parameter budget over DistMult, so on KGs with few training edges per relation the imaginary part overfits and DistMult wins. UMLS at $113$~e/r is the lone DistMult-winner in our seven datasets ($-0.045$ MRR, Welch $t \approx 8.5$ across 6 seeds, $p < 10^{-5}$); the other six all sit above the threshold. The single statistic $|\mathcal{D}_{\text{train}}| / |\mathcal{R}|$ predicts the decoder winner correctly on $6/6$ measured datasets. The standard advice ``ComplEx is strictly better'' is false at low edges-per-relation regardless of relation-symmetry profile.
-(R2) \textbf{Don't add a CompGCN encoder unless your KG is dense \emph{and} heterogeneous.} On four of our five standard benchmarks (YAGO3-10, CoDEx-M, CoDEx-L, WN18RR with ComplEx) the encoder hurts or is neutral; only on FB15k-237 does it pay for itself ($+0.014$ MRR). This is consistent with \citet{zhang2022rethinking}.
-(R3) \textbf{Don't sweep dimension past $d{=}128$ on YAGO-scale KGs.} Capacity saturates fast under a modern recipe: the marginal MRR for $d{=}256$ over $d{=}128$ on YAGO3-10 is $+0.004$.
-
-\subsection{The 6.6-Point WN18RR Gap to NBFNet}
+\paragraph{The WN18RR gap to NBFNet.}
 \label{sec:wn18rr-gap}
-
-\paragraph{The gap is real and structural.}
-We do \emph{not} claim to beat NBFNet on WN18RR: its $0.551$ stays $6.6$ MRR points above our best ComplEx ($0.485$), and that gap is not closed by any recipe or architectural change we tested. The per-relation breakdown (Appendix~\ref{app:per-relation}) localises the source: on 1-to-N WordNet relations (\emph{hypernym}), NBFNet reaches $0.19$ MRR while we reach $0.08$, a $0.11$ gap that accounts for essentially the entire dataset-level deficit. Hypernym chains require multi-hop composition and live on a tree-like graph (avg.\ degree $4.2$); this is the regime where path propagation has a genuine inductive advantage that a static embedding cannot replicate. WN18RR is a dataset where path-based reasoning genuinely helps, regardless of which decoder we pair it with.
-
-\subsection{Limitations}
-
-\paragraph{We acknowledge.}
-(i) The audit introduces no new architecture; this is deliberately a baseline study---in the spirit of \citet{ruffinelli2020olderboys} for the recipe axis and \citet{zhang2022rethinking} for the encoder axis. Our increment is on the decoder axis.
-(ii) Our decoder analysis is limited to ComplEx vs.\ DistMult; we do not extend to RotatE or QuatE under the same recipe.
-(iii) Path-based methods (NBFNet) retain interpretability and inductive advantages we do not contest; we do not evaluate in inductive splits.
-(iv) We did not re-run NBFNet under our recipe (the codebase failed to install on our server, App.~\ref{app:modern}). Our FB15k-237 comparison is therefore not apples-to-apples; the YAGO3-10 gap of $+13.4$ is large enough to absorb any plausible recipe effect on NBFNet.
-(v) We do not evaluate on OGB-scale KGs (ogbl-biokg, ogbl-wikikg2); single-GPU transductive training at that scale requires engineering beyond our scope.
-(vi) Text-based methods (SimKGC) outperform structural methods on WN18RR by leveraging entity descriptions; our setting is strictly structural.
-(vii) The edges-per-relation phase-transition explanation for UMLS (Sec.~\ref{sec:umls-spotlight}) is supported by $6/6$ measured datasets above and below the threshold, but the threshold itself ($\sim\!200{-}300$ edges/rel) is informed by two data points near the boundary (UMLS at $113$, Kinship at $342$). A finer-grained sweep across small KGs of varying edges/rel (e.g.\ $50, 100, 150, 200, 250, 300, 500$) would localise the threshold sharply; we leave this to follow-up.
-
-\paragraph{Recipe generalises beyond the four main benchmarks.}
-To test whether the recipe is FB/WN/YAGO/CoDEx-specific, we re-applied it without per-dataset tuning to two small KG benchmarks, UMLS (135 entities) and Kinship (104 entities). Using the same $d{=}200$, $L{=}2$, $\varepsilon{=}0.3$, AdamW + MultiStepLR recipe as our WN18RR main configuration, we obtain (6 seeds each): UMLS DistMult MRR $= 0.8748 \pm 0.0096$, Kinship ComplEx MRR $= 0.7634 \pm 0.0065$ (Appendix~\ref{app:umls-kinship}). Variance stays tight at small-KG scale; the recipe is not benchmark-overfit.
-
-\paragraph{Comparison with 2024 foundation-model baselines.}
-We attempted to verify ULTRA~\citep{galkin2024ultra} and KG-ICL~\citep{kgicl2024} per-dataset numbers by running the authors' released checkpoints. KG-ICL-6L reproduced successfully on all three datasets (verified MRR: FB15k-237 $0.355$, WN18RR $0.442$, YAGO3-10 $0.368$), all below our per-dataset numbers---consistent with KG-ICL's claimed value being transfer across 43 KGs rather than per-dataset peak. ULTRA reproduction repeatedly failed at the rspmm JIT-compilation and \texttt{torch\_geometric} WordNet18RR preprocessing stages on our server; we retain the paper's aggregate MRR ($0.312$ zero-shot / $0.379$ fine-tuned over 13 KGs) and leave per-dataset verification for a compatible environment (Appendix~\ref{app:modern}).
-
-\subsection{Implications for the Field}
-
-\paragraph{A measuring stick for future architectural work.}
-Future KG-completion proposals---especially encoder-heavy or path-based ones---would benefit from reporting against a recipe-controlled embedding baseline. We make that easy: 3.0--15.8\,M parameters, $\sim\!10^5$ queries/sec on a single 11\,GB GPU, deterministic across seeds, code and per-run JSONs released. Where a new architecture genuinely contributes, the contribution will be visible above this baseline; where it does not, we have not lost the cost of an additional 50\,M parameters and three orders of magnitude in inference latency.
-
-\paragraph{Broader impact.}
-Improved KG completion benefits downstream applications (search, recommendation, biomedical KG construction) but can amplify biases in the source KG. Our recipe reduces GPU-hours per trained model, with corresponding energy savings, and brings reproduction within reach of single-11-GB-GPU groups. We encourage downstream users to apply per-relation error analysis and fairness auditing before deployment. Datasets we use (FB15k-237, WN18RR, YAGO3-10, CoDEx-M) are public and contain no PII beyond what is already in Freebase / WordNet / YAGO / Wikidata; extended discussion in Appendix~\ref{app:impact}.
+We do \emph{not} claim superiority over path-based models: on WN18RR, NBFNet's $0.551$ stays $5.8$ MRR above our RotatE spot-check ($0.493$) and $6.6$ above our selected ComplEx configuration ($0.485$). The gap is consistent with path propagation having a genuine advantage on tree-like hypernym chains. Path-based reasoning is a separate lever, orthogonal to our decoder-vs-CompGCN-encoder audit.
 
 \section{Conclusion}
 
-A KG-completion model has three independent levers (decoder, encoder, recipe). Two of the three have been audited: \citet{ruffinelli2020olderboys} on recipe (ICLR 2020) and \citet{zhang2022rethinking} on encoder (WWW 2022). This paper completes the trio along the decoder axis, and produces three findings:
+Prior controlled audits cover recipe~\cite{ruffinelli2020olderboys} and CompGCN-style encoder~\cite{zhang2022rethinking} axes; this paper adds the decoder axis through \ours. The actionable outcome is a compact audit checklist: report a matched DistMult-vs-ComplEx row, log small-KG recipe and provenance details, inspect edges per relation and symmetry as descriptors, and avoid reporting encoder depth without the decoder dimension. On standard KGs, decoder gaps are modest but consistent under our recipe; on small KGs, they can become decisive and provenance-sensitive. Future encoder ablations should report the full $\{\mathrm{decoder}\} \times \{L\}$ grid rather than a row-wise minimum.
 
-\begin{enumerate}
-    \item \emph{For researchers}: the decoder $\Delta$ (ComplEx $-$ DistMult) under one recipe spans $0.134$ MRR across seven benchmarks ($-0.045$ on UMLS to $+0.089$ on Kinship), $1.78\times$ wider than the encoder $\Delta$ across the same data ($0.075$). The decoder is the higher-leverage axis. The UMLS reversal (DistMult $>$ ComplEx by $+0.045$ MRR; Welch $t \approx 8.5$ across 6 seeds, df $\approx 10$, $p < 10^{-5}$) contradicts the practitioner-tutorial recommendation that ComplEx is the preferred decoder for biomedical KGs with antisymmetric relations~\citep{graph4nlp_kgc}. We explain it as an \emph{edges-per-relation phase transition}: UMLS at $113$ edges/rel is the only dataset below the $\sim\!200{-}300$ threshold, and the threshold predicts the decoder winner correctly on all $6$ measured datasets. Direct measurement also falsifies the alternative ``UMLS is symmetric-rich'' reading --- UMLS empirical symmetry score $0.133$ is \emph{lower} than Kinship's $0.207$. The YAGO3-10 capacity narrative is empirically wrong: MRR saturates by $d \approx 128$, $16\times$ smaller than \citet{lacroix2018complex}'s $d{=}2000$.
-    \item \emph{For practitioners}: three rules. (R1) Compute $|\mathcal{D}_{\text{train}}| / |\mathcal{R}|$; default to DistMult below $\sim\!200$, ComplEx above $\sim\!300$. (R2) Don't add a CompGCN encoder unless your KG is dense and heterogeneous (consistent with \citet{zhang2022rethinking}). (R3) Don't sweep dimension past $d{=}128$ on YAGO-scale KGs. Following these rules our pure ComplEx reaches MRR $0.6968 \pm 0.0023$ on YAGO3-10 (6 seeds; new published best within structural KGC) and $0.5379$ ($\sigma{<}0.001$) on CoDEx-M.
-    \item \emph{For benchmarkers}: we release the seven-benchmark recipe-controlled grid (3.0--15.8\,M parameters, $\sim\!10^5$ queries/sec on a single 11\,GB GPU, deterministic across seeds, code and per-run JSONs released). Future architectural proposals should report the full $\{\mathrm{decoder}\} \times \{L\}$ grid, not its row-wise minimum, since we have shown the two interact (Sec.~\ref{sec:depth-decoder-interaction}).
-\end{enumerate}
 
-\noindent The next three follow-ups are (i) localising the edges-per-relation threshold sharply by sweeping small KGs of varying $|\mathcal{D}_{\text{train}}|/|\mathcal{R}|$ (e.g.\ $50, 100, 150, 200, 250, 300, 500$), (ii) extending the decoder axis to RotatE / QuatE under the same recipe to test whether the threshold transfers beyond the ComplEx-vs-DistMult pair, and (iii) a direct head-to-head of Adagrad vs.\ AdamW + MultiStepLR under matched loss, which would close the $+0.060$ MRR optimiser residual on YAGO3-10 currently absorbed by ``optimiser/initialisation'' in our recipe decomposition (Sec.~\ref{sec:decomposition}).
+\section*{Limitations}
+\label{sec:limitations}
 
-% LNCS standard bibstyle is splncs04 (no natbib), but our paper uses natbib's
-% \citep / \citet commands, so we use plainnat (natbib-compatible, ships with
-% LaTeX). With the [numbers,square,sort&compress] options on natbib above,
-% citations render as LNCS-style "[1]" / "Author et al.\ [1]". Camera-ready
-% can switch to splncs04 after de-natbib-ing the citation commands.
-\bibliographystyle{plainnat}
+Our conclusions are limited to structural transductive KGC with the ComplEx/DistMult decoder family, CompGCN-style encoders, and one fixed recipe; they do not extend to inductive, text-augmented, LLM-based, OGB-scale, or path-based KGC. A fixed recipe isolates decoder and encoder effects but does not identify each model's independently tuned optimum, and recipe itself is a large lever. Table~\ref{tab:main} mixes published baselines and our recipe-controlled runs, so small gaps should be read cautiously. The decoder and encoder $\Delta$ columns are not fully symmetric: UMLS/Kinship are decoder-only small-KG diagnostics, seed budgets and depths differ, and YAGO3-10 dimensionality differs across cells. The UMLS mechanism remains a heuristic: edge-weighted symmetry is coarse, UMLS/Kinship are small benchmarks, e/r subsampling can reduce absolute MRR, and UMLS changes winner between an earlier run bundle and the clean server rerun. Finally, throughput is scoring throughput after graph encoding, not full end-to-end training or inference wall-clock.
+
+\section*{Ethics Statement}
+
+Improved KG completion benefits downstream applications (search, recommendation, biomedical KG construction) but can amplify biases in the source KG. Our recipe reduces GPU-hours per trained model and brings reproduction within reach of single-11-GB-GPU groups. We encourage per-relation error analysis and fairness auditing before deployment. All datasets used are public.
+
+\bibliographystyle{splncs04}
 \bibliography{references}
 
-\appendix
-\input{appendix}
+% The appendix is retained in appendix.tex but omitted from the PRICAI submission
+% build because the submission page sets a 16-page limit including references.
+% \appendix
+% \input{appendix}
 
 \end{document}
+
+

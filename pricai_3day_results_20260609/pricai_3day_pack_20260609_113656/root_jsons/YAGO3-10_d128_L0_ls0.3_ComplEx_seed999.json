@@ -1,0 +1,24 @@
+{
+  "dataset": "YAGO3-10",
+  "seed": 999,
+  "config": {
+    "d_h": 128,
+    "layers": 0,
+    "lr": 0.0005,
+    "epochs": 150,
+    "batch_size": 2048,
+    "score_chunk_size": 0,
+    "label_smooth": 0.3,
+    "dropout": 0.2
+  },
+  "params": 15777024,
+  "train_time_s": 3787.0571796894073,
+  "best_val_mrr": 0.6974301333088401,
+  "test": {
+    "MRR": 0.6966403086827635,
+    "Hits@1": 63.68000000000001,
+    "Hits@3": 73.76,
+    "Hits@10": 79.72,
+    "MR": 1470.1792
+  }
+}

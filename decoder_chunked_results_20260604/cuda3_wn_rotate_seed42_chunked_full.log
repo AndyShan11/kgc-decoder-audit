@@ -1,0 +1,14 @@
+nohup: ignoring input
+Device: cuda, AMP: True
+GPU: NVIDIA GeForce RTX 2080 Ti, 11.3 GB
+======================================================================
+CompGCN+DistMult | WN18RR | seed=42
+d_h=200 L=2 lr=0.0005 ls=0.3 epochs=300
+score_chunk_size=2048
+======================================================================
+  KG: 40943 ent, 22 rel, 173670 edges
+  Train/Val/Test: 86835/3034/3134
+  Params: 8,361,200
+  Training: epochs=300, lr=0.0005, batch=128, ls=0.3
+  Steps/epoch: 678
+  E  1/300 Loss:9.862 lr:5.00e-04 318s
